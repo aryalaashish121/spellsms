@@ -10,24 +10,26 @@ import eventBus from '../common/event';
 import store from '../common/store';
 import { toggleFullScreen } from "../utils";
 import AxiosAjaxDetect from "../common/axiosAxajDetect";
+import './tailwindcss.css'
+
 Vue.use(eventBus);
 const app = new Vue({
     router,
     eventBus,
     vuetify,
     store,
-    components:{
+    components: {
         App,
     },
     el: "#admin",
-    data(){
-return{
-    breadCrumbsItems: [{
-        text: 'Users',
-        href: '/admin/users',
-        disabled: false
-    }],
-}
+    data() {
+        return {
+            breadCrumbsItems: [{
+                text: 'Users',
+                href: '/admin/users',
+                disabled: false
+            }],
+        }
     },
     mounted() {
         const self = this;
@@ -58,7 +60,7 @@ return{
             this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
             localStorage.setItem("darkMode", this.$vuetify.theme.dark);
         },
-       
+
     },
 
     computed: {
@@ -67,7 +69,7 @@ return{
                 ? "mdi-fullscreen-exit"
                 : "mdi-fullscreen";
         },
-        
+
     }
-   
+
 });
