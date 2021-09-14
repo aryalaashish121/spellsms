@@ -39,18 +39,18 @@
       <v-divider></v-divider>
 
       <v-list nav dense>
-        <v-list-item>
-          <v-list-item-icon>
-            <v-icon> mdi-home </v-icon>
-          </v-list-item-icon>
-          <v-list-item-content>
-            <v-list-item-title>
-              <router-link to="/">
+        <router-link to="/">
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon> mdi-home </v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>
                 <span class="font-extrabold text-sm">Dashboard</span>
-              </router-link>
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
 
         <v-list-group prepend-icon="mdi-account-group">
           <template v-slot:activator>
@@ -61,40 +61,46 @@
             </v-list-item-content>
           </template>
 
-          <v-list-item class="px-6">
-            <v-list-item-icon>
-              <v-icon> mdi-account-clock </v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>
-                <router-link to="/activeUsers">
+          <router-link to="/activeUsers">
+            <v-list-item class="px-6">
+              <v-list-item-icon>
+                <v-icon> mdi-account-clock </v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>
                   <span class="font-extrabold text-sm"> Active Users</span>
-                </router-link>
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </router-link>
 
-          <v-list-item class="px-6">
-            <v-list-item-icon>
-              <v-icon> mdi-account-remove </v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>
-                <span class="font-extrabold text-sm"> Suspended Accounts </span>
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+          <router-link to="/suspendedUsers">
+            <v-list-item class="px-6">
+              <v-list-item-icon>
+                <v-icon> mdi-account-remove </v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>
+                  <span class="font-extrabold text-sm">
+                    Suspended Accounts
+                  </span>
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </router-link>
 
-          <v-list-item class="px-6">
-            <v-list-item-icon>
-              <v-icon> mdi-bullhorn </v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>
-                <span class="font-extrabold text-sm"> Announcements </span>
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
+          <router-link to="/announcements">
+            <v-list-item class="px-6">
+              <v-list-item-icon>
+                <v-icon> mdi-bullhorn </v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>
+                  <span class="font-extrabold text-sm"> Announcements </span>
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </router-link>
 
           <v-list-item class="px-6">
             <v-list-item-icon>

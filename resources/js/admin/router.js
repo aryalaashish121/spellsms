@@ -17,7 +17,17 @@ const routes = [
     {
         path: '/activeUsers',
         name: 'admin.active-users',
-        component: require('./user-management/Users').default
+        component: require('./user-management/users/Users').default
+    },
+    {
+        path: '/suspendedUsers',
+        name: 'admin.suspended-users',
+        component: require('./user-management/users/Suspended-Users').default
+    },
+    {
+        path: '/announcements',
+        name: 'admin.announcements',
+        component: require('./user-management/announcements/Announcements').default
     },
 ];
 
