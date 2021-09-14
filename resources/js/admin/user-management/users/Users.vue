@@ -35,7 +35,7 @@
           ></v-text-field>
           <v-spacer></v-spacer>
 
-          <v-btn color="primary" @click="addUser">
+          <v-btn color="primary" @click="addUser" class="capitalize">
             <v-icon left small> mdi-plus </v-icon>
             Add
           </v-btn>

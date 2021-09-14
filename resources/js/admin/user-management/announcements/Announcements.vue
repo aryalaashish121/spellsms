@@ -11,7 +11,7 @@
     <v-data-table
       v-model="selected"
       :headers="headers"
-      :items="customers"
+      :items="announcements"
       class="shadow-md border rounded-md"
       :search="search"
       item-key="message"
@@ -117,7 +117,7 @@ export default {
         { text: "Actions", value: "actions", sortable: false },
       ],
 
-      customers: [
+      announcements: [
         {
           sn: "1",
           created_by: "Spell Innovation",
