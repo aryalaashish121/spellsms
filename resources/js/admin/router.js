@@ -17,7 +17,7 @@ const routes = [
     {
         path: '/activeUsers',
         name: 'admin.active-users',
-        component: require('./user-management/Active-users').default
+        component: require('./user-management/Users').default
     },
 ];
 

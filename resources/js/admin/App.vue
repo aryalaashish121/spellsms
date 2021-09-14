@@ -45,7 +45,9 @@
           </v-list-item-icon>
           <v-list-item-content>
             <v-list-item-title>
-              <router-link to="/" style="color: black"> Dashboard </router-link>
+              <router-link to="/">
+                <span class="font-extrabold text-sm">Dashboard</span>
+              </router-link>
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
@@ -53,7 +55,9 @@
         <v-list-group prepend-icon="mdi-account-group">
           <template v-slot:activator>
             <v-list-item-content>
-              <v-list-item-title> User Management </v-list-item-title>
+              <v-list-item-title>
+                <span class="font-extrabold text-sm">User Management</span>
+              </v-list-item-title>
             </v-list-item-content>
           </template>
 
@@ -63,8 +67,8 @@
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>
-                <router-link to="/activeUsers" style="color: black">
-                  Active Users
+                <router-link to="/activeUsers">
+                  <span class="font-extrabold text-sm"> Active Users</span>
                 </router-link>
               </v-list-item-title>
             </v-list-item-content>
@@ -75,7 +79,9 @@
               <v-icon> mdi-account-remove </v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title> Suspended Accounts </v-list-item-title>
+              <v-list-item-title>
+                <span class="font-extrabold text-sm"> Suspended Accounts </span>
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -84,7 +90,9 @@
               <v-icon> mdi-bullhorn </v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title> Announcements </v-list-item-title>
+              <v-list-item-title>
+                <span class="font-extrabold text-sm"> Announcements </span>
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -93,7 +101,9 @@
               <v-icon> mdi-account-cog </v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title> Account Manager </v-list-item-title>
+              <v-list-item-title>
+                <span class="font-extrabold text-sm"> Account Manager </span>
+              </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -102,8 +112,8 @@
               <v-icon> mdi-currency-usd </v-icon>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title class="font-weight-bold">
-                Low Credit
+              <v-list-item-title>
+                <span class="font-extrabold text-sm"> Low Credit </span>
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -181,10 +191,6 @@
           </v-list-item>
         </v-list>
       </v-menu>
-
-      <!-- <v-btn icon @click="toggleFullScreen">
-                <v-icon>@{{toggleFullScreenIcon}}</v-icon>
-            </v-btn> -->
     </v-app-bar>
 
     <v-main>
@@ -196,6 +202,15 @@
     </v-main>
   </v-app>
 </template>
+
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+
+#inspire {
+  font-family: "Poppins", sans-serif;
+}
+</style>
 
 <script>
 import { toggleFullScreen } from "../utils";
