@@ -19,6 +19,9 @@ Route::middleware('auth:sanctum')->get('/get-token',function(){
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
   
     return $request->user();
+
+    //crud roles
+    Route::resource('/roles', RoleController::class);
 });
 
 Route::get('/check',function(){
