@@ -13,9 +13,11 @@
     <!-- Scripts -->
     <script src="{{ asset('js/admin.js') }}" defer></script>
 
+    <!-- Animate On Scroll -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     {{-- <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet"> --}}
 
     <!-- Styles -->
@@ -25,7 +27,7 @@
         var APP = {};
         APP.APP_URL = '{{ config('app.url') }}';
         @php
-          $user = Auth::user();
+        $user = Auth::user();
         @endphp
         APP.USER = {!! json_encode($user, true) !!};
     </script>
@@ -35,6 +37,21 @@
     <div id="admin">
         <App></App>
     </div>
+
+    {{-- AOS Script --}}
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap');
+
+        #admin {
+            font-family: 'Raleway', sans-serif;
+        }
+
+    </style>
 </body>
 
 </html>
