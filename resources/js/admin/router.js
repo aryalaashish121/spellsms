@@ -14,11 +14,16 @@ const routes = [
         name: 'admin.dashboard',
         component: require('./dashboard/Home').default
     },
+    {
+        path: '/activeUsers',
+        name: 'admin.active-users',
+        component: require('./user-management/Active-users').default
+    },
 ];
 
 const router = new VueRouter({
     routes,
-    mode:'history',
+    mode: 'history',
 });
 
 export default router;
