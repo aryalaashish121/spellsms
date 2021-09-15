@@ -74,6 +74,7 @@ export default {
     return {
       search: "",
       selected: [],
+      
 
       breadcrumbsItems: [
         {
@@ -135,11 +136,17 @@ export default {
     };
   },
 
+  mounted(){
+    const self = this;
+
+  },
+
   methods: {
     addUser() {
       const self = this;
       self.$refs.addUser.add();
     },
+
   },
 };
 </script>

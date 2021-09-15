@@ -15,13 +15,18 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
+        
         User::create(
             [
+                'parent_id'=>1,
+                'account_type'=>1,
+                'login_id'=>'aashish121',
+                'phone'=>'9867182424',
+                'address'=>'Maitidevi ktm',
                 'name'=>'Aashish Aryal',
-                'is_admin'=>true,
+                'company_name'=>'rvo softsolutions',
                 'email'=>'aryalaashish121@gmail.com',
                 'password'=>Hash::make('123456789'),
-                'phone'=>'9867182424',
             ]
             );
     }

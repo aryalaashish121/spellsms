@@ -32,8 +32,11 @@
                       <v-select
                         :items="userTypeList"
                         label="Select Type"
+                        item-value="id"
+                        item-text="name"
                         outlined
                         prepend-inner-icon="mdi-account-cog"
+                        v-model="form_fields.user_type"
                       ></v-select>
                     </v-row>
 
@@ -43,6 +46,7 @@
                         prepend-inner-icon="mdi-office-building"
                         label="Company Name"
                         type="text"
+                        v-model="form_fields.company_name"
                       ></v-text-field>
                     </v-row>
 
@@ -52,6 +56,7 @@
                         prepend-inner-icon="mdi-account-circle"
                         label="Customer Name"
                         type="text"
+                        v-model="form_fields.name"
                       ></v-text-field>
                     </v-row>
 
@@ -61,6 +66,7 @@
                         prepend-inner-icon="mdi-map-marker"
                         label="Company Address"
                         type="text"
+                        v-model="form_fields.address"
                       ></v-text-field>
                     </v-row>
 
@@ -70,6 +76,7 @@
                         prepend-inner-icon="mdi-account-arrow-right"
                         label="Assign login ID"
                         type="text"
+                        v-model="form_fields.login_id"
                       ></v-text-field>
                     </v-row>
 
@@ -79,6 +86,7 @@
                         prepend-inner-icon="mdi-account-key"
                         label="Assign password"
                         type="password"
+                        v-model="form_fields.password"
                       ></v-text-field>
                     </v-row>
 
@@ -88,6 +96,7 @@
                         prepend-inner-icon="mdi-email"
                         label="Email"
                         type="email"
+                        v-model="form_fields.email"
                       ></v-text-field>
                     </v-row>
 
@@ -95,15 +104,16 @@
                       <v-text-field
                         outlined
                         prepend-inner-icon="mdi-phone"
-                        label="Mobile No"
+                        label="Contact No"
                         type="number"
+                        v-model="form_fields.phone"
                       ></v-text-field>
                     </v-row>
 
                     <v-divider></v-divider>
 
                     <v-row>
-                      <v-checkbox v-model="checkbox">
+                      <v-checkbox v-model="form_fields.expire_password">
                         <template v-slot:label>
                           <div>User must change password at next login</div>
                         </template>
@@ -128,6 +138,7 @@
                         label="Route"
                         outlined
                         prepend-inner-icon="mdi-directions-fork"
+                        v-model="form_fields.route"
                       ></v-select>
                     </v-row>
 
@@ -151,16 +162,21 @@
                         label="Balance"
                         type="text"
                         suffix="SMS"
+                        v-model="form_fields.balance"
                       ></v-text-field>
                     </v-row>
 
                     <v-row>
-                      <v-select
+                      <v-date-picker v-model="
+                      form_fields.validity">
+                      </v-date-picker>
+                      <!-- <v-select
                         :items="validityList"
                         label="Validity"
                         outlined
                         prepend-inner-icon="mdi-calendar-clock"
-                      ></v-select>
+                        v-model="form_fields.validity"
+                      ></v-select> -->
                     </v-row>
                   </v-card-text>
                 </v-card>
@@ -170,7 +186,7 @@
                     <v-icon> mdi-chevron-left </v-icon> Back
                   </v-btn>
 
-                  <v-btn color="primary" text @click="e1 = 1">
+                  <v-btn color="primary" text v-on:click="store">
                     <v-icon class="mr-1"> mdi-account-circle </v-icon> Create
                     Account
                   </v-btn>
@@ -186,9 +202,11 @@
 
 <script>
 export default {
-  data: () => ({
+  data(){
+    return{
+ form_fields:[],
     addUserDialog: false,
-    userTypeList: ["Client", "Reseller"],
+    userTypeList: [],
     routeList: ["SMSBIT ID: 116", "SMSBIT ID: 117", "SMSBIT ID: 118"],
     validityList: [
       "1 Month",
@@ -207,16 +225,40 @@ export default {
       "3 Years",
       "Unlimited",
     ],
-    checkbox: false,
     e1: 1,
     row: null,
-  }),
+    }
+  },
+  mounted(){
+  const self = this;
+  self.getRoles();
+  },
 
   methods: {
     add() {
       const self = this;
       self.addUserDialog = true;
     },
+
+    async getRoles(){
+      const self = this;
+      self.url = "/api/roles";
+      
+      const response = await axios.get(self.url);
+      console.log(response.data);
+      self.userTypeList = response.data.data;
+    },
+     store(){
+    const self = this;
+      console.log(self.form_fields);
+      self.url = "/api/user/create";   
+      axios.post(`${self.url}`,self.form_fields).then((response) => {
+        console.log(response);
+      }).catch((err) => {
+      
+      });
+       
+    }
   },
 };
 </script>
