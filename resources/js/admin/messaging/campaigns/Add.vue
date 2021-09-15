@@ -1,0 +1,129 @@
+<template>
+  <div>
+    <v-dialog
+      v-model="createCampaignDialog"
+      persistent
+      max-width="750px"
+      scrollable
+    >
+      <v-card>
+        <v-card-title class="primary white--text" elevation="5">
+          <v-icon dark left> mdi-sign-text </v-icon>
+          Create Campaign
+          <v-spacer></v-spacer>
+          <v-btn dark icon @click="createCampaignDialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-card-text>
+          <v-card flat>
+            <v-card-text class="mt-3">
+              <v-row>
+                <v-text-field
+                  label="Name"
+                  outlined
+                  prepend-inner-icon="mdi-sign-text"
+                ></v-text-field>
+              </v-row>
+
+              <v-row>
+                <v-textarea
+                  outlined
+                  name="input-7-4"
+                  label="Description"
+                  placeholder="A brief description of this campaign"
+                ></v-textarea>
+              </v-row>
+
+              <v-row>
+                <v-select
+                  :items="categoryList"
+                  label="Category"
+                  outlined
+                  prepend-inner-icon="mdi-view-list"
+                ></v-select>
+              </v-row>
+
+              <v-row>
+                <v-select
+                  :items="coverageList"
+                  label="Default Coverage"
+                  outlined
+                  prepend-inner-icon="mdi-radio-tower"
+                ></v-select>
+              </v-row>
+
+              <v-row>
+                <v-select
+                  :items="routeList"
+                  label="Default Route"
+                  outlined
+                  prepend-inner-icon="mdi-routes"
+                ></v-select>
+              </v-row>
+
+              <v-row class="flex space-x-2">
+                <v-label> Set as default : </v-label>
+                <div class="-mt-6">
+                  <v-radio-group v-model="column" column>
+                    <v-radio
+                      color="blue"
+                      label="Yes, Sure."
+                      value="radio-1"
+                    ></v-radio>
+                    <v-radio
+                      color="red"
+                      label="No, thanks."
+                      value="radio-2"
+                    ></v-radio>
+                  </v-radio-group>
+                </div>
+              </v-row>
+            </v-card-text>
+
+            <v-divider></v-divider>
+
+            <v-card-actions class="justify-end">
+              <v-btn
+                color="error"
+                text
+                v-on:click="createCampaignDialog = false"
+              >
+                <v-icon left> mdi-close</v-icon>Cancel
+              </v-btn>
+              <v-btn text color="primary">
+                Save <v-icon right> mdi-content-save</v-icon>
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+  </div>
+</template>
+
+<script>
+export default {
+  data: () => ({
+    column: null,
+    createCampaignDialog: false,
+    categoryList: [
+      "News & Info",
+      "Education",
+      "Ringtones/WAP contents",
+      "Carrer & Jobs",
+      "Otheres",
+    ],
+    coverageList: ["(977) Nepal", "(91) India"],
+    routeList: ["SMSBIT", "SMSDIT"],
+    row: null,
+  }),
+
+  methods: {
+    create() {
+      const self = this;
+      self.createCampaignDialog = true;
+    },
+  },
+};
+</script>

@@ -17,7 +17,42 @@ const routes = [
     {
         path: '/activeUsers',
         name: 'admin.active-users',
-        component: require('./user-management/Users').default
+        component: require('./user-management/users/Users').default
+    },
+    {
+        path: '/suspendedUsers',
+        name: 'admin.suspended-users',
+        component: require('./user-management/users/Suspended-Users').default
+    },
+    {
+        path: '/announcements',
+        name: 'admin.announcements',
+        component: require('./user-management/announcements/Announcements').default
+    },
+    {
+        path: '/accountManagers',
+        name: 'admin.accountManagers',
+        component: require('./user-management/account-manager/Index').default
+    },
+    {
+        path: '/lowCredits',
+        name: 'admin.lowCredits',
+        component: require('./user-management/low-credit/Index').default
+    },
+    {
+        path: '/campaigns',
+        name: 'admin.campaigns',
+        component: require('./messaging/campaigns/Index').default
+    },
+    {
+        path: '/senderId',
+        name: 'admin.senderId',
+        component: require('./messaging/sender_Id/Index').default
+    },
+    {
+        path: '/sendSMS',
+        name: 'admin.sendSMS',
+        component: require('./messaging/send-SMS/Index').default
     },
 ];
 

@@ -1,0 +1,95 @@
+<template>
+  <div data-aos="zoom-out" data-aos-duration="1000" class="p-5 md:px-3 md:py-2">
+    <div>
+      <v-breadcrumbs :items="breadcrumbsItems">
+        <template v-slot:divider>
+          <v-icon>mdi-chevron-right</v-icon>
+        </template>
+      </v-breadcrumbs>
+    </div>
+    <v-data-table
+      v-model="selected"
+      :headers="headers"
+      :items="lowCreditUsers"
+      class="shadow-md border rounded-md"
+      :search="search"
+      item-key="login_id"
+      show-select
+    >
+      <template v-slot:top>
+        <v-toolbar flat class="rounded-md">
+          <v-toolbar-title>
+            <v-icon class="pb-1" left> mdi-gauge-low </v-icon>
+            <span class="text-base"> Low Credit Users (less than 500) </span>
+          </v-toolbar-title>
+          <v-divider class="mx-4" inset vertical></v-divider>
+
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+            class="text-sm"
+          ></v-text-field>
+          <v-spacer></v-spacer>
+        </v-toolbar>
+      </template>
+    </v-data-table>
+  </div>
+</template>
+
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
+th {
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  background-color: #b2ebf2 !important;
+  font-family: "Montserrat", sans-serif !important;
+  color: black !important;
+}
+</style>
+
+<script>
+export default {
+  data() {
+    return {
+      search: "",
+      selected: [],
+
+      breadcrumbsItems: [
+        {
+          text: "Dashboard",
+          disabled: false,
+          href: "/",
+        },
+        {
+          text: "Low Credit Users",
+          disabled: true,
+        },
+      ],
+
+      headers: [
+        {
+          text: "User Details",
+          align: "start",
+          sortable: false,
+          value: "login_id",
+        },
+        { text: "Route Details", value: "route" },
+      ],
+
+      lowCreditUsers: [
+        {
+          login_id: "bistap98",
+          route: "SMSBIT (1)",
+        },
+        {
+          login_id: "nikesh009",
+          route: "SMSBIT (6)",
+        },
+      ],
+    };
+  },
+};
+</script>
