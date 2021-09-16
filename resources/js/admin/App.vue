@@ -164,7 +164,7 @@
             </v-list-item>
           </router-link>
 
-          <router-link to="">
+          <router-link to="/templates">
             <v-list-item class="px-6">
               <v-list-item-icon>
                 <v-icon> mdi-shape </v-icon>
@@ -177,7 +177,7 @@
             </v-list-item>
           </router-link>
 
-          <router-link to="">
+          <router-link to="/blacklist">
             <v-list-item class="px-6">
               <v-list-item-icon>
                 <v-icon> mdi-account-off </v-icon>
@@ -198,6 +198,42 @@
               <v-list-item-content>
                 <v-list-item-title>
                   <span class="font-extrabold text-sm"> Campaigns </span>
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </router-link>
+        </v-list-group>
+
+        <v-list-group prepend-icon="mdi-card-account-phone-outline">
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title>
+                <span class="font-extrabold text-sm">Contacts & Groups </span>
+              </v-list-item-title>
+            </v-list-item-content>
+          </template>
+
+          <router-link to="/">
+            <v-list-item class="px-6">
+              <v-list-item-icon>
+                <v-icon> mdi-account-group </v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>
+                  <span class="font-extrabold text-sm"> Manage Groups </span>
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </router-link>
+
+          <router-link to="">
+            <v-list-item class="px-6">
+              <v-list-item-icon>
+                <v-icon> mdi-phone </v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>
+                  <span class="font-extrabold text-sm"> Manage Contacts </span>
                 </v-list-item-title>
               </v-list-item-content>
             </v-list-item>

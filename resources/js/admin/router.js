@@ -54,6 +54,16 @@ const routes = [
         name: 'admin.sendSMS',
         component: require('./messaging/send-SMS/Index').default
     },
+    {
+        path: '/templates',
+        name: 'admin.templates',
+        component: require('./messaging/templates/Index').default
+    },
+    {
+        path: '/blacklist',
+        name: 'admin.blacklist',
+        component: require('./messaging/blacklist/Index').default
+    },
 ];
 
 const router = new VueRouter({
