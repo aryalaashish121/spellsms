@@ -45,11 +45,5 @@ extend("regex", {
     ...regex,
     message: 'This field is invalid'
 })
-// Dropzone.autoDiscover = false;
-// Vue.mixin(functions);
-Vue.mixin(cruds);
 
-// Vue.filter('formatDate', function(value) {
-//     if(!value) return '';
-//     return window.moment(value).format('MMM DD, YYYY hh:mm a');
-// })
+Vue.mixin(cruds);

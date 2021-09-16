@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Authorization\RoleController;
+use App\Http\Controllers\RouteController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TestController;
 
 Route::middleware('auth:sanctum')->get('/get-token',function(){
     $user = User::first();
@@ -16,22 +20,27 @@ Route::middleware('auth:sanctum')->get('/get-token',function(){
     return response($data);
 });
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('')->get('/user', function (Request $request) {
   
     return $request->user();
+
+    //crud roles
+    Route::resource('/roles', RoleController::class);
+    
+
+    //crud users
+    Route::get('/users',[UserController::class,'index']);
+    Route::post('/user/create',[UserController::class,'store']);
+    Route::put('user/update/{slug}',[UserController::class,'update']);
 });
 
-Route::get('/check',function(){
-    // if(!auth()->user()){
-    //     abort('you are not qualified',403);
-    // }
+Route::resource('/roles', RoleController::class);
+   //crud users
+   Route::get('/users',[UserController::class,'index']);
 
-    $response_data = [
-       [
-        'name'=>"Aashish", 'emai'=>'email@gmail.com','id'=>""
-    ]
-    ];
-    $data = ['success' => true, 'message' => "Data fetched successfully",'data'=>$response_data];
-    return response()->json($data,200);
-});
+   Route::post('/user/create',[UserController::class,'store']);
+   Route::put('user/update/{slug}',[UserController::class,'update']);
 
+   Route::get('/check',[TestController::class,'check']);
+    
+   Route::get('/route',[RouteController::class,'index']);

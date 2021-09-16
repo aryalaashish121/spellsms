@@ -336,12 +336,15 @@
 <script>
 import { toggleFullScreen } from "../utils";
 import store from "../common/store";
+
 export default {
-  data: () => ({
+  data(){
+    return{
     drawer: true,
     isFullScreen: false,
     timeout: 3000,
-  }),
+    }
+  },
 
   methods: {
     toggleFullScreen() {

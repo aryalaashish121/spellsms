@@ -13,7 +13,7 @@ import AxiosAjaxDetect from "../common/axiosAxajDetect";
 import './tailwindcss.css'
 
 Vue.use(eventBus);
-const app = new Vue({
+const admin = new Vue({
     router,
     eventBus,
     vuetify,
@@ -33,15 +33,14 @@ const app = new Vue({
     },
     mounted() {
         const self = this;
-        AxiosAjaxDetect.init(
-            () => {
-                self.$Progress.start();
-            },
-            () => {
-                self.$Progress.finish();
-            }
-        );
-
+        // AxiosAjaxDetect.init(
+        //     () => {
+        //         self.$Progress.start();
+        //     },
+        //     () => {
+        //         self.$Progress.finish();
+        //     }
+        // );
         self.$store.commit("showSnackbar", {
             message: "message",
             color: "primary"
@@ -60,16 +59,20 @@ const app = new Vue({
             this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
             localStorage.setItem("darkMode", this.$vuetify.theme.dark);
         },
-
+        dialogOk() {
+            store.commit("dialogOk");
+        },
+        dialogCancel() {
+            store.commit("dialogCancel");
+        },
     },
-
     computed: {
         toggleFullScreenIcon() {
             return this.isFullScreen == true
                 ? "mdi-fullscreen-exit"
                 : "mdi-fullscreen";
         },
-
     }
-
 });
+
+export default admin;

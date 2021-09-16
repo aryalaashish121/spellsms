@@ -28,6 +28,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "postcss-loader": "^6.1.1",
         "vee-validate": "^3.4.12",
         "vue-router": "^3.5.2",
         "vuetify": "^2.5.8",
