@@ -25,7 +25,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        return $this->respondOk($users);
     }
 
   
@@ -38,9 +39,9 @@ class UserController extends Controller
     public function store(UserStoreRequest $request)
     {
         $userdata = $request->validated();
-
+      
         try{
-            Db::beginTransaction();
+            DB::beginTransaction();
             $user = User::create([
                 // 'parent_id'=>auth()->user()->id,
                 'account_type'=>$userdata['account_type'],
@@ -63,12 +64,16 @@ class UserController extends Controller
 
             ]);
 
-            DB::commit();
-            return $this->respondCreated($user,"New User created successfully");
+            if($userroute){
+                DB::commit();
+                return $this->respondCreated($user,"New User created successfully");
+            }
+            return $this->respondError("Could not create new user");
+            
             
         }catch(Exception $err){
             DB::rollBack();
-            return $this->respondError($err->getMessage());
+            return $this->respondBadRequest($err->getMessage());
         }
     }
 
@@ -104,6 +109,27 @@ class UserController extends Controller
     public function update(Request $request, $slug)
     {
         
+        $userdata = $request->validated();
+        try{
+           
+            $user = User::where('slug',$slug)->update([
+                // 'parent_id'=>auth()->user()->id,
+                'account_type'=>$userdata['account_type'],
+                'company_name'=>$userdata['company_name'],
+                'login_id'=>$userdata['login_id'],
+                'phone'=>$userdata['phone'],
+                'address'=>$userdata['address'],
+                'name' => $userdata['name'],
+                'email' => $userdata['email'],
+                'password' => Hash::make($userdata['password']),
+            ]);
+          
+                return $this->respondUpdated("User updated successfully");
+      
+        }catch(Exception $err){
+            
+            return $this->respondBadRequest($err->getMessage());
+        }
     }
 
     /**

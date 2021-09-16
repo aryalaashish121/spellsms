@@ -49,6 +49,7 @@ class UserStoreRequest extends FormRequest
             'phone.required'=>'Customer phone number is required',
             'address.required'=>'Customer address is required',
             'route.required'=>'Shoud assign route to the customer',
+            'balance.required'=>"Balance is required",
 
             'company_name.min'=>'Company name must have minimum 6 char.',
             'name.min'=>'Customer name must have atleast 6 char.',

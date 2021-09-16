@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Authorization;
+
+use App\Components\Core\ResponseHelpers;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Exception;
@@ -8,15 +10,12 @@ use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
+    use ResponseHelpers;
    
     public function index(Request $request){
 
         $roles = Role::orderBy('created_at','desc')->get();
-        return response()->json([
-            'success'=>true,
-            'message'=>"Roles fetched successfully",
-            'data'=>$roles
-        ]);
+        return $this->respondOk($roles);
     }
 
     public function store(Request $request){
@@ -24,16 +23,10 @@ class RoleController extends Controller
         $request->validate([
             'name'=> ['required','unique:roles,name']
         ]);
-
-        $role = Role::create([
+    $role = Role::create([
             'name'=>$request->name,
-        ]
-        );
-        return response()->json([
-            'success'=>true,
-            'message'=>"Role updated successfully",
-            'data'=>$role
-        ]);
+    ]);
+        return $this->respondCreated($role,"Role created successfully");
     }
 
     public function update(Request $request, $id){
@@ -43,26 +36,19 @@ class RoleController extends Controller
         $role = Role::where('id',$id)->update([
             'name'=>$request->name
         ]);
-
-        return response()->json([
-            'success'=>true,
-            'message'=>"Role updated successfully"
-        ]);
+        return $this->respondUpdated("Role updated successfully");
+       
     }
 
     public function destroy($id){
         $role = Role::findOrFail($id);
         try{
             $role->delete();
-            return response()->json([
-                'success'=>true,
-                'message'=>'Deleted successfully'
-            ]);
+            return $this->respondDeleted("Deleted successfully");
+          
         }catch(Exception $err){
-            return response()->json([
-                'success'=>true,
-                'message'=>$err->getMessage()
-            ]);
+            return $this->respondWithError($err->getMessage());
+           
         }
     }
 }

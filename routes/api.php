@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Authorization\RoleController;
+use App\Http\Controllers\RouteController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,14 +29,18 @@ Route::middleware('')->get('/user', function (Request $request) {
     
 
     //crud users
+    Route::get('/users',[UserController::class,'index']);
     Route::post('/user/create',[UserController::class,'store']);
     Route::put('user/update/{slug}',[UserController::class,'update']);
 });
 
 Route::resource('/roles', RoleController::class);
    //crud users
+   Route::get('/users',[UserController::class,'index']);
+
    Route::post('/user/create',[UserController::class,'store']);
    Route::put('user/update/{slug}',[UserController::class,'update']);
 
    Route::get('/check',[TestController::class,'check']);
-  
+    
+   Route::get('/route',[RouteController::class,'index']);

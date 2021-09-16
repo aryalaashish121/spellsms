@@ -72,6 +72,9 @@ Trait  ResponseHelpers
         return response()->json($this->response, $this->getStatusCode() ?? 200);
     }
 
+    public function respondLoad($data){
+        return $this->buildResponse(true,"Data fetched successfully",$data)->respond();
+    }
 
     public function respondOk($data, $additional_data = [])
     {
@@ -98,7 +101,7 @@ Trait  ResponseHelpers
         return $this->setStatusCode(201)->buildResponse(true, $message, $data)->respond();
     }
 
-    public function respondUpdated($message = "Resource Updated")
+    public function respondUpdated($message = "Updated successfully")
     {
         return $this->setStatusCode(200)->buildResponse(true, $message, null)->respond();
     }

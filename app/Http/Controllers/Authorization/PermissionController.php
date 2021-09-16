@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Authorization;
+
+use App\Components\Core\ResponseHelpers;
 use Spatie\Permission\Models\Permission;
 use App\Http\Controllers\Controller;
 use Exception;
@@ -8,6 +10,7 @@ use Illuminate\Http\Request;
 
 class PermissionController extends Controller
 {
+    use ResponseHelpers;
     /**
      * Display a listing of the resource.
      *
@@ -16,11 +19,8 @@ class PermissionController extends Controller
     public function index()
     {
         $permissions = Permission::orderBy('created_at','desc')->get();
-        return response()->json([
-            'success'=>true,
-            'message'=>"All permissions fetched successfully",
-            'data'=>$permissions
-        ]);
+        return $this->respondOk($permissions);
+       
     }
 
 
@@ -40,16 +40,11 @@ class PermissionController extends Controller
             $permission = Permission::create([
                 'name'=>$request->name
             ]);
-            return response()->json([
-                'success'=>true,
-                'message'=>'Created successfully',
-                'data'=>$permission
-            ]);
+            return $this->respondCreated($permission,"Created successfully");
+           
         }catch(Exception $err){
-            return response()->json([
-                'success'=>false,
-                'message'=>'Could not create permission',
-            ]);
+            return $this->respondWithError($err->getMessage());
+            
         }
     }
 
@@ -62,11 +57,7 @@ class PermissionController extends Controller
     public function show($id)
     {
         $permission = Permission::where('id',$id)->first();
-        return response()->json([
-            'success'=>true,
-            'message'=>'Fetched successfully',
-            'data'=>$permission
-        ]);
+        return $this->respondOk($permission,"fetched successfully");
     }
 
     /**
@@ -97,16 +88,12 @@ class PermissionController extends Controller
             $permission = Permission::where('id',$id)->update([
                 'name'=>$request->name
             ]);
-            return response()->json([
-                'success'=>true,
-                'message'=>'Created successfully',
-                'data'=>$permission
-            ]);
+
+            return $this->respondUpdated();
+          
         }catch(Exception $err){
-            return response()->json([
-                'success'=>false,
-                'message'=>'Could not create permission',
-            ]);
+            return $this->respondWithError($err->getMessage());
+         
         }
     }
 
