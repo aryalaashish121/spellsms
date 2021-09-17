@@ -63,23 +63,21 @@
                 ></v-text-field>
               </v-row>
             </v-card-text>
-
-            <v-divider></v-divider>
-
-            <v-card-actions class="justify-end">
-              <v-btn
-                color="error"
-                text
-                v-on:click="addAccountManagerDialog = false"
-              >
-                <v-icon left> mdi-close</v-icon>Cancel
-              </v-btn>
-              <v-btn text color="primary">
-                Save <v-icon right> mdi-content-save</v-icon>
-              </v-btn>
-            </v-card-actions>
           </v-card>
         </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions class="justify-end">
+          <v-btn
+            color="error"
+            text
+            v-on:click="addAccountManagerDialog = false"
+          >
+            <v-icon left> mdi-close</v-icon>Cancel
+          </v-btn>
+          <v-btn text color="primary">
+            Save <v-icon right> mdi-content-save</v-icon>
+          </v-btn>
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </div>

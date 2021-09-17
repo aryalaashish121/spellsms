@@ -10,9 +10,12 @@ import eventBus from '../common/event';
 import store from '../common/store';
 import { toggleFullScreen } from "../utils";
 import AxiosAjaxDetect from "../common/axiosAxajDetect";
+import VMdDateRangePicker from "v-md-date-range-picker";
+// import "v-md-date-range-picker/dist/v-md-date-range-picker.css";
 import './tailwindcss.css'
 
 Vue.use(eventBus);
+Vue.use(VMdDateRangePicker);
 const admin = new Vue({
     router,
     eventBus,
@@ -41,10 +44,6 @@ const admin = new Vue({
         //         self.$Progress.finish();
         //     }
         // );
-        self.$store.commit("showSnackbar", {
-            message: "message",
-            color: "primary"
-        });
     },
     methods: {
         toggleFullScreen() {
