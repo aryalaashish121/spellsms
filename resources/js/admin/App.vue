@@ -46,7 +46,7 @@
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>
-                <span class="font-extrabold text-sm">Dashboard</span>
+                <span class="text-xs">Dashboard</span>
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -56,188 +56,282 @@
           <template v-slot:activator>
             <v-list-item-content>
               <v-list-item-title>
-                <span class="font-extrabold text-sm">User Management</span>
+                <span class="text-xs">User Management</span>
               </v-list-item-title>
             </v-list-item-content>
           </template>
 
-          <router-link to="/activeUsers">
-            <v-list-item class="px-6">
-              <v-list-item-icon>
-                <v-icon> mdi-account-clock </v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>
-                  <span class="font-extrabold text-sm"> Active Users</span>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </router-link>
+          <div class="shadow-inner bg-blue-50 py-3 rounded-md">
+            <router-link to="/activeUsers">
+              <v-list-item class="px-6">
+                <v-list-item-icon>
+                  <v-icon> mdi-account-clock </v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <span class="text-xs"> Active Users</span>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </router-link>
 
-          <router-link to="/suspendedUsers">
-            <v-list-item class="px-6">
-              <v-list-item-icon>
-                <v-icon> mdi-account-remove </v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>
-                  <span class="font-extrabold text-sm">
-                    Suspended Accounts
-                  </span>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </router-link>
+            <router-link to="/suspendedUsers">
+              <v-list-item class="px-6">
+                <v-list-item-icon>
+                  <v-icon> mdi-account-remove </v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <span class="text-xs"> Suspended Accounts </span>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </router-link>
 
-          <router-link to="/announcements">
-            <v-list-item class="px-6">
-              <v-list-item-icon>
-                <v-icon> mdi-bullhorn </v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>
-                  <span class="font-extrabold text-sm"> Announcements </span>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </router-link>
+            <router-link to="/announcements">
+              <v-list-item class="px-6">
+                <v-list-item-icon>
+                  <v-icon> mdi-bullhorn </v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <span class="text-xs"> Announcements </span>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </router-link>
 
-          <router-link to="/accountManagers">
-            <v-list-item class="px-6">
-              <v-list-item-icon>
-                <v-icon> mdi-account-cog </v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>
-                  <span class="font-extrabold text-sm"> Account Manager </span>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </router-link>
+            <router-link to="/accountManagers">
+              <v-list-item class="px-6">
+                <v-list-item-icon>
+                  <v-icon> mdi-account-cog </v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <span class="text-xs"> Account Manager </span>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </router-link>
 
-          <router-link to="/lowCredits">
-            <v-list-item class="px-6">
-              <v-list-item-icon>
-                <v-icon> mdi-gauge-low </v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>
-                  <span class="font-extrabold text-sm"> Low Credit </span>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </router-link>
+            <router-link to="/lowCredits">
+              <v-list-item class="px-6">
+                <v-list-item-icon>
+                  <v-icon> mdi-gauge-low </v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <span class="text-xs"> Low Credit </span>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </router-link>
+          </div>
         </v-list-group>
 
         <v-list-group prepend-icon="mdi-forum">
           <template v-slot:activator>
             <v-list-item-content>
               <v-list-item-title>
-                <span class="font-extrabold text-sm">Messaging</span>
+                <span class="text-xs">Messaging</span>
               </v-list-item-title>
             </v-list-item-content>
           </template>
 
-          <router-link to="/sendSMS">
-            <v-list-item class="px-6">
-              <v-list-item-icon>
-                <v-icon> mdi-email </v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>
-                  <span class="font-extrabold text-sm"> Send SMS </span>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </router-link>
+          <div class="shadow-inner bg-blue-50 py-3 rounded-md">
+            <router-link to="/sendSMS">
+              <v-list-item class="px-6">
+                <v-list-item-icon>
+                  <v-icon> mdi-email </v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <span class="text-xs"> Send SMS </span>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </router-link>
 
-          <router-link to="/senderId">
-            <v-list-item class="px-6">
-              <v-list-item-icon>
-                <v-icon> mdi-card-account-details </v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>
-                  <span class="font-extrabold text-sm"> Sender ID </span>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </router-link>
+            <router-link to="/senderId">
+              <v-list-item class="px-6">
+                <v-list-item-icon>
+                  <v-icon> mdi-card-account-details </v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <span class="text-xs"> Sender ID </span>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </router-link>
 
-          <router-link to="/templates">
-            <v-list-item class="px-6">
-              <v-list-item-icon>
-                <v-icon> mdi-shape </v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>
-                  <span class="font-extrabold text-sm"> Templates </span>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </router-link>
+            <router-link to="/templates">
+              <v-list-item class="px-6">
+                <v-list-item-icon>
+                  <v-icon> mdi-shape </v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <span class="text-xs"> Templates </span>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </router-link>
 
-          <router-link to="/blacklist">
-            <v-list-item class="px-6">
-              <v-list-item-icon>
-                <v-icon> mdi-account-off </v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>
-                  <span class="font-extrabold text-sm"> Blacklist </span>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </router-link>
+            <router-link to="/blacklist">
+              <v-list-item class="px-6">
+                <v-list-item-icon>
+                  <v-icon> mdi-account-off </v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <span class="text-xs"> Blacklist </span>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </router-link>
 
-          <router-link to="/campaigns">
-            <v-list-item class="px-6">
-              <v-list-item-icon>
-                <v-icon> mdi-sign-text </v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>
-                  <span class="font-extrabold text-sm"> Campaigns </span>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </router-link>
+            <router-link to="/campaigns">
+              <v-list-item class="px-6">
+                <v-list-item-icon>
+                  <v-icon> mdi-sign-text </v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <span class="text-xs"> Campaigns </span>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </router-link>
+          </div>
         </v-list-group>
 
         <v-list-group prepend-icon="mdi-card-account-phone-outline">
           <template v-slot:activator>
             <v-list-item-content>
               <v-list-item-title>
-                <span class="font-extrabold text-sm">Contacts & Groups </span>
+                <span class="text-xs">Contacts & Groups </span>
               </v-list-item-title>
             </v-list-item-content>
           </template>
 
-          <router-link to="/">
-            <v-list-item class="px-6">
-              <v-list-item-icon>
-                <v-icon> mdi-account-group </v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>
-                  <span class="font-extrabold text-sm"> Manage Groups </span>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </router-link>
+          <div class="shadow-inner bg-blue-50 py-3 rounded-md">
+            <router-link to="/manageContactGroups">
+              <v-list-item class="px-6">
+                <v-list-item-icon>
+                  <v-icon> mdi-account-group </v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <span class="text-xs"> Manage Groups </span>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </router-link>
 
-          <router-link to="">
-            <v-list-item class="px-6">
-              <v-list-item-icon>
-                <v-icon> mdi-phone </v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>
-                  <span class="font-extrabold text-sm"> Manage Contacts </span>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </router-link>
+            <router-link to="/manageContacts">
+              <v-list-item class="px-6">
+                <v-list-item-icon>
+                  <v-icon> mdi-phone </v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <span class="text-xs"> Manage Contacts </span>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </router-link>
+          </div>
+        </v-list-group>
+
+        <v-list-group prepend-icon="mdi-chart-bar">
+          <template v-slot:activator>
+            <v-list-item-content>
+              <v-list-item-title>
+                <span class="text-xs"> Reports </span>
+              </v-list-item-title>
+            </v-list-item-content>
+          </template>
+
+          <div class="shadow-inner bg-blue-50 py-3 rounded-md">
+            <router-link to="/campaignReports">
+              <v-list-item class="px-6">
+                <v-list-item-icon>
+                  <v-icon> mdi-sign-text </v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <span class="text-xs"> Campaign Report </span>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </router-link>
+
+            <router-link to="/deliveryReports">
+              <v-list-item class="px-6">
+                <v-list-item-icon>
+                  <v-icon> mdi-truck </v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <span class="text-xs"> Delivery Report </span>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </router-link>
+
+            <router-link to="">
+              <v-list-item class="px-6">
+                <v-list-item-icon>
+                  <v-icon> mdi-chart-box </v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <span class="text-xs"> Cumulative Report </span>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </router-link>
+
+            <router-link to="">
+              <v-list-item class="px-6">
+                <v-list-item-icon>
+                  <v-icon> mdi-message-text-clock </v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <span class="text-xs"> Scheduled SMS </span>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </router-link>
+
+            <router-link to="">
+              <v-list-item class="px-6">
+                <v-list-item-icon>
+                  <v-icon> mdi-handshake </v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <span class="text-xs"> Transaction Reports </span>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </router-link>
+
+            <router-link to="">
+              <v-list-item class="px-6">
+                <v-list-item-icon>
+                  <v-icon> mdi-archive </v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>
+                    <span class="text-xs"> Archive Reports </span>
+                  </v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </router-link>
+          </div>
         </v-list-group>
       </v-list>
       <!-- -->
@@ -315,8 +409,9 @@
     </v-app-bar>
 
     <v-main>
+      <div class="">
         <router-view></router-view>
-      <!--  -->
+      </div>
     </v-main>
   </v-app>
 </template>
@@ -335,12 +430,12 @@ import { toggleFullScreen } from "../utils";
 import store from "../common/store";
 
 export default {
-  data(){
-    return{
-    drawer: true,
-    isFullScreen: false,
-    timeout: 3000,
-    }
+  data() {
+    return {
+      drawer: true,
+      isFullScreen: false,
+      timeout: 3000,
+    };
   },
 
   methods: {

@@ -9,11 +9,9 @@
     </div>
 
     <div class="w-full h-auto shadow-md rounded-lg flex space-x-2">
-      <div class="w-full lg:w-1/2 px-5 rounded-lg">
+      <div class="w-full lg:w-4/6 px-5 rounded-lg">
         <div>
-          <v-card-title class="font-black">
-            Send SMS Quickly and Efficiently
-          </v-card-title>
+          <v-card-title> Send SMS Quickly and Efficiently </v-card-title>
           <div class="flex space-x-1 ml-4 -mt-3">
             <div class="w-14 h-0.5 rounded-full bg-gray-600"></div>
             <div class="w-6 h-0.5 bg-gray-600 rounded-full"></div>
@@ -51,24 +49,24 @@
             </v-row>
 
             <v-row>
-              <v-card class="pa-2" elevation="2" rounded="lg">
-                <v-tabs grow dark background-color="blue darken-1">
-                  <v-tab class="font-weight-black">
+              <v-card elevation="2" rounded="lg">
+                <v-tabs dark background-color="blue darken-1">
+                  <v-tab>
                     <v-icon left> mdi-content-copy </v-icon>
                     Copy / Paste
                   </v-tab>
 
-                  <v-tab class="font-weight-black">
+                  <v-tab>
                     <v-icon left> mdi-cloud-upload </v-icon>
                     Upload File
                   </v-tab>
 
-                  <v-tab class="font-weight-black">
+                  <v-tab>
                     <v-icon left> mdi-account-group </v-icon>
                     Contact groups
                   </v-tab>
 
-                  <v-tab class="font-weight-black">
+                  <v-tab>
                     <v-icon left> mdi-magnify </v-icon>
                     Search
                   </v-tab>
@@ -220,7 +218,7 @@
             </v-row>
 
             <v-row class="mt-9">
-              <label for="" class="text-lg font-black">
+              <label for="" class="text-lg">
                 <v-icon small>mdi-cog</v-icon> Options :
               </label>
             </v-row>
@@ -248,7 +246,7 @@
             </v-row>
 
             <v-row>
-              <label for="" class="text-lg font-black">
+              <label for="" class="text-lg">
                 <v-icon small>mdi-message-cog</v-icon> SMS Type :
               </label>
             </v-row>
@@ -266,7 +264,7 @@
             <v-row>
               <div class="flex space-x-2">
                 <div>
-                  <label for="" class="text-lg font-black">
+                  <label for="" class="text-lg">
                     <v-icon small>mdi-message-draw</v-icon> SMS Content :
                   </label>
                 </div>
@@ -284,7 +282,7 @@
             </v-row>
 
             <v-row>
-              <label for="" class="text-lg font-black">
+              <label for="" class="text-lg">
                 <v-icon small>mdi-clock</v-icon> Schedule :
               </label>
             </v-row>
@@ -303,7 +301,8 @@
 
           <v-card-actions class="justify-end">
             <v-btn color="blue darken-1" dark>
-              <v-icon left> mdi-content-save </v-icon> Save
+              Send
+              <v-icon right> mdi-send </v-icon>
             </v-btn>
           </v-card-actions>
         </div>

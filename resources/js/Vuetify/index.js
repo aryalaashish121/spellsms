@@ -3,7 +3,9 @@ import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 // import * as VueGoogleMaps from 'vue2-google-maps'
 import '@mdi/font/css/materialdesignicons.css'
-Vue.use(Vuetify)
+
+Vue.use(Vuetify);
+
 
 // Vue.use(VueGoogleMaps, {
 //     load: {
@@ -16,7 +18,7 @@ Vue.use(Vuetify)
 const opts = {
     icons: {
         iconfont: 'mdi', // default - only for display purposes
-      },
+    },
     theme: {
         dark: false,
         themes: {

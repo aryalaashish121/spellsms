@@ -1,8 +1,21 @@
 <template>
-    <div
-        data-aos="zoom-out"
-        data-aos-duration="1000"
-        class="p-5 md:px-3 md:py-2"
+  <div data-aos="zoom-out" data-aos-duration="1000" class="p-5 md:px-3 md:py-2">
+    <AddUser ref="addUser"> </AddUser>
+    <div>
+      <v-breadcrumbs :items="breadcrumbsItems">
+        <template v-slot:divider>
+          <v-icon>mdi-chevron-right</v-icon>
+        </template>
+      </v-breadcrumbs>
+    </div>
+    <v-data-table
+      v-model="selected"
+      :headers="headers"
+      :items="usersList"
+      class="shadow-md border rounded-md"
+      :search="search"
+      item-key="name"
+      show-select
     >
         <AddUser ref="addUser"> </AddUser>
         <div>
@@ -29,15 +42,15 @@
                     </v-toolbar-title>
                     <v-divider class="mx-4" inset vertical></v-divider>
 
-                    <v-text-field
-                        v-model="search"
-                        append-icon="mdi-magnify"
-                        label="Search"
-                        single-line
-                        hide-details
-                        class="text-sm"
-                    ></v-text-field>
-                    <v-spacer></v-spacer>
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+            class="text-sm"
+          ></v-text-field>
+          <v-spacer></v-spacer>
 
                     <v-btn color="primary" @click="addUser" class="capitalize">
                         <v-icon left small> mdi-plus </v-icon>
@@ -83,11 +96,12 @@
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
 th {
-    font-size: 15px !important;
-    font-weight: 900 !important;
-    background-color: #b2ebf2 !important;
-    font-family: "Montserrat", sans-serif !important;
-    color: black !important;
+  color: #000;
+  font-weight: 700 !important;
+}
+td {
+  font-size: 12px !important;
+  font-weight: 400 !important;
 }
 </style>
 
@@ -113,36 +127,36 @@ export default {
                 }
             ],
 
-            headers: [
-                {
-                    text: "Client Name",
-                    align: "start",
-                    sortable: false,
-                    value: "name"
-                },
-                { text: "Company Name", value: "company_name" },
-                { text: "Address", value: "address" },
-                { text: "Login ID", value: "login_id" },
-                { text: "User Type", value: "user_type" },
-                { text: "Reseller/Upline", value: "reseller" },
-                { text: "Actions", value: "actions", sortable: false }
-            ]
-        };
-    },
-
-    mounted() {
-        const self = this;
-        self.loadUsersData();
-        self.$eventBus.$on("usersData", data => {
-            self.loadUsersData();
-        });
-    },
-
-    methods: {
-        addUser() {
-            const self = this;
-            self.$refs.addUser.add();
+      headers: [
+        {
+          text: "Client Name",
+          align: "start",
+          sortable: false,
+          value: "name",
         },
+        { text: "Company Name", value: "company_name" },
+        { text: "Address", value: "address" },
+        { text: "Login ID", value: "login_id" },
+        { text: "User Type", value: "user_type" },
+        { text: "Reseller/Upline", value: "reseller" },
+        { text: "Actions", value: "actions", sortable: false },
+      ],
+    };
+  },
+
+  mounted() {
+    const self = this;
+    self.loadUsersData();
+    self.$eventBus.$on("usersData", (data) => {
+      self.loadUsersData();
+    });
+  },
+
+  methods: {
+    addUser() {
+      const self = this;
+      self.$refs.addUser.add();
+    },
 
         async loadUsersData() {
             const self = this;

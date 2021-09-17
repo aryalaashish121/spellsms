@@ -3,7 +3,7 @@
     <v-dialog
       v-model="addBlacklistDialog"
       persistent
-      max-width="750px"
+      max-width="450px"
       scrollable
     >
       <v-card>

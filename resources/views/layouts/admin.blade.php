@@ -23,6 +23,9 @@
     <!-- Styles -->
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+
     <script>
         var APP = {};
         APP.APP_URL = '{{ config('app.url') }}';

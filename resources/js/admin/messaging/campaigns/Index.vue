@@ -71,17 +71,6 @@
   </div>
 </template>
 
-<style>
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
-th {
-  font-size: 15px !important;
-  font-weight: 900 !important;
-  background-color: #b2ebf2 !important;
-  font-family: "Montserrat", sans-serif !important;
-  color: black !important;
-}
-</style>
-
 <script>
 import CreateCampaign from "./Add";
 export default {

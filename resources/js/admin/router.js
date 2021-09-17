@@ -64,6 +64,26 @@ const routes = [
         name: 'admin.blacklist',
         component: require('./messaging/blacklist/Index').default
     },
+    {
+        path: '/manageContacts',
+        name: 'admin.manageContacts',
+        component: require('./contact-and-groups/manage-contacts/Index').default
+    },
+    {
+        path: '/manageContactGroups',
+        name: 'admin.manageContactGroups',
+        component: require('./contact-and-groups/manage-groups/Index').default
+    },
+    {
+        path: '/campaignReports',
+        name: 'admin.campaignReports',
+        component: require('./reports/campaign-report/Index').default
+    },
+    {
+        path: '/deliveryReports',
+        name: 'admin.deliveryReports',
+        component: require('./reports/delivery-report/Index').default
+    },
 ];
 
 const router = new VueRouter({
