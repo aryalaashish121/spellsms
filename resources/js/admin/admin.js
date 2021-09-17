@@ -41,10 +41,7 @@ const admin = new Vue({
         //         self.$Progress.finish();
         //     }
         // );
-        self.$store.commit("showSnackbar", {
-            message: "message",
-            color: "primary"
-        });
+       
     },
     methods: {
         toggleFullScreen() {

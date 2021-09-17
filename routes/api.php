@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Authorization\RoleController;
+use App\Http\Controllers\Message\UserCreditController;
 use App\Http\Controllers\RouteController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,25 +23,21 @@ Route::middleware('auth:sanctum')->get('/get-token',function(){
 
 Route::middleware('')->get('/user', function (Request $request) {
   
-    return $request->user();
-
-    //crud roles
-    Route::resource('/roles', RoleController::class);
-    
-
-    //crud users
-    Route::get('/users',[UserController::class,'index']);
-    Route::post('/user/create',[UserController::class,'store']);
-    Route::put('user/update/{slug}',[UserController::class,'update']);
+    // return $request->user();
 });
 
-Route::resource('/roles', RoleController::class);
+
+Route::group(['middleware' => 'auth'], function () {
+   Route::resource('/roles', RoleController::class);
    //crud users
    Route::get('/users',[UserController::class,'index']);
 
    Route::post('/user/create',[UserController::class,'store']);
    Route::put('user/update/{slug}',[UserController::class,'update']);
 
-   Route::get('/check',[TestController::class,'check']);
-    
    Route::get('/route',[RouteController::class,'index']);
+
+   Route::get('self-credit',[UserCreditController::class,'selfCredit']);
+
+   Route::post('/export-users',[UserController::class,'export']);
+});

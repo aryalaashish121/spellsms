@@ -13,12 +13,12 @@
             </v-breadcrumbs>
         </div>
         <v-data-table
-            v-model="selected"
+            v-model="selectedList"
             :headers="headers"
             :items="usersList"
             class="shadow-md border rounded-md"
             :search="search"
-            item-key="client_name"
+            item-key="login_id"
             show-select
         >
             <template v-slot:top>
@@ -43,9 +43,29 @@
                         <v-icon left small> mdi-plus </v-icon>
                         Add
                     </v-btn>
+
+                    <v-btn color="secondary" @click="exportData">
+                        <v-icon left small>
+                            mdi-export
+                        </v-icon>
+                    </v-btn>
                 </v-toolbar>
             </template>
-
+            <template v-slot:[`item.user_type`]="{ item }">
+                <v-flex v-if="item.roles[0]">
+               <div v-for="role in item.roles" key="role.id">
+                   {{role.name}}
+               </div>
+                </v-flex>
+                <v-flex v-else>N/A</v-flex>
+            </template>
+              <template v-slot:[`item.reseller`]="{ item }">
+                  <v-flex v-if="item.parent">
+                        {{item.parent.name}}
+                </v-flex>
+                <v-flex v-else>N/A</v-flex>
+              
+            </template>
             <template v-slot:[`item.actions`]="{}">
                 <v-flex>
                     <v-btn class="ma-1" outlined x-small fab color="indigo">
@@ -77,6 +97,7 @@ export default {
     components: { AddUser },
     data() {
         return {
+            selectedList:[],
             search: "",
             selected: [],
             usersList: [],
@@ -128,7 +149,14 @@ export default {
             self.url = "/api/users";
             let response = await self.getAll();
             self.usersList = response.data;
-           
+        },
+
+        exportData(){
+            const self = this;
+            self.url = "/api/export-users";
+             let response = self.post(self.selectedList);
+             console.log(response);
+            console.log(self.selectedList);
         }
     }
 };

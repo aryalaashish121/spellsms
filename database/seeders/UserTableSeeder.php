@@ -19,7 +19,6 @@ class UserTableSeeder extends Seeder
         User::create(
             [
                 'parent_id'=>1,
-                'account_type'=>1,
                 'login_id'=>'aashish121',
                 'phone'=>'9867182424',
                 'address'=>'Maitidevi ktm',

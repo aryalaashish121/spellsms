@@ -3,17 +3,19 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Components\Core\ResponseHelpers;
+use App\Exports\SelectedUsersExport;
+use App\Exports\UserExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserStoreRequest;
-use App\Http\Requests\UserUpdateRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
-use App\Models\UserBalance;
 use App\Models\UserRoute;
-use Carbon\Carbon;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -25,8 +27,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return $this->respondOk($users);
+        $users = User::selfUsers()->orderBy('created_at','desc')->get();
+        // $users = User::with('roles','parent')->orderBy('created_at','desc')->get();
+        return $this->respondOk(new UserResource($users));
     }
 
   
@@ -43,8 +46,7 @@ class UserController extends Controller
         try{
             DB::beginTransaction();
             $user = User::create([
-                // 'parent_id'=>auth()->user()->id,
-                'account_type'=>$userdata['account_type'],
+                'parent_id'=>auth()->user()->id,
                 'company_name'=>$userdata['company_name'],
                 'login_id'=>$userdata['login_id'],
                 'phone'=>$userdata['phone'],
@@ -52,9 +54,12 @@ class UserController extends Controller
                 'name' => $userdata['name'],
                 'email' => $userdata['email'],
                 'password' => Hash::make($userdata['password']),
+                'expire_password'=>$userdata['expire_password'],
             ]);
             
-            $userrole = $user->assignRole('Client');
+            $userrole = $user->assignRole($userdata['account_type']);
+
+            $token = $user->createToken($userdata['name']);
 
             $userroute = UserRoute::create([
                 'user_id'=>$user->id,
@@ -142,4 +147,10 @@ class UserController extends Controller
     {
         //
     }
+
+    public function export(Request $request) 
+    {
+        $collection = new Collection($request->selectedList);
+    return Excel::download(new SelectedUsersExport(), 'users.xlsx');
+}
 }

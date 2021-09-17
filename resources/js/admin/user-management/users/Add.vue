@@ -45,7 +45,7 @@
                                             <v-select
                                                 :items="userTypeList"
                                                 label="Select Type"
-                                                item-value="id"
+                                                item-value="name"
                                                 item-text="name"
                                                 outlined
                                                 prepend-inner-icon="mdi-account-cog"
@@ -133,8 +133,7 @@
                                             <v-checkbox
                                                 v-model="
                                                     form_fields.expire_password
-                                                "
-                                            >
+                                                ">
                                                 <template v-slot:label>
                                                     <div>
                                                         User must change
@@ -244,6 +243,7 @@
 export default {
     data() {
         return {
+      
             loading: false,
             form_fields: [],
             routeList: [],
@@ -310,6 +310,8 @@ export default {
             self.loading = true;
             console.log(self.form_fields);
             self.url = "/api/user/create";
+
+            console.log(self.form_fields);
             let data = {
                 account_type: self.form_fields.account_type,
                 company_name: self.form_fields.company_name,
@@ -321,7 +323,8 @@ export default {
                 address: self.form_fields.address,
                 route_id: self.form_fields.route_id,
                 balance: self.form_fields.balance,
-                validity: self.form_fields.validity
+                validity: self.form_fields.validity,
+                expire_password:self.form_fields.expire_password,
             };
 
             self.post(data, async () => {

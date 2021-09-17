@@ -16,10 +16,7 @@ export default {
                 const self = this;
                 let response = await axios.get(self.url);
                 if (response.status === 200) 
-                self.$store.commit("showSnackbar", {
-                    message: response.data.message,
-                    color: response.data.success
-                });
+               
                 return response.data.data;
             } catch (error) {
                 console.log(error.response);
@@ -30,10 +27,7 @@ export default {
                 const self = this;
                 let response = await axios.get(self.url, { params });
                 if (response.status === 200) 
-                self.$store.commit("showSnackbar", {
-                    message: response.data.message,
-                    color: response.data.success
-                });
+            
                 return response.data;
             } catch (error) {
                 console.log(error.response);

@@ -29,7 +29,7 @@ class UserCreatedNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database',];
+        return ['toMail',];
     }
 
     /**

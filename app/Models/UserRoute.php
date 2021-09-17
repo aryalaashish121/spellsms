@@ -12,4 +12,8 @@ class UserRoute extends Model
     protected $fillable = [
         'user_id','balance','validity','status','route_id',
     ];
+
+    public static function selfUserCredit(){
+        return UserRoute::where('user_id',14);
+    }
 }

@@ -35,6 +35,8 @@ class UserStoreRequest extends FormRequest
             'route_id'=>'required',
             'balance'=>'required',
             'validity'=>'nullable',
+            'expire_password'=>'nullable'
+            
         ];
     }
 
