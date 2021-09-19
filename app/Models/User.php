@@ -30,7 +30,7 @@ class User extends Authenticatable
         'phone',
         'address',
         'status',
-        'change_password',
+        'expire_password',
        
     ];
 
@@ -70,5 +70,17 @@ class User extends Authenticatable
 
     public function balance(){
         return $this->hasMany(UserBalance::class,'user_id','id');
+    }
+
+    public function parent(){
+        return $this->hasOne(User::class,'id','parent_id');
+    }
+
+    public function userType(){
+        return $this->hasMany(Role::class,'id','user_type');
+    }
+
+    public static function selfUsers(){
+        return User::with('roles','parent')->where('parent_id',auth()->user()->id);
     }
 }

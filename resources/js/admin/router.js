@@ -1,4 +1,5 @@
 
+import { record } from 'laravel-mix/src/HotReloading';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
@@ -104,11 +105,27 @@ const routes = [
         name: 'admin.logs',
         component: require('./logs/Index').default
     },
+
+    {
+        path: '/login',
+        name: 'login',
+        component: require('../auth/Login').default
+    },
+
+    {
+        path: '/register',
+        name: 'register',
+        component: require('../auth/Register').default
+    }
 ];
 
 const router = new VueRouter({
     routes,
     mode: 'history',
 });
+
+// function isLoggedIn(){
+//     return localStorage.getItem("token");
+// }
 
 export default router;

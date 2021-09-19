@@ -18,9 +18,6 @@ class CreateUsersTable extends Migration
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->unsignedBigInteger('account_type')->nullable();
-            $table->foreign('account_type')->references('id')->on('user_types')->onDelete('cascade');
-            
             $table->string('company_name');
             $table->string('name');
             $table->string('slug');
@@ -31,7 +28,7 @@ class CreateUsersTable extends Migration
             $table->string('phone');
             $table->string('address');
             $table->boolean('status')->default(true);
-            $table->boolean('change_password')->default(false);
+            $table->boolean('expire_password')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

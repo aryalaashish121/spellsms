@@ -27,8 +27,7 @@ class UserFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'company_name'=>$this->faker->company(),
             'login_id'=>$this->faker->userName(),
-            'address'=>$this->faker->address()
-,            'account_type'=> rand(1,2),
+            'address'=>$this->faker->address(),
             'parent_id'=> \App\Models\User::all()->random()->id,
             'phone'=>$this->faker->numerify('98########'),
             'email_verified_at' => now(),

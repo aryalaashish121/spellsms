@@ -44,6 +44,7 @@ const admin = new Vue({
         //         self.$Progress.finish();
         //     }
         // );
+       
     },
     methods: {
         toggleFullScreen() {
