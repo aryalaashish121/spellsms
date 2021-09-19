@@ -1,5 +1,5 @@
 import axios from "axios";
-// import Api from './Api';
+import Api from './Api';
 export default {
     data() {
         return {
@@ -11,10 +11,23 @@ export default {
         };
     },
     methods: {
+        async login(data){
+            try {
+                const self = this;
+                self.url = "/api/login";
+                let response = await Api().post(self.url, data);
+                if (response.status === 200)
+                localStorage.setItem("token", response.data);
+                this.$router.push({ name: "admin.dashboard" });
+                return response.data.data;
+            } catch (error) {
+                console.log(error.response);
+            }
+        },
         async getData() {
             try {
                 const self = this;
-                let response = await axios.get(self.url);
+                let response = await Api().get(self.url);
                 if (response.status === 200) 
                
                 return response.data.data;
@@ -25,9 +38,8 @@ export default {
         async getAll(params = {}) {
             try {
                 const self = this;
-                let response = await axios.get(self.url, { params });
+                let response = await Api().get(self.url, { params });
                 if (response.status === 200) 
-            
                 return response.data;
             } catch (error) {
                 console.log(error.response);
@@ -37,7 +49,7 @@ export default {
         async show(id) {
             try {
                 const self = this;
-                let response = await axios.get(`${self.url}/${id}`);
+                let response = await Api().get(`${self.url}/${id}`);
                 if (response.status === 200 && response.data.success)
                     return response.data;
             } catch (error) {
@@ -48,7 +60,7 @@ export default {
         async getById(id) {
             try {
                 const self = this;
-                let response = await axios.get(`${self.url}/${id}/edit`);
+                let response = await Api().get(`${self.url}/${id}/edit`);
                 if (response.status === 200 && response.data.success)
                     return response.data;
             } catch (error) {
@@ -58,7 +70,7 @@ export default {
         async post(data = {}, callback) {
             const self = this;
             try {
-                let response = await axios.post(`${self.url}`, data);
+                let response = await Api().post(`${self.url}`, data);
                 if (response.status === 201 && response.data.success) {
                     self.$store.commit("showSnackbar", {
                         message: response.data.message,
@@ -98,7 +110,7 @@ export default {
         async delete(id, callback) {
             const self = this;
             try {
-                let response = await axios.delete(`${self.url}/${id}`);
+                let response = await Api().delete(`${self.url}/${id}`);
                 if (response.status === 200 && response.data.success) {
                     self.$store.commit("showSnackbar", {
                         message: response.data.message,
@@ -113,7 +125,7 @@ export default {
         async put(id, data = {}, callback) {
             const self = this;
             try {
-                let response = await axios.put(
+                let response = await Api().put(
                     `${self.url}/${id}`,
                     data
                 );
@@ -164,7 +176,7 @@ export default {
             const self = this;
             try {
                 this.$store.commit('showLoader');
-                let response = await axios.post(self.url);
+                let response = await Api().post(self.url);
                 if(response.status === 200) {
                     this.$store.commit('hideLoader');
                     window.open(response.data);

@@ -74,8 +74,6 @@ class UserController extends Controller
                 return $this->respondCreated($user,"New User created successfully");
             }
             return $this->respondError("Could not create new user");
-            
-            
         }catch(Exception $err){
             DB::rollBack();
             return $this->respondBadRequest($err->getMessage());
@@ -113,10 +111,8 @@ class UserController extends Controller
      */
     public function update(Request $request, $slug)
     {
-        
         $userdata = $request->validated();
         try{
-           
             $user = User::where('slug',$slug)->update([
                 // 'parent_id'=>auth()->user()->id,
                 'account_type'=>$userdata['account_type'],
@@ -128,7 +124,6 @@ class UserController extends Controller
                 'email' => $userdata['email'],
                 'password' => Hash::make($userdata['password']),
             ]);
-          
                 return $this->respondUpdated("User updated successfully");
       
         }catch(Exception $err){

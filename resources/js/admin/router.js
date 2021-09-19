@@ -1,5 +1,4 @@
 
-import { record } from 'laravel-mix/src/HotReloading';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
@@ -13,99 +12,138 @@ const routes = [
     {
         path: '/dashboard',
         name: 'admin.dashboard',
-        component: require('./dashboard/Home').default
+        component: require('./dashboard/Home').default,
+        meta: { authOnly: true }
     },
     {
         path: '/activeUsers',
         name: 'admin.active-users',
-        component: require('./user-management/users/Users').default
+        component: require('./user-management/users/Users').default,
+        meta: { authOnly: true }
     },
     {
         path: '/suspendedUsers',
         name: 'admin.suspended-users',
-        component: require('./user-management/users/Suspended-Users').default
+        component: require('./user-management/users/Suspended-Users').default,
+        meta: { authOnly: true }
     },
     {
         path: '/announcements',
         name: 'admin.announcements',
-        component: require('./user-management/announcements/Announcements').default
+        component: require('./user-management/announcements/Announcements').default,
+        meta: { authOnly: true }
     },
     {
         path: '/accountManagers',
         name: 'admin.accountManagers',
-        component: require('./user-management/account-manager/Index').default
+        component: require('./user-management/account-manager/Index').default,
+        meta: { authOnly: true }
     },
     {
         path: '/lowCredits',
         name: 'admin.lowCredits',
-        component: require('./user-management/low-credit/Index').default
+        component: require('./user-management/low-credit/Index').default,
+        meta: { authOnly: true }
     },
     {
         path: '/campaigns',
         name: 'admin.campaigns',
-        component: require('./messaging/campaigns/Index').default
+        component: require('./messaging/campaigns/Index').default,
+        meta: { authOnly: true }
     },
     {
         path: '/senderId',
         name: 'admin.senderId',
-        component: require('./messaging/sender_Id/Index').default
+        component: require('./messaging/sender_Id/Index').default,
+        meta: { authOnly: true }
     },
     {
         path: '/sendSMS',
         name: 'admin.sendSMS',
-        component: require('./messaging/send-SMS/Index').default
+        component: require('./messaging/send-SMS/Index').default,
+        meta: { authOnly: true }
     },
     {
         path: '/templates',
         name: 'admin.templates',
-        component: require('./messaging/templates/Index').default
+        component: require('./messaging/templates/Index').default,
+        meta: { authOnly: true }
     },
     {
         path: '/blacklist',
         name: 'admin.blacklist',
-        component: require('./messaging/blacklist/Index').default
+        component: require('./messaging/blacklist/Index').default,
+        meta: { authOnly: true }
     },
     {
         path: '/manageContacts',
         name: 'admin.manageContacts',
-        component: require('./contact-and-groups/manage-contacts/Index').default
+        component: require('./contact-and-groups/manage-contacts/Index').default,
+        meta: { authOnly: true }
     },
     {
         path: '/manageContactGroups',
         name: 'admin.manageContactGroups',
-        component: require('./contact-and-groups/manage-groups/Index').default
+        component: require('./contact-and-groups/manage-groups/Index').default,
+        meta: { authOnly: true }
     },
     {
         path: '/campaignReports',
         name: 'admin.campaignReports',
-        component: require('./reports/campaign-report/Index').default
+        component: require('./reports/campaign-report/Index').default,
+        meta: { authOnly: true }
     },
     {
         path: '/deliveryReports',
         name: 'admin.deliveryReports',
-        component: require('./reports/delivery-report/Index').default
+        component: require('./reports/delivery-report/Index').default,
+        meta: { authOnly: true }
     },
 
     {
         path:'/login',
         name:'login',
-        component: require('../auth/Login').default
-    },
-
-    {
-        path:'/register',
-        name:'register',
-        component: require('../auth/Register').default
+        component: require('../auth/Login').default,
+        meta: { authOnly: true },
     }
 ];  
 
 const router = new VueRouter({
     routes,
     mode: 'history',
+    base: process.env.BASE_URL,
 });
 
-// function isLoggedIn(){
-//     return localStorage.getItem("token");
-// }
+function isLoggedIn(){
+    return localStorage.getItem("token");
+}
 
+// router.beforeEach((to, from, next) => {
+//     if (to.matched.some(record => record.meta.authOnly)) {
+//       // this route requires auth, check if logged in
+//       // if not, redirect to login page.
+//       if (!isLoggedIn()) {
+//         next({
+//           path: "/login",
+//           query: { redirect: to.fullPath }
+//         });
+//       } else {
+//         next();
+//       }
+//     } else if (to.matched.some(record => record.meta.guestOnly)) {
+//       // this route requires auth, check if logged in
+//       // if not, redirect to login page.
+//       if (isLoggedIn()) {
+//         next({
+//           path: "/dashboard",
+//           query: { redirect: to.fullPath }
+//         });
+//       } else {
+//         next();
+//       }
+//     } else {
+//       next(); // make sure to always call next()!
+//     }
+//   });
+  
 export default router;

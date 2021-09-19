@@ -12,7 +12,7 @@ class TestController extends Controller
 {
     use ResponseHelpers;
     public function check(){
-      
+      return "hekk";
         $user = User::first();
         Notification::send($user, new NewUserCreatedNotification());
         return $this->respondBadRequest("hello successfully used");
