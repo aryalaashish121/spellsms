@@ -1,23 +1,6 @@
 <template>
   <div data-aos="zoom-out" data-aos-duration="1000" class="p-5 md:px-3 md:py-2">
-    <AddUser ref="addUser"> </AddUser>
-    <div>
-      <v-breadcrumbs :items="breadcrumbsItems">
-        <template v-slot:divider>
-          <v-icon>mdi-chevron-right</v-icon>
-        </template>
-      </v-breadcrumbs>
-    </div>
-    <v-data-table
-      v-model="selected"
-      :headers="headers"
-      :items="usersList"
-      class="shadow-md border rounded-md"
-      :search="search"
-      item-key="name"
-      show-select
-    >
-        <AddUser ref="addUser"> </AddUser>
+           <AddUser ref="addUser"> </AddUser>
         <div>
             <v-breadcrumbs :items="breadcrumbsItems">
                 <template v-slot:divider>
