@@ -280,7 +280,7 @@
               </v-list-item>
             </router-link>
 
-            <router-link to="">
+            <router-link to="/cumulativeReports">
               <v-list-item class="px-6">
                 <v-list-item-icon>
                   <v-icon> mdi-chart-box </v-icon>
@@ -293,7 +293,7 @@
               </v-list-item>
             </router-link>
 
-            <router-link to="">
+            <router-link to="/scheduledSMSReports">
               <v-list-item class="px-6">
                 <v-list-item-icon>
                   <v-icon> mdi-message-text-clock </v-icon>
@@ -306,7 +306,7 @@
               </v-list-item>
             </router-link>
 
-            <router-link to="">
+            <router-link to="/transactionReports">
               <v-list-item class="px-6">
                 <v-list-item-icon>
                   <v-icon> mdi-handshake </v-icon>
@@ -333,6 +333,19 @@
             </router-link>
           </div>
         </v-list-group>
+
+        <router-link to="/logs">
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon> mdi-chart-gantt </v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>
+                <span class="text-xs">Logs</span>
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
       </v-list>
       <!-- -->
     </v-navigation-drawer>
