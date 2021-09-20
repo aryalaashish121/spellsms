@@ -11,6 +11,7 @@
     <v-data-table
       v-model="selected"
       :headers="headers"
+      :loading="isLoading"
       :items="templates"
       class="shadow-md border rounded-md"
       :search="search"
@@ -39,7 +40,7 @@
             dark
             color="green"
             class="capitalize"
-            v-on:click="CreateTemplate"
+            v-on:click="createTemplate"
           >
             <v-icon left small> mdi-shape </v-icon>
             Add New Template
@@ -78,6 +79,7 @@ export default {
       search: "",
       selected: [],
       templates: [],
+      isLoading: true,
 
       breadcrumbsItems: [
         {
@@ -107,28 +109,25 @@ export default {
   mounted() {
     const self = this;
     self.getAllTemplates();
-    self.$eventBus.$on("templateData", () => {
+    self.$eventBus.$on("templateData", (data) => {
       self.getAllTemplates();
     });
   },
 
-  // created() {
-  //   const self = this;
-  //   self.getAllTemplates();
-  // },
-
   methods: {
-    CreateTemplate() {
+    createTemplate() {
       const self = this;
       self.$refs.CreateTemplate.create();
     },
 
     async getAllTemplates() {
       const self = this;
+      self.isLoading = true;
       try {
         self.url = "/all-templates";
         let response = await self.getAll();
         self.templates = response.data;
+        self.isLoading = false;
       } catch (err) {}
     },
 
