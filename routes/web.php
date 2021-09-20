@@ -5,7 +5,7 @@ use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Auth::routes();
+// Auth::routes();
 Route::get('self-credit',[UserCreditController::class,'selfcredit']);
 
 Route::get('/test',[TestController::class,'check']);

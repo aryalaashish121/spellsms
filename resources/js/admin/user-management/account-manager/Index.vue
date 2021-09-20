@@ -118,11 +118,23 @@ export default {
     };
   },
 
+  mounted() {
+    const self = this;
+    self.getAllAccountManagers();
+  },
+
   methods: {
     createAccountManager() {
       const self = this;
       self.$refs.createAccountManager.create();
     },
+
+    getAllAccountManagers(){
+      const self = this;
+      self.url = "/all-account-managers";
+      let response = self.getAll();
+      self.accountManagers = response.data;
+    }
   },
 };
 </script>

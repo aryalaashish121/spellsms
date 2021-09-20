@@ -5,6 +5,7 @@ require('../common/common');
 import Vue from 'vue';
 import vuetify from '../Vuetify';
 import App from './App.vue';
+import Login from '../auth/Login.vue';
 import router from './router';
 import eventBus from '../common/event';
 import store from '../common/store';
@@ -22,7 +23,7 @@ const admin = new Vue({
     vuetify,
     store,
     components: {
-        App,
+        App,Login
     },
     el: "#admin",
     data() {

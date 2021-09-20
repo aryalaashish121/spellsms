@@ -121,6 +121,7 @@
                 h-10
                 text-center
                 pt-2
+                text-sm
                 border border-t-0 border-r-0 border-gray-400
               "
             >
@@ -132,6 +133,7 @@
                 h-10
                 text-center
                 pt-2
+                text-sm
                 border border-t-0 border-gray-400
               "
             >
@@ -145,6 +147,7 @@
                 h-10
                 text-center
                 pt-2
+                text-sm
                 border border-t-0 border-r-0 border-gray-400
               "
             >
@@ -156,6 +159,7 @@
                 h-10
                 text-center
                 pt-2
+                text-sm
                 border border-t-0 border-gray-400
               "
             >
@@ -169,6 +173,7 @@
                 h-10
                 text-center
                 pt-2
+                text-sm
                 border border-t-0 border-r-0 border-gray-400
               "
             >
@@ -180,6 +185,7 @@
                 h-10
                 text-center
                 pt-2
+                text-sm
                 border border-t-0 border-gray-400
               "
             >
@@ -198,9 +204,9 @@
                 class="
                   w-1/2
                   h-10
-                  text-center
+                  text-center text-xs
                   font-light
-                  pt-2
+                  pt-3
                   border border-t-0 border-r-0 border-gray-400
                 "
               >
@@ -209,9 +215,10 @@
               <div
                 class="
                   w-1/2
+                  text-xs
                   h-10
                   text-center
-                  pt-2
+                  pt-3
                   border border-t-0 border-r-0 border-gray-400
                   font-light
                 "
@@ -225,7 +232,8 @@
                   w-1/2
                   h-10
                   text-center
-                  pt-2
+                  pt-3
+                  text-xs
                   border border-t-0 border-r-0 border-gray-400
                   font-light
                 "
@@ -237,7 +245,8 @@
                   w-1/2
                   h-10
                   text-center
-                  pt-2
+                  pt-3
+                  text-xs
                   border border-t-0 border-r-0 border-gray-400
                   font-light
                 "
@@ -254,7 +263,8 @@
                   h-10
                   text-center
                   font-light
-                  pt-2
+                  pt-3
+                  text-xs
                   border border-t-0 border-r-0 border-gray-400
                 "
               >
@@ -265,7 +275,8 @@
                   w-1/2
                   h-10
                   text-center
-                  pt-2
+                  pt-3
+                  text-xs
                   border border-t-0 border-r-0 border-gray-400
                   font-light
                 "
@@ -279,7 +290,8 @@
                   w-1/2
                   h-10
                   text-center
-                  pt-2
+                  pt-3
+                  text-xs
                   border border-t-0 border-r-0 border-gray-400
                   font-light
                 "
@@ -291,7 +303,8 @@
                   w-1/2
                   h-10
                   text-center
-                  pt-2
+                  pt-3
+                  text-xs
                   border border-t-0 border-gray-400
                   font-light
                 "

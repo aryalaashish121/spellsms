@@ -161,6 +161,8 @@ return [
     */
     'extension_detector' => [
         'xlsx'     => Excel::XLSX,
+
+
         'xlsm'     => Excel::XLSX,
         'xltx'     => Excel::XLSX,
         'xltm'     => Excel::XLSX,

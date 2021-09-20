@@ -94,23 +94,25 @@ export default {
         { text: "Actions", value: "actions", sortable: false },
       ],
 
-      templates: [
-        {
-          name: "Thank You",
-          text: "Thank you for placing your order. You will recieve your parcel within 2 days. Keep Shopping.",
-        },
-        {
-          name: "Vacancy Alert",
-          text: "New Jobs available in various positions. Click on the link to view all.",
-        },
-      ],
+      templates: [],
     };
   },
 
+  mounted() {
+    const self = this;
+    self.getAllTemplates();
+  },
   methods: {
     CreateTemplate() {
       const self = this;
       self.$refs.CreateTemplate.create();
+    },
+
+    getAllTemplates() {
+      const self = this;
+      self.url = "/all-templates";
+      self.response = self.getAll();
+      self.templates = response.data;
     },
   },
 };

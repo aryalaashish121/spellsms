@@ -28,10 +28,12 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "chart.js": "^2.9.4",
         "path-browserify": "^1.0.1",
         "postcss-loader": "^6.1.1",
         "v-md-date-range-picker": "^2.6.0",
         "vee-validate": "^3.4.12",
+        "vue-chartjs": "^3.5.1",
         "vue-router": "^3.5.2",
         "vue2-daterange-picker": "^0.6.6",
         "vuetify": "^2.5.8",
