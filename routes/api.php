@@ -28,16 +28,18 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
    Route::resource('/roles', RoleController::class);
    //crud users
    Route::get('/users',[UserController::class,'index']);
-
    Route::post('/user/create',[UserController::class,'store']);
    Route::put('user/update/{slug}',[UserController::class,'update']);
+   Route::post('/export-users',[UserController::class,'export']);
 
+   
    Route::get('/route',[RouteController::class,'index']);
 
    Route::get('self-credit',[UserCreditController::class,'selfCredit']);
 
-   Route::post('/export-users',[UserController::class,'export']);
 
     Route::get('/test',[TestController::class,'check']);
+
+    Route::post('add-account-manager',[AccountManager])
 
 });

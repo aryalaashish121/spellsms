@@ -7,7 +7,7 @@ Vue.use(VueRouter);
 const routes = [
     {
         path: '/',
-        redirect: '/dashboard'
+        redirect: '/login'
     },
     {
         path: '/dashboard',
@@ -104,7 +104,7 @@ const routes = [
         path:'/login',
         name:'login',
         component: require('../auth/Login').default,
-        meta: { authOnly: true },
+        meta: { hideForAuth: true },
     }
 ];  
 
@@ -118,32 +118,25 @@ function isLoggedIn(){
     return localStorage.getItem("token");
 }
 
-// router.beforeEach((to, from, next) => {
-//     if (to.matched.some(record => record.meta.authOnly)) {
-//       // this route requires auth, check if logged in
-//       // if not, redirect to login page.
-//       if (!isLoggedIn()) {
-//         next({
-//           path: "/login",
-//           query: { redirect: to.fullPath }
-//         });
-//       } else {
-//         next();
-//       }
-//     } else if (to.matched.some(record => record.meta.guestOnly)) {
-//       // this route requires auth, check if logged in
-//       // if not, redirect to login page.
-//       if (isLoggedIn()) {
-//         next({
-//           path: "/dashboard",
-//           query: { redirect: to.fullPath }
-//         });
-//       } else {
-//         next();
-//       }
-//     } else {
-//       next(); // make sure to always call next()!
-//     }
-//   });
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.authOnly)) {
+    if (!isLoggedIn()) {
+      next({ name: 'login' })
+    } else {
+      next() // go to wherever I'm going
+    }
+  } else {
+    next() // does not require auth, make sure to always call next()!
+  }
+   if (to.matched.some(record => record.meta.hideForAuth)) {
+            if (isLoggedIn()) {
+                next({ path: '/dashboard' });
+            } else {
+                next();
+            }
+        } else {
+            next();
+        }
+});
   
 export default router;

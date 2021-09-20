@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('phone');
+          
             $table->string('address');
             $table->boolean('status')->default(true);
             $table->boolean('expire_password')->default(false);
