@@ -143,14 +143,14 @@ export default {
 
         async loadUsersData() {
             const self = this;
-            self.url = "/api/users";
+            self.url = "/users";
             let response = await self.getAll();
             self.usersList = response.data;
         },
 
         exportData(){
             const self = this;
-            self.url = "/api/export-users";
+            self.url = "/export-users";
              let response = self.post(self.selectedList);
              console.log(response);
             console.log(self.selectedList);

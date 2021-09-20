@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Components\Core\ResponseHelpers;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\AccountManagerStoreRequest;
 use App\Http\Requests\AccountManagerUpdateRequest;
 use App\Models\AccountManager;
-use Illuminate\Http\Request;
 
 class AccountManagerController extends Controller
 {
@@ -18,7 +18,7 @@ class AccountManagerController extends Controller
      */
     public function index()
     {
-        $accountManagers = AccountManager::all();
+        $accountManagers = AccountManager::where('parent_id',auth()->user()->id)->orderBy('created_at','desc')->get();
         return $this->respondOk($accountManagers);
 
     }
@@ -34,7 +34,7 @@ class AccountManagerController extends Controller
     {
         $data = [];
         $data = $request->validated();
-        $data['parent_id']=1;
+        $data['parent_id']= auth()->user()->id;
         $accountManager = AccountManager::create($data);
         if($accountManager){
             return $this->respondCreated($accountManager,"Created successfully.");
@@ -80,8 +80,10 @@ class AccountManagerController extends Controller
      * @param  \App\Models\AccountManager  $accountManager
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AccountManager $accountManager)
+    public function destroy($id)
     {
-        //
+        $accountManager = AccountManager::findOrFail($id);
+        $accountManager->delete();
+        return $this->respondDeleted("Manager deleted successfully");
     }
 }

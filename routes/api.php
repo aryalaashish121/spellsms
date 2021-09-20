@@ -1,15 +1,19 @@
 <?php
 
+use App\Http\Controllers\Admin\AccountManagerController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\AuthenticationController;
 use App\Http\Controllers\Authorization\RoleController;
+use App\Http\Controllers\Message\CampaignsController;
+use App\Http\Controllers\Message\SenderIdController;
 use App\Http\Controllers\Message\UserCreditController;
 use App\Http\Controllers\RouteController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
-
+use App\Models\AccountManager;
+use App\Models\CampaignCategory;
 
 Route::post('/login',[AuthenticationController::class,'login']);
 Route::middleware('auth:sanctum')->get('/get-token',function(){
@@ -32,6 +36,19 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
    Route::put('user/update/{slug}',[UserController::class,'update']);
    Route::post('/export-users',[UserController::class,'export']);
 
+
+   //account manager
+   Route::post('/add-account-manager',[AccountManagerController::class,'store']);
+   Route::get('/account-managers',[AccountManagerController::class,'index']);
+   Route::delete('/delete/account-manager/{id}',[AccountManagerController::class,'destroy']);
+   
+   //sender id
+   Route::post('/create-senderid',[SenderIdController::class,'store']);
+   Route::get('/all-senderid',[SenderIdController::class,'index']);
+   Route::delete('/delete/senderid/{id}',[SenderIdController::class,'destroy']);
+
+   //campaign
+   Route::get('/all-campaign-categories',[CampaignsController::class,'getCategories']);
    
    Route::get('/route',[RouteController::class,'index']);
 
@@ -39,6 +56,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
 
     Route::get('/test',[TestController::class,'check']);
-
 
 });

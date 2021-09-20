@@ -11,7 +11,7 @@
     <v-data-table
       v-model="selected"
       :headers="headers"
-      :items="campaigns"
+      :items="senderIDList"
       class="shadow-md border rounded-md"
       :search="search"
       item-key="sender_id"
@@ -43,7 +43,7 @@
       </template>
 
       <template v-slot:[`item.default`]="{ item }">
-        <v-icon size="20" color="primary" v-if="item.default == 'default'">
+        <v-icon size="20" color="primary" v-if="item.is_default">
           mdi-check-circle-outline
         </v-icon>
 
@@ -57,7 +57,7 @@
           class="ma-2"
           color="indigo"
           text-color="white"
-          v-if="item.status == 'approved'"
+          v-if="item.is_approved"
         >
           <v-avatar left>
             <v-icon>mdi-account-check</v-icon>
@@ -73,12 +73,12 @@
         </v-chip>
       </template>
 
-      <template v-slot:[`item.actions`]="{}">
+      <template v-slot:[`item.actions`]="{item}">
         <v-flex>
           <v-btn class="ma-1" outlined x-small fab color="indigo">
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
-          <v-btn class="ma-1" outlined x-small fab color="error">
+          <v-btn class="ma-1" outlined x-small fab color="error" @click="deleteSenderId(item.id)">
             <v-icon>mdi-delete</v-icon>
           </v-btn>
         </v-flex>
@@ -95,7 +95,7 @@ export default {
     return {
       search: "",
       selected: [],
-
+      senderIDList:[],
       breadcrumbsItems: [
         {
           text: "Dashboard",
@@ -125,29 +125,13 @@ export default {
         { text: "Actions", value: "actions", sortable: false },
       ],
 
-      campaigns: [
-        {
-          sender_id: "SMSBit",
-          company: "Spell Innovation",
-          details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-          route: "SMSBIT - ID:116",
-          sample_message: "Hello, your order has been successfully placed.",
-          requested_on: "Wed, 15th Sep 2021 12:00 PM",
-          default: "default",
-          status: "approved",
-        },
-        {
-          sender_id: "ACCSit",
-          company: "Spell Innovation",
-          details: "Lorem ipsum dolor sit amet",
-          route: "SMSBIT - ID:116",
-          sample_message: "Hello, ringtone set succesfully",
-          requested_on: "Wed, 15th Sep 2021 2:00 PM",
-          default: "not_default",
-          status: "pending",
-        },
-      ],
+      routeList: [],
     };
+  },
+
+  mounted(){
+    const self = this;
+    self.getSenderIds();
   },
 
   methods: {
@@ -155,6 +139,20 @@ export default {
       const self = this;
       self.$refs.AddSender.create();
     },
+
+   async getSenderIds(){
+      const self = this;
+      self.url = "/all-senderid";
+      let response  = await self.getAll();
+      self.senderIDList = response.data;
+    },
+
+    deleteSenderId(id){
+      const self = this;
+      self.url = "/delete/senderid";
+      let response = self.delete(id);
+      self.getSenderIds();
+    }
   },
 };
 </script>

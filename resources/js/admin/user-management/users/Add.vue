@@ -274,7 +274,6 @@ export default {
         };
     },
     mounted() {
-       
         const self = this;
         self.getRoles();
         self.getRoutes();
@@ -286,16 +285,15 @@ export default {
             self.addUserDialog = true;
         },
 
-      
         async getRoles() {
             const self = this;
-            self.url = "/api/roles";
+            self.url = "/roles";
             self.userTypeList = await self.getData();
         },
 
         async getRoutes() {
             const self = this;
-            self.url = "/api/route";
+            self.url = "/route";
             self.routeList = await self.getData();
             console.log(self.routeList);
         },
@@ -309,7 +307,7 @@ export default {
             const self = this;
             self.loading = true;
             console.log(self.form_fields);
-            self.url = "/api/user/create";
+            self.url = "/user/create";
 
             console.log(self.form_fields);
             let data = {

@@ -14,7 +14,7 @@ export default {
         async login(data){
             try {
                 const self = this;
-                self.url = "/api/login";
+                self.url = "/login";
                 let response = await Api().post(self.url, data);
                 if (response.status === 200)
                 localStorage.setItem("token", response.data);
@@ -29,7 +29,6 @@ export default {
                 const self = this;
                 let response = await Api().get(self.url);
                 if (response.status === 200) 
-               
                 return response.data.data;
             } catch (error) {
                 console.log(error.response);
