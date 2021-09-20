@@ -23,6 +23,7 @@
                   label="Sender ID"
                   outlined
                   prepend-inner-icon="mdi-card-account-details"
+                  v-model="form_fields.sender_id"
                 ></v-text-field>
               </v-row>
 
@@ -32,6 +33,7 @@
                   outlined
                   placeholder="Related to sender ID"
                   prepend-inner-icon="mdi-office-building"
+                  v-model="form_fields.company_name"
                 ></v-text-field>
               </v-row>
 
@@ -41,6 +43,7 @@
                   name="input-7-4"
                   label="Description"
                   placeholder="Explanation of Sender ID"
+                  v-model="form_fields.description"
                 ></v-textarea>
               </v-row>
 
@@ -50,6 +53,7 @@
                   name="input-7-4"
                   label="Sample Message"
                   placeholder="example('Hello, your order has been successfully placed.')"
+                  v-model="form_fields.sample"
                 ></v-textarea>
               </v-row>
 
@@ -59,6 +63,7 @@
                   outlined
                   placeholder="Route Type: Transactional or Promotional"
                   prepend-inner-icon="mdi-routes"
+                  v-model="form_fields.route"
                 ></v-text-field>
               </v-row>
             </v-card-text>
@@ -69,7 +74,7 @@
           <v-btn color="error" text v-on:click="addSenderIdDialog = false">
             <v-icon left> mdi-close</v-icon>Cancel
           </v-btn>
-          <v-btn text color="primary">
+          <v-btn text color="primary" @click="addNew">
             Save <v-icon right> mdi-content-save</v-icon>
           </v-btn>
         </v-card-actions>
@@ -80,26 +85,30 @@
 
 <script>
 export default {
-  data: () => ({
-    column: null,
+  data(){
+    return {
+ column: null,
     addSenderIdDialog: false,
-    categoryList: [
-      "News & Info",
-      "Education",
-      "Ringtones/WAP contents",
-      "Carrer & Jobs",
-      "Otheres",
-    ],
-    coverageList: ["(977) Nepal", "(91) India"],
-    routeList: ["SMSBIT", "SMSDIT"],
-    row: null,
-  }),
-
+    form_fields:{
+      sender_id:"",
+      company_name:"",
+      description:"",
+      sample:"",
+      route:"",
+    },
+    }
+  },
   methods: {
     create() {
       const self = this;
       self.addSenderIdDialog = true;
     },
+    
+    addNew(){
+      const self = this;
+      self.url = "create-senderid";
+      let response = self.post(self.form_fields);
+    }
   },
 };
 </script>

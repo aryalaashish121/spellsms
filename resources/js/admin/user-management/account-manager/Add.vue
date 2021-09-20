@@ -104,7 +104,7 @@ export default {
 
     createNew(){
       const self = this;
-      self.url = "/account-manager";
+      self.url = "/add-account-manager";
       let data = {
         name:self.form_fields.name,
         phone:self.form_fields.phone,
@@ -113,7 +113,6 @@ export default {
         facebook_url:self.form_fields.facebook_url,
       }
       let response = self.post(data);
-
     }
   },
 };

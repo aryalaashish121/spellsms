@@ -37,7 +37,9 @@
 
               <v-row>
                 <v-select
-                  :items="categoryList"
+                  :items="categoriesList"
+                  item-value="id"
+                  item-text="name"
                   label="Category"
                   outlined
                   prepend-inner-icon="mdi-view-list"
@@ -56,6 +58,8 @@
               <v-row>
                 <v-select
                   :items="routeList"
+                  item-text="name"
+                  item-value="id"
                   label="Default Route"
                   outlined
                   prepend-inner-icon="mdi-routes"
@@ -104,26 +108,39 @@
 
 <script>
 export default {
-  data: () => ({
+  data(){
+    return{
     column: null,
     createCampaignDialog: false,
-    categoryList: [
-      "News & Info",
-      "Education",
-      "Ringtones/WAP contents",
-      "Carrer & Jobs",
-      "Otheres",
-    ],
+    categoriesList: [],
     coverageList: ["(977) Nepal", "(91) India"],
-    routeList: ["SMSBIT", "SMSDIT"],
+    routeList: [],
     row: null,
-  }),
+    }
+  },
+  mounted(){
+    const self = this;
+    self.getCampaignCategories();
+    self.getRouteList();
+  },
 
   methods: {
     create() {
       const self = this;
       self.createCampaignDialog = true;
     },
+      async getCampaignCategories(){
+      const self = this;
+      self.url = "/all-campaign-categories";
+      self.categoriesList = await self.getData();
+      console.log(self.categoriesList);
+    },
+
+    async getRouteList(){
+      const self = this;
+      self.url = "/route";
+      self.routeList = await self.getData();
+    }
   },
 };
 </script>

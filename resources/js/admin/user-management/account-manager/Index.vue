@@ -5,6 +5,7 @@
       <v-breadcrumbs :items="breadcrumbsItems">
         <template v-slot:divider>
           <v-icon>mdi-chevron-right</v-icon>
+    
         </template>
       </v-breadcrumbs>
     </div>
@@ -47,12 +48,12 @@
         </v-toolbar>
       </template>
 
-      <template v-slot:[`item.actions`]="{}">
+      <template v-slot:[`item.actions`]="{item}">
         <v-flex>
           <v-btn class="ma-1" outlined x-small fab color="indigo">
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
-          <v-btn class="ma-1" outlined x-small fab color="error">
+          <v-btn class="ma-1" outlined x-small fab color="error" @click="deleteManager(item.id)">
             <v-icon>mdi-delete</v-icon>
           </v-btn>
         </v-flex>
@@ -69,6 +70,7 @@ export default {
     return {
       search: "",
       selected: [],
+      accountManagers: [],
 
       breadcrumbsItems: [
         {
@@ -90,37 +92,19 @@ export default {
           value: "name",
         },
         { text: "Email", value: "email" },
-        { text: "Mobile", value: "mobile" },
-        { text: "WhtasApp", value: "whats_app" },
-        { text: "Skype", value: "skype" },
+        { text: "Mobile", value: "phone" },
+        { text: "WhtasApp", value: "whatsapp" },
+        { text: "Skype", value: "facebook_url" },
         { text: "Created", value: "created_at" },
         { text: "Actions", value: "actions", sortable: false },
       ],
 
-      accountManagers: [
-        {
-          name: "Prakash Bista",
-          email: "bistap@gmail.com",
-          mobile: "987654321",
-          whats_app: "987654321",
-          skype: "prakash22",
-          created_at: "Wed, 15th Sep 2021 11:44 AM",
-        },
-        {
-          name: "Nikesh Magar",
-          email: "nikeshm@gmail.com",
-          mobile: "987654323",
-          whats_app: "987654323",
-          skype: "nikesh99",
-          created_at: "Mon, 13th Sep 2021 10:13 AM",
-        },
-      ],
     };
   },
 
-  mounted() {
+   mounted() {
     const self = this;
-    self.getAllAccountManagers();
+     self.getAllAccountManagers();
   },
 
   methods: {
@@ -129,11 +113,20 @@ export default {
       self.$refs.createAccountManager.create();
     },
 
-    getAllAccountManagers(){
+    async getAllAccountManagers(){
       const self = this;
-      self.url = "/all-account-managers";
-      let response = self.getAll();
+      self.url = "/account-managers";
+      let response = await self.getAll();
       self.accountManagers = response.data;
+      console.log("hello");
+      console.log(response.data);
+    },
+
+    deleteManager(id){
+      const self = this;
+      self.url = "delete/account-manager";
+     
+      let response = self.delete(id);
     }
   },
 };

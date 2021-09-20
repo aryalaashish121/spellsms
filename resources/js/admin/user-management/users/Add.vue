@@ -274,7 +274,6 @@ export default {
         };
     },
     mounted() {
-       
         const self = this;
         self.getRoles();
         self.getRoutes();
@@ -286,7 +285,6 @@ export default {
             self.addUserDialog = true;
         },
 
-      
         async getRoles() {
             const self = this;
             self.url = "/roles";

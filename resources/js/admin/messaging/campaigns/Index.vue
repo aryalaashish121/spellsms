@@ -124,6 +124,8 @@ export default {
       const self = this;
       self.$refs.CreateCampaign.create();
     },
+
+  
   },
 };
 </script>

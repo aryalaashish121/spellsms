@@ -138,20 +138,20 @@ export default {
       self.$refs.addUser.add();
     },
 
-    async loadUsersData() {
-      const self = this;
-      self.url = "/users";
-      let response = await self.getAll();
-      self.usersList = response.data;
-    },
+        async loadUsersData() {
+            const self = this;
+            self.url = "/users";
+            let response = await self.getAll();
+            self.usersList = response.data;
+        },
 
-    exportData() {
-      const self = this;
-      self.url = "/export-users";
-      let response = self.post(self.selectedList);
-      console.log(response);
-      console.log(self.selectedList);
-    },
-  },
+        exportData(){
+            const self = this;
+            self.url = "/export-users";
+             let response = self.post(self.selectedList);
+             console.log(response);
+            console.log(self.selectedList);
+        }
+    }
 };
 </script>

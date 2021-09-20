@@ -32,4 +32,15 @@ class AccountManagerStoreRequest extends FormRequest
             'image'=>'nullable|image',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required'=>"Account manager name is required.",
+            'name.string'=>"Only string value supported for name.",
+            'email.email'=>"Enter vaild email address",
+            'phone.required'=>"Contact no. field is required.",
+            
+        ];
+    }
 }
