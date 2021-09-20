@@ -102,27 +102,32 @@ const routes = [
     {
         path: '/cumulativeReports',
         name: 'admin.cumulativeReports',
-        component: require('./reports/cumulative-report/Index').default
+        component: require('./reports/cumulative-report/Index').default,
+        meta: { authOnly: true }
     },
     {
         path: '/scheduledSMSReports',
         name: 'admin.scheduledSMSReports',
-        component: require('./reports/scheduled-sms/Index').default
+        component: require('./reports/scheduled-sms/Index').default,
+        meta: { authOnly: true }
     },
     {
         path: '/transactionReports',
         name: 'admin.transactionReports',
-        component: require('./reports/transaction-reports/Index').default
+        component: require('./reports/transaction-reports/Index').default,
+        meta: { authOnly: true }
     },
     {
-        path: '/logs',
-        name: 'admin.logs',
-        component: require('./logs/Index').default
+        path: '/creditsLogs',
+        name: 'admin.creditsLogs',
+        component: require('./logs/credits_logs/Index').default,
+        meta: { authOnly: true }
     },
 
+
     {
-        path:'/login',
-        name:'login',
+        path: '/login',
+        name: 'login',
         component: require('../auth/Login').default,
         meta: { hideForAuth: true },
     }
@@ -134,29 +139,29 @@ const router = new VueRouter({
     base: process.env.BASE_URL,
 });
 
-function isLoggedIn(){
+function isLoggedIn() {
     return localStorage.getItem("token");
 }
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.authOnly)) {
-    if (!isLoggedIn()) {
-      next({ name: 'login' })
+    if (to.matched.some(record => record.meta.authOnly)) {
+        if (!isLoggedIn()) {
+            next({ name: 'login' })
+        } else {
+            next() // go to wherever I'm going
+        }
     } else {
-      next() // go to wherever I'm going
+        next() // does not require auth, make sure to always call next()!
     }
-  } else {
-    next() // does not require auth, make sure to always call next()!
-  }
-   if (to.matched.some(record => record.meta.hideForAuth)) {
-            if (isLoggedIn()) {
-                next({ path: '/dashboard' });
-            } else {
-                next();
-            }
+    if (to.matched.some(record => record.meta.hideForAuth)) {
+        if (isLoggedIn()) {
+            next({ path: '/dashboard' });
         } else {
             next();
         }
+    } else {
+        next();
+    }
 });
-  
+
 export default router;

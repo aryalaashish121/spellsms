@@ -145,11 +145,21 @@
         </div>
       </div>
     </div>
+
+    <div class="w-1/2 h-60 bg-gray-200 rounded shadow mt-10">
+      <v-card>
+        <v-card-text>
+          <LineChart :height="200"></LineChart>
+        </v-card-text>
+      </v-card>
+    </div>
   </div>
 </template>
 
 <script>
+import LineChart from "../charts/LineChart.vue";
 export default {
+  components: { LineChart },
   data() {
     return {
       appurl: APP.APP_URL,

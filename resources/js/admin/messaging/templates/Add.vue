@@ -23,24 +23,18 @@
                   label="Template Name"
                   outlined
                   prepend-inner-icon="mdi-shape"
+                  v-model="form_fields.name"
                 ></v-text-field>
               </v-row>
 
               <v-row>
                 <v-textarea
+                  v-model="form_fields.description"
                   outlined
                   name="input-7-4"
                   label="Template Text"
                   placeholder="Enter content for SMS template. You can use variables in the text enclosing them in braces, e.g. Hi {name}, your account expires on {date} ......... and so on."
                 ></v-textarea>
-              </v-row>
-
-              <v-row>
-                <v-checkbox v-model="checkbox">
-                  <template v-slot:label>
-                    <div>Request Approval for Transactional Route</div>
-                  </template>
-                </v-checkbox>
               </v-row>
             </v-card-text>
 
@@ -67,15 +61,27 @@
 
 <script>
 export default {
-  data: () => ({
-    checkbox: false,
-    createTemplateDialog: false,
-  }),
+  data() {
+    return {
+      createTemplateDialog: false,
+
+      form_fields: {
+        name: "",
+        description: "",
+      },
+    };
+  },
 
   methods: {
     create() {
       const self = this;
       self.createTemplateDialog = true;
+    },
+
+    addNew() {
+      const self = this;
+      self.url = "/add-template";
+      let response = self.post(self.form_fields);
     },
   },
 };

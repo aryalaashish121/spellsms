@@ -4,7 +4,7 @@ let BaseApi = axios.create({
   baseURL: "http://spellsms.test/api/"
 });
 
-let Api = function() {
+let Api = function () {
   let token = localStorage.getItem("token");
 
   if (token) {
