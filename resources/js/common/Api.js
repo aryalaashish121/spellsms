@@ -1,7 +1,7 @@
 import axios from "axios";
 
 let BaseApi = axios.create({
-  baseURL: "http://spellsms.test/"
+  baseURL: "http://spellsms.test/api/"
 });
 
 let Api = function () {

@@ -48,7 +48,7 @@
               >
                 <v-icon left> mdi-close</v-icon>Cancel
               </v-btn>
-              <v-btn text color="primary">
+              <v-btn text color="primary" @click="addNew">
                 Save <v-icon right> mdi-content-save</v-icon>
               </v-btn>
             </v-card-actions>
@@ -78,10 +78,17 @@ export default {
       self.createTemplateDialog = true;
     },
 
-    addNew() {
+    async addNew() {
       const self = this;
       self.url = "/add-template";
-      let response = self.post(self.form_fields);
+      let templateData = self.form_fields;
+      try {
+        self.post(templateData);
+        self.$eventBus.$emit("templateData");
+        self.createTemplateDialog = false;
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 };

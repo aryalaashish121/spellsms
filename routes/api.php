@@ -33,8 +33,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::put('user/update/{slug}', [UserController::class, 'update']);
     Route::post('/export-users', [UserController::class, 'export']);
 
-    Route::get('/all-templates', [TemplateController::class, 'index']);
-    Route::post('/add-template', [TemplateController::class, 'store']);
+
 
     Route::get('/route', [RouteController::class, 'index']);
 
@@ -42,4 +41,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
 
     Route::get('/test', [TestController::class, 'check']);
+
+
+    //CRUD Templates
+    Route::get('/all-templates', [TemplateController::class, 'index']);
+    Route::post('/add-template', [TemplateController::class, 'store']);
+    Route::delete('/delete-template/{id}', [TemplateController::class, 'destroy']);
 });
