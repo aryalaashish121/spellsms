@@ -300,7 +300,7 @@ export default {
         store() {
             const self = this;
             console.log(self.form_fields);
-            self.url = "/user/create";
+            self.url = "/create";
             let response = self.post(self.form_fields);
         },
         addUser() {

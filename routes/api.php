@@ -60,4 +60,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('self-credit', [UserCreditController::class, 'selfCredit']);
 
 
+    Route::get('/test', [TestController::class, 'check']);
+
+
+    //CRUD Templates
+    Route::get('/all-templates', [TemplateController::class, 'index']);
+    Route::post('/add-template', [TemplateController::class, 'store']);
+    Route::delete('/delete-template/{id}', [TemplateController::class, 'destroy']);
 });

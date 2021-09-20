@@ -32,7 +32,7 @@ class TemplateStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'=>"Name is required bidu",
-        ]
+            'name.required' => "Name is required",
+        ];
     }
 }

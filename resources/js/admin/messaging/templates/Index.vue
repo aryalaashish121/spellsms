@@ -47,12 +47,19 @@
         </v-toolbar>
       </template>
 
-      <template v-slot:[`item.actions`]="{}">
+      <template v-slot:[`item.actions`]="{ item }">
         <v-flex>
           <v-btn class="ma-1" outlined x-small fab color="indigo">
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
-          <v-btn class="ma-1" outlined x-small fab color="error">
+          <v-btn
+            class="ma-1"
+            outlined
+            x-small
+            fab
+            color="error"
+            @click="deleteTemplate(item.id)"
+          >
             <v-icon>mdi-delete</v-icon>
           </v-btn>
         </v-flex>
@@ -70,6 +77,7 @@ export default {
     return {
       search: "",
       selected: [],
+      templates: [],
 
       breadcrumbsItems: [
         {
@@ -90,29 +98,46 @@ export default {
           sortable: false,
           value: "name",
         },
-        { text: "Text", value: "text" },
+        { text: "Text", value: "description" },
         { text: "Actions", value: "actions", sortable: false },
       ],
-
-      templates: [],
     };
   },
 
   mounted() {
     const self = this;
     self.getAllTemplates();
+    self.$eventBus.$on("templateData", () => {
+      self.getAllTemplates();
+    });
   },
+
+  // created() {
+  //   const self = this;
+  //   self.getAllTemplates();
+  // },
+
   methods: {
     CreateTemplate() {
       const self = this;
       self.$refs.CreateTemplate.create();
     },
 
-    getAllTemplates() {
+    async getAllTemplates() {
       const self = this;
-      self.url = "/all-templates";
-      self.response = self.getAll();
-      self.templates = response.data;
+      try {
+        self.url = "/all-templates";
+        let response = await self.getAll();
+        self.templates = response.data;
+      } catch (err) {}
+    },
+
+    async deleteTemplate(id) {
+      const self = this;
+      self.url = "/delete-template";
+
+      let response = self.delete(id);
+      self.getAllTemplates();
     },
   },
 };

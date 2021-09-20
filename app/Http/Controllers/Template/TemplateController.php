@@ -19,6 +19,8 @@ class TemplateController extends Controller
      */
     public function index()
     {
+        $templates = Template::all();
+        return $this->respondOk($templates);
     }
 
 
@@ -91,6 +93,12 @@ class TemplateController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Template::findOrFail($id);
+        try {
+            $data->delete();
+            return $this->respondDeleted("Deleted Successfully");
+        } catch (Exception $err) {
+            return $this->respondWithError($err->getMessage());
+        }
     }
 }

@@ -1,4 +1,3 @@
-import axios from "axios";
 import Api from './Api';
 export default {
     data() {
@@ -7,17 +6,17 @@ export default {
             filterStatusItems: [
                 { text: "Active", value: true },
                 { text: "Inactive", value: false },
-              ],
+            ],
         };
     },
     methods: {
-        async login(data){
+        async login(data) {
             try {
                 const self = this;
                 self.url = "/login";
                 let response = await Api().post(self.url, data);
                 if (response.status === 200)
-                localStorage.setItem("token", response.data);
+                    localStorage.setItem("token", response.data);
                 this.$router.push({ name: "admin.dashboard" });
                 return response.data.data;
             } catch (error) {
@@ -28,8 +27,9 @@ export default {
             try {
                 const self = this;
                 let response = await Api().get(self.url);
-                if (response.status === 200) 
-                return response.data.data;
+                if (response.status === 200)
+
+                    return response.data.data;
             } catch (error) {
                 console.log(error.response);
             }
@@ -38,8 +38,8 @@ export default {
             try {
                 const self = this;
                 let response = await Api().get(self.url, { params });
-                if (response.status === 200) 
-                return response.data;
+                if (response.status === 200)
+                    return response.data;
             } catch (error) {
                 console.log(error.response);
             }
@@ -80,17 +80,17 @@ export default {
             } catch (err) {
                 self.loading = false;
                 // alert(err);
-                if(err) {
+                if (err) {
                     self.loading = false;
                     let errResponse = err.response;
                     if (errResponse && errResponse.status === 422) {
                         self.isSaving = false;
                         let data = errResponse.data;
                         let keys = Object.keys(data.errors);
-    
+
                         keys.forEach((key) => {
-                            for(let err of data.errors[key]) {
-                                 self.$store.commit("showSnackbar", {
+                            for (let err of data.errors[key]) {
+                                self.$store.commit("showSnackbar", {
                                     message: err,
                                     color: errResponse.data.success
                                 })
@@ -129,9 +129,9 @@ export default {
                     data
                 );
 
-                if(response) {
+                if (response) {
                     if (response.status === 200 && response.data.success) {
-                     
+
                         self.$store.commit("showSnackbar", {
                             message: response.data.message,
                             color: response.data.success
@@ -144,17 +144,17 @@ export default {
                 }
 
             } catch (err) {
-                if(err) {
+                if (err) {
                     self.loading = false;
                     let errResponse = err.response;
                     if (errResponse && errResponse.status === 422) {
                         self.isSaving = false;
                         let data = errResponse.data;
                         let keys = Object.keys(data.errors);
-    
+
                         keys.forEach((key) => {
-                            for(let err of data.errors[key]) {
-                                 self.$store.commit("showSnackbar", {
+                            for (let err of data.errors[key]) {
+                                self.$store.commit("showSnackbar", {
                                     message: err,
                                     color: errResponse.data.success
                                 })
@@ -162,7 +162,7 @@ export default {
                         })
                     }
                     else {
-                        
+
                         self.$store.commit("showSnackbar", {
                             message: errResponse.data.message,
                             color: errResponse.data.success
@@ -176,7 +176,7 @@ export default {
             try {
                 this.$store.commit('showLoader');
                 let response = await Api().post(self.url);
-                if(response.status === 200) {
+                if (response.status === 200) {
                     this.$store.commit('hideLoader');
                     window.open(response.data);
                 }
