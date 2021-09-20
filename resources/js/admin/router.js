@@ -99,6 +99,26 @@ const routes = [
         component: require('./reports/delivery-report/Index').default,
         meta: { authOnly: true }
     },
+    {
+        path: '/cumulativeReports',
+        name: 'admin.cumulativeReports',
+        component: require('./reports/cumulative-report/Index').default
+    },
+    {
+        path: '/scheduledSMSReports',
+        name: 'admin.scheduledSMSReports',
+        component: require('./reports/scheduled-sms/Index').default
+    },
+    {
+        path: '/transactionReports',
+        name: 'admin.transactionReports',
+        component: require('./reports/transaction-reports/Index').default
+    },
+    {
+        path: '/logs',
+        name: 'admin.logs',
+        component: require('./logs/Index').default
+    },
 
     {
         path:'/login',
@@ -106,7 +126,7 @@ const routes = [
         component: require('../auth/Login').default,
         meta: { hideForAuth: true },
     }
-];  
+];
 
 const router = new VueRouter({
     routes,

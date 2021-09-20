@@ -40,6 +40,5 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('/test',[TestController::class,'check']);
 
-    Route::post('add-account-manager',[AccountManager])
 
 });

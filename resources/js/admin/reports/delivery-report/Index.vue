@@ -45,7 +45,7 @@
               </v-select>
             </v-col>
           </v-row>
-          <v-spacer></v-spacer>
+
           <v-text-field
             v-model="search"
             append-icon="mdi-magnify"
@@ -54,6 +54,10 @@
             hide-details
             class="text-sm"
           ></v-text-field>
+          <v-spacer></v-spacer>
+          <v-btn small color="secondary" class="capitalize">
+            <v-icon left color="ma-2"> mdi-download </v-icon> Download as Excel
+          </v-btn>
         </v-toolbar>
       </template>
     </v-data-table>

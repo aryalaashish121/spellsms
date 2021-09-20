@@ -17,15 +17,30 @@
       show-select
     >
       <template v-slot:top>
-        <v-toolbar flat class="rounded-md mb-10">
+        <v-toolbar flat class="rounded-md mb-8">
           <v-toolbar-title>
             <v-icon class="pb-1" left> mdi-sign-text </v-icon>
             <span class="text-base"> Campaign Reports </span>
           </v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
-          <v-flex class="mt-10 ml-24">
-            <v-md-date-range-picker class="caption"></v-md-date-range-picker>
-          </v-flex>
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+            class="text-sm"
+          ></v-text-field>
+          <v-spacer> </v-spacer>
+
+          <v-md-date-range-picker
+            max-year="2030"
+            min-year="2010"
+            show-year-select
+            :show-custom-range-label="value"
+            :opens="opens"
+            class="shadow-md text-xs mt-8"
+          ></v-md-date-range-picker>
         </v-toolbar>
       </template>
 
@@ -43,6 +58,11 @@
   </div>
 </template>
 
+<style>
+.v-md-date-range-picker input {
+  font-size: 12px !important;
+}
+</style>
 
 <script>
 import DateRangePicker from "vue2-daterange-picker";
@@ -51,6 +71,10 @@ export default {
   components: { DateRangePicker },
   data() {
     return {
+      //Date range picker custom value
+      value: true,
+      opens: "right",
+
       search: "",
       selected: [],
 
