@@ -23,6 +23,7 @@
                   label="Name"
                   outlined
                   prepend-inner-icon="mdi-sign-text"
+                  v-model="form_fields.name"
                 ></v-text-field>
               </v-row>
 
@@ -32,6 +33,7 @@
                   name="input-7-4"
                   label="Description"
                   placeholder="A brief description of this campaign"
+                  v-model="form_fields.description"
                 ></v-textarea>
               </v-row>
 
@@ -43,17 +45,10 @@
                   label="Category"
                   outlined
                   prepend-inner-icon="mdi-view-list"
+                  v-model="form_fields.category_id"
                 ></v-select>
               </v-row>
 
-              <v-row>
-                <v-select
-                  :items="coverageList"
-                  label="Default Coverage"
-                  outlined
-                  prepend-inner-icon="mdi-radio-tower"
-                ></v-select>
-              </v-row>
 
               <v-row>
                 <v-select
@@ -63,22 +58,24 @@
                   label="Default Route"
                   outlined
                   prepend-inner-icon="mdi-routes"
+                  v-model="form_fields.default_route"
                 ></v-select>
               </v-row>
 
               <v-row class="flex space-x-2">
                 <v-label> Set as default : </v-label>
                 <div class="-mt-6">
-                  <v-radio-group v-model="column" column>
+                  <v-radio-group v-model="form_fields.is_default" column >
                     <v-radio
                       color="blue"
                       label="Yes, Sure."
-                      value="radio-1"
+                      value="1"
                     ></v-radio>
                     <v-radio
                       color="red"
                       label="No, thanks."
-                      value="radio-2"
+                      value="0"
+                      
                     ></v-radio>
                   </v-radio-group>
                 </div>
@@ -95,7 +92,7 @@
               >
                 <v-icon left> mdi-close</v-icon>Cancel
               </v-btn>
-              <v-btn text color="primary">
+              <v-btn text color="primary" @click="addNew"> 
                 Save <v-icon right> mdi-content-save</v-icon>
               </v-btn>
             </v-card-actions>
@@ -113,9 +110,16 @@ export default {
     column: null,
     createCampaignDialog: false,
     categoriesList: [],
-    coverageList: ["(977) Nepal", "(91) India"],
     routeList: [],
     row: null,
+    form_fields:{
+      is_default:"",
+      name:"",
+      description:"",
+      default_route:"",
+      category_id:"",
+
+    },
     }
   },
   mounted(){
@@ -123,6 +127,7 @@ export default {
     self.getCampaignCategories();
     self.getRouteList();
   },
+
 
   methods: {
     create() {
@@ -140,6 +145,19 @@ export default {
       const self = this;
       self.url = "/route";
       self.routeList = await self.getData();
+    },
+
+    addNew(){
+      const self = this;
+      self.url = "/add-campaigns";
+      let data = {
+        name:self.form_fields.name,
+        description:self.form_fields.description,
+        category_id:self.form_fields.category_id,
+        default_route:self.form_fields.default_route,
+        is_default:self.form_fields.is_default
+        }
+      let response = self.post(data);
     }
   },
 };

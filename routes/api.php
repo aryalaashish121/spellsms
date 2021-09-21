@@ -50,8 +50,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
    //campaign
    Route::get('/all-campaign-categories',[CampaignsController::class,'getCategories']);
+   Route::get('/my-campaigns',[CampaignsController::class,'index']);
+   Route::post('/add-campaigns',[CampaignsController::class,'store']);
    
-   Route::get('/route',[RouteController::class,'index']);
+   
+    Route::get('/route',[RouteController::class,'index']);
     Route::get('/all-templates', [TemplateController::class, 'index']);
     Route::post('/add-template', [TemplateController::class, 'store']);
 
@@ -67,4 +70,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/all-templates', [TemplateController::class, 'index']);
     Route::post('/add-template', [TemplateController::class, 'store']);
     Route::delete('/delete-template/{id}', [TemplateController::class, 'destroy']);
+
+    Route::post('/send-sms',function(Request $request){
+        return $request->all();
+    });
+
 });

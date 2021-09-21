@@ -73,6 +73,9 @@ class UserController extends Controller
                 DB::commit();
                 return $this->respondCreated($user, "New User created successfully");
             }
+
+            //assing default campaign to user
+            
             return $this->respondError("Could not create new user");
         } catch (Exception $err) {
             DB::rollBack();
