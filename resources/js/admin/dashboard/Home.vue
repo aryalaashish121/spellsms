@@ -146,7 +146,7 @@
       </div>
     </div>
 
-    <div class="w-1/2 h-60 bg-gray-200 rounded shadow mt-10">
+    <div class="w-1/2 h-auto rounded shadow mt-10">
       <v-card>
         <v-card-text>
           <LineChart :height="200"></LineChart>

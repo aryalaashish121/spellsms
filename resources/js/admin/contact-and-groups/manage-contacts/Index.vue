@@ -12,6 +12,7 @@
     <v-data-table
       v-model="selected"
       :headers="headers"
+      :loading="loading"
       :items="contacts"
       class="shadow-md border rounded-md"
       :search="search"
@@ -60,12 +61,25 @@
         </v-toolbar>
       </template>
 
-      <template v-slot:[`item.actions`]="{}">
+      <template v-slot:[`item.contact_group_id`]="{ item }">
+        <v-chip>
+          <p class="text-sm font-normal mt-3.5">{{ item.group.name }}</p>
+        </v-chip>
+      </template>
+
+      <template v-slot:[`item.actions`]="{ item }">
         <v-flex>
           <v-btn class="ma-1" outlined x-small fab color="indigo">
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
-          <v-btn class="ma-1" outlined x-small fab color="error">
+          <v-btn
+            class="ma-1"
+            outlined
+            x-small
+            fab
+            color="error"
+            @click="deleteContact(item.id)"
+          >
             <v-icon>mdi-delete</v-icon>
           </v-btn>
         </v-flex>
@@ -84,6 +98,8 @@ export default {
     return {
       search: "",
       selected: [],
+      contacts: [],
+      loading: true,
 
       breadcrumbsItems: [
         {
@@ -98,45 +114,24 @@ export default {
       ],
 
       headers: [
-        {
-          text: "S.No",
-          align: "start",
-          sortable: false,
-          value: "sn",
-        },
         { text: "Mobile", value: "mobile" },
         { text: "Name", value: "name" },
         { text: "Email", value: "email" },
         { text: "Company", value: "company" },
         { text: "Address", value: "address" },
         { text: "NOTE", value: "note" },
-        { text: "Group Name", value: "group_name" },
+        { text: "Group Name", value: "contact_group_id" },
         { text: "Actions", value: "actions", sortable: false },
       ],
-
-      contacts: [
-        {
-          sn: "1",
-          mobile: "9876123452",
-          name: "Aashish Aryal",
-          email: "aashish@gmail.com",
-          company: "Rvo Softwares",
-          address: "Maitidevi",
-          note: "CEO",
-          group_name: "Influencers",
-        },
-        {
-          sn: "2",
-          mobile: "9826225459",
-          name: "Prakash Bista",
-          email: "bistap@gmail.com",
-          company: "Bista Courier",
-          address: "Surkhet",
-          note: "Managing Director",
-          group_name: "Managers",
-        },
-      ],
     };
+  },
+
+  mounted() {
+    const self = this;
+    self.getAllContacts();
+    self.$eventBus.$on("contacts_data", (data) => {
+      self.getAllContacts();
+    });
   },
 
   methods: {
@@ -148,6 +143,26 @@ export default {
     uploadFile() {
       const self = this;
       self.$refs.UploadFile.upload();
+    },
+
+    async getAllContacts() {
+      const self = this;
+      self.loading = true;
+
+      try {
+        self.url = "/all-contacts";
+        let response = await self.getAll();
+        self.contacts = response.data;
+        self.loading = false;
+      } catch ($err) {}
+    },
+
+    async deleteContact(id) {
+      const self = this;
+      self.url = "/delete-contact";
+
+      let response = self.delete(id);
+      self.getAllContacts();
     },
   },
 };

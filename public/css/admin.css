@@ -9,6 +9,12 @@
   font-size: 22px;
 } */
 
+/* @media screen and (max-width:1366px) {
+    * {
+        font-size: 14px !important;
+    }
+} */
+
 .quick-sand {
     font-family: "Quicksand" !important;
 }

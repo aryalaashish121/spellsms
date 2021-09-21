@@ -11,10 +11,11 @@
     <v-data-table
       v-model="selected"
       :headers="headers"
-      :items="contacts"
+      :loading="loading"
+      :items="contact_groups"
       class="shadow-md border rounded-md"
       :search="search"
-      item-key="group_name"
+      item-key="name"
       show-select
     >
       <template v-slot:top>
@@ -48,7 +49,15 @@
         </v-toolbar>
       </template>
 
-      <template v-slot:[`item.actions`]="{}">
+      <template v-slot:[`item.total_contacts`]="{ item }">
+        <v-chip v-if="item.total_contacts == null" color="red" dark> 0 </v-chip>
+
+        <v-chip v-else color="primary" dark>
+          {{ item.total_contacts }}
+        </v-chip>
+      </template>
+
+      <template v-slot:[`item.actions`]="{ item }">
         <v-flex>
           <v-btn class="ma-1" outlined x-small fab color="indigo">
             <v-icon>mdi-eye</v-icon>
@@ -56,7 +65,14 @@
           <v-btn class="ma-1" outlined x-small fab color="green">
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
-          <v-btn class="ma-1" outlined x-small fab color="error">
+          <v-btn
+            class="ma-1"
+            outlined
+            x-small
+            fab
+            color="error"
+            @click="deleteContactGroup(item.id)"
+          >
             <v-icon>mdi-delete</v-icon>
           </v-btn>
         </v-flex>
@@ -74,6 +90,8 @@ export default {
     return {
       search: "",
       selected: [],
+      contact_groups: [],
+      loading: true,
 
       breadcrumbsItems: [
         {
@@ -89,29 +107,23 @@ export default {
 
       headers: [
         {
-          text: "S.No",
+          text: "Group Name",
           align: "start",
-          sortable: false,
-          value: "sn",
+          sortable: true,
+          value: "name",
         },
-        { text: "Group Name", value: "group_name" },
         { text: "Total Contacts", value: "total_contacts" },
         { text: "Actions", value: "actions", sortable: false },
       ],
-
-      contacts: [
-        {
-          sn: "1",
-          group_name: "Influencers",
-          total_contacts: "10",
-        },
-        {
-          sn: "2",
-          group_name: "Managers",
-          total_contacts: "5",
-        },
-      ],
     };
+  },
+
+  mounted() {
+    const self = this;
+    self.getAllContactGroups();
+    self.$eventBus.$on("contact_groups_data", (data) => {
+      self.getAllContactGroups();
+    });
   },
 
   methods: {
@@ -120,9 +132,23 @@ export default {
       self.$refs.AddNewGroup.create();
     },
 
-    uploadFile() {
+    async getAllContactGroups() {
       const self = this;
-      self.$refs.UploadFile.upload();
+      self.loading = true;
+      try {
+        self.url = "/all-contact-groups";
+        let response = await self.getAll();
+        self.contact_groups = response.data;
+        self.loading = false;
+      } catch (err) {}
+    },
+
+    async deleteContactGroup(id) {
+      const self = this;
+      self.url = "/delete-contact-group";
+
+      let response = self.delete(id);
+      self.getAllContactGroups();
     },
   },
 };
