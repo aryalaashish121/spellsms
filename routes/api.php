@@ -40,6 +40,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     //campaign
     Route::get('/all-campaign-categories', [CampaignsController::class, 'getCategories']);
+    Route::get('/my-campaigns', [CampaignsController::class, 'index']);
+    Route::post('/add-campaigns', [CampaignsController::class, 'store']);
+
 
     Route::get('/route', [RouteController::class, 'index']);
     Route::get('/all-templates', [TemplateController::class, 'index']);
@@ -81,4 +84,7 @@ Route::middleware('auth:sanctum')->get('/get-token', function () {
         'token' => $token
     ];
     return response($data);
+    Route::post('/send-sms', function (Request $request) {
+        return $request->all();
+    });
 });
