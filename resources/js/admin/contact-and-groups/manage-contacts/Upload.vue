@@ -90,6 +90,7 @@ export default {
   data: () => ({
     dialog: false,
     contactGroupList: ["Managers", "Influencers"],
+    files: [],
   }),
 
   methods: {

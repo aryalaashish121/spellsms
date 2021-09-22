@@ -15,6 +15,7 @@
             <v-card-text class="mt-3">
               <v-row>
                 <v-text-field
+                  v-model="form_fields.name"
                   label="Group Name"
                   outlined
                   prepend-inner-icon="mdi-account-group"
@@ -30,7 +31,12 @@
           <v-btn color="error" text v-on:click="dialog = false">
             <v-icon left> mdi-close</v-icon>Cancel
           </v-btn>
-          <v-btn text color="primary">
+          <v-btn
+            text
+            color="primary"
+            @click="addContactGroup"
+            :loading="loading"
+          >
             Save <v-icon right> mdi-content-save</v-icon>
           </v-btn>
         </v-card-actions>
@@ -38,18 +44,35 @@
     </v-dialog>
   </div>
 </template>
-<style>
-</style>
 <script>
 export default {
-  data: () => ({
-    dialog: false,
-  }),
+  data() {
+    return {
+      dialog: false,
+      loading: false,
+
+      form_fields: {
+        name: "",
+      },
+    };
+  },
 
   methods: {
     create() {
       const self = this;
       self.dialog = true;
+    },
+
+    async addContactGroup() {
+      const self = this;
+      self.url = "/add-contact-group";
+      try {
+        self.post(self.form_fields);
+        self.$eventBus.$emit("contact_groups_data");
+        self.dialog = false;
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 };

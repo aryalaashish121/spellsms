@@ -15,6 +15,14 @@ const routes = [
         component: require('./dashboard/Home').default,
         meta: { authOnly: true }
     },
+
+    {
+        path: '/admin/profile',
+        name: 'admin.profile',
+        component: require('./profile/Profile').default,
+        meta: { authOnly: true }
+    },
+
     {
         path: '/activeUsers',
         name: 'admin.active-users',

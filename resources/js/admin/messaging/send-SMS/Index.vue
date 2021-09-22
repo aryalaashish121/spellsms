@@ -134,8 +134,7 @@
                                                     class="mt-3"
                                                     placeholder="Upload your documents"
                                                     label="Browse"
-                                                    multiple
-                                                    solo
+                                                    type="file"
                                                     prepend-icon="mdi-paperclip"
                                                     v-model="
                                                         form_fields.excel_numbers
@@ -532,7 +531,7 @@ export default {
         show() {
             console.log(self.contacts);
         },
-        sendMessage() {
+        async sendMessage() {
             const self = this;
             alert("hello");
             self.url = "/send-sms";
@@ -550,7 +549,7 @@ export default {
                 schedule:self.form_fields.schedule
             };
 
-           let response = self.post(data);
+           let response = await self.post(data);
            console.log(response);
         }
     }

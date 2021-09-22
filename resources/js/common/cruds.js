@@ -37,8 +37,10 @@ export default {
         async getAll(params = {}) {
             try {
                 const self = this;
+
                 let response = await Api().get(self.url, { params });
                 if (response.status === 200)
+
                     return response.data;
             } catch (error) {
                 console.log(error.response);
@@ -66,7 +68,7 @@ export default {
                 console.log(error.response);
             }
         },
-        async post(data = {}, callback) {
+        async post(data = {}, callback,) {
             const self = this;
             try {
                 let response = await Api().post(`${self.url}`, data);
