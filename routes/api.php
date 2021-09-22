@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\AuthenticationController;
 use App\Http\Controllers\Authorization\RoleController;
 use App\Http\Controllers\Message\CampaignsController;
+use App\Http\Controllers\Message\MessageController;
 use App\Http\Controllers\Message\SenderIdController;
 use App\Http\Controllers\Message\UserCreditController;
 use App\Http\Controllers\RouteController;
@@ -71,8 +72,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/add-template', [TemplateController::class, 'store']);
     Route::delete('/delete-template/{id}', [TemplateController::class, 'destroy']);
 
-    Route::post('/send-sms',function(Request $request){
-        return $request->all();
-    });
+    Route::post('/send-sms',[MessageController::class,'sendSMS']);
 
 });

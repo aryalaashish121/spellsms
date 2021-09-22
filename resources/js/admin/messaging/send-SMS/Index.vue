@@ -103,11 +103,13 @@
                                                     Mobile numbers
                                                 </v-chip>
                                                 <v-textarea
-                                                @change="show"
+                                                    @change="show"
                                                     outlined
                                                     placeholder="Copy paste numbers separated by newline.........
                                                                             9851******"
-                                                v-model="form_fields.pasted_numbers"
+                                                    v-model="
+                                                        form_fields.pasted_numbers
+                                                    "
                                                 >
                                                 </v-textarea>
                                             </v-card-text>
@@ -135,7 +137,9 @@
                                                     multiple
                                                     solo
                                                     prepend-icon="mdi-paperclip"
-                                                    v-model="form_fields.excel_numbers"
+                                                    v-model="
+                                                        form_fields.excel_numbers
+                                                    "
                                                 >
                                                     <template
                                                         v-slot:selection="{
@@ -159,7 +163,9 @@
                                         <v-card flat>
                                             <v-card-text>
                                                 <v-combobox
-                                                    v-model="form_fields.contact_groups"
+                                                    v-model="
+                                                        form_fields.contact_groups
+                                                    "
                                                     :items="contactGroups"
                                                     label="Select Contact Groups"
                                                     multiple
@@ -224,7 +230,9 @@
                                         <v-card flat>
                                             <v-card-text>
                                                 <v-autocomplete
-                                                    v-model="form_fields.selected_numbers"
+                                                    v-model="
+                                                        form_fields.selected_numbers
+                                                    "
                                                     :items="people"
                                                     filled
                                                     solo
@@ -325,24 +333,27 @@
                             <div class="flex space-x-3 -mt-3">
                                 <div>
                                     <v-checkbox
-                                        v-model="checkDuplicates"
+                                        v-model="form_fields.remove_duplicate"
                                         label="Remove Duplicates"
+                                        value="1"
                                     >
                                     </v-checkbox>
                                 </div>
 
                                 <div>
                                     <v-checkbox
-                                        v-model="checkInvalids"
+                                        v-model="form_fields.remove_invalids"
                                         label="Remove Invalids"
+                                        value="1"
                                     >
                                     </v-checkbox>
                                 </div>
 
                                 <div>
                                     <v-checkbox
-                                        v-model="checkBlacklist"
+                                        v-model="form_fields.remove_blacklist"
                                         label="Blacklist"
+                                        value="1"
                                     >
                                     </v-checkbox>
                                 </div>
@@ -357,11 +368,11 @@
                         </v-row>
 
                         <v-row>
-                            <div class="-mt-3">
-                                <v-radio-group row>
-                                    <v-radio label="Text"> </v-radio>
-                                    <v-radio label="Unicode"> </v-radio>
-                                    <v-radio label="Dynamic"> </v-radio>
+                            <div class="-mt-3" >
+                                <v-radio-group row v-model="form_fields.sms_type">
+                                    <v-radio label="Text" value="text"> </v-radio>
+                                    <v-radio label="Unicode" value="unicode"> </v-radio>
+                                    <v-radio label="Dynamic" value="dynamic"> </v-radio>
                                 </v-radio-group>
                             </div>
                         </v-row>
@@ -399,7 +410,7 @@
 
                         <v-row>
                             <div class="-mt-3">
-                                <v-radio-group row>
+                                <v-radio-group row v-model="form_fields.schedule">
                                     <v-radio label="Now"> </v-radio>
                                     <v-radio label="Later"> </v-radio>
                                     <v-radio label="Long Course"> </v-radio>
@@ -409,7 +420,7 @@
                     </v-card-text>
                     <v-divider></v-divider>
 
-                    <v-card-actions class="justify-end" >
+                    <v-card-actions class="justify-end">
                         <v-btn color="blue darken-1" dark @click="sendMessage">
                             Send
                             <v-icon right> mdi-send </v-icon>
@@ -437,8 +448,8 @@
 <style></style>
 
 <script>
-import axios from 'axios';
-import Api from '../../../common/Api';
+import axios from "axios";
+import Api from "../../../common/Api";
 export default {
     data() {
         const srcs = {
@@ -449,23 +460,23 @@ export default {
             5: "https://cdn.vuetifyjs.com/images/lists/5.jpg"
         };
         return {
-          contacts:"",
+            contacts: "",
             select: [],
             selectedPeople: [],
             checkDuplicates: false,
             checkInvalids: false,
             checkBlacklist: false,
             files: [],
-            form_fields:[],
+            form_fields: [],
             breadcrumbsItems: [
                 {
-                  text: "Dashboard",
-                  disabled: false,
-                  href: "/"
+                    text: "Dashboard",
+                    disabled: false,
+                    href: "/"
                 },
                 {
-                  text: "Send SMS",
-                  disabled: true
+                    text: "Send SMS",
+                    disabled: true
                 }
             ],
             campaignList: [],
@@ -506,40 +517,41 @@ export default {
             self.campaignList = await self.getData();
         },
 
-        async loadRoutes(){
-          const self = this;
-          self.url = "/route";
-          self.routeList = await self.getData();
+        async loadRoutes() {
+            const self = this;
+            self.url = "/route";
+            self.routeList = await self.getData();
         },
 
-        async loadSenderIDs(){
-          const self = this;
-          self.url = "/all-senderid";
-          self.senderList = await self.getData();
+        async loadSenderIDs() {
+            const self = this;
+            self.url = "/all-senderid";
+            self.senderList = await self.getData();
         },
 
-        show(){
-          console.log(self.contacts);
+        show() {
+            console.log(self.contacts);
         },
-        sendMessage(){
+        sendMessage() {
             const self = this;
             alert("hello");
-
+            self.url = "/send-sms";
             let data = {
-                pasted_numbers:self.form_fields.pasted_numbers,
-                excel_numbers:self.form_fields.excel_numbers,
-                selected_numbers:self.form_fields.selected_numbers,
-                contact_groups:self.form_fields.contact_groups,
-                message:self.form_fields.message,
-            }
+                campaign_id:self.form_fields.campaign_id,
+                pasted_numbers: self.form_fields.pasted_numbers,
+                excel_numbers: self.form_fields.excel_numbers,
+                selected_numbers: self.form_fields.selected_numbers,
+                contact_groups: self.form_fields.contact_groups,
+                message: self.form_fields.message,
+                remove_duplicate:self.form_fields.remove_duplicate,
+                remove_invalids:self.form_fields.remove_invalids,
+                remove_blacklist:self.form_fields.remove_blacklist,
+                sms_type:self.form_fields.sms_type,
+                schedule:self.form_fields.schedule
+            };
 
-            Api().post(`api/send-sms`,data).then((response)=>{
-                    console.log(response);
-            }).catch((err)=>{
-                console.log(err);
-            })
-            
-            console.log(self.form_fields);
+           let response = self.post(data);
+           console.log(response);
         }
     }
 };

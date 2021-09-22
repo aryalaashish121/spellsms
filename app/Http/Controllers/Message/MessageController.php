@@ -8,13 +8,15 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class MessageController extends Controller
 {
-    public function sendSms(Request $request){
-     
-        //data listed on array by copy paste
-        //uploaded cvs data
-        //contact groups data
-        // from contacts
+    public function sendSMS(Request $request){
 
+        $pasted_numbers = $request->pasted_numbers;
+        $excel_numbers = $request->excel_numbers;
+        $contact_groups = $request->contact_groups;
+        $selected_numbers = $request->$request->selected_numbers;
+
+        
+        
         $message = 'Welcome to message center';
         $mobile = "9867182424";
         $api_key = '26131CBCBE0BDF';

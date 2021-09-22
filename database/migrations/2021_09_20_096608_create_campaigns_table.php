@@ -27,6 +27,9 @@ class CreateCampaignsTable extends Migration
             $table->unsignedBigInteger('default_route')->nullable();
             $table->foreign('default_route')->references('id')->on('routes')->onDelete('cascade');
 
+            // $table->unsignedBigInteger('sender_id')->nullable();
+            // $table->foreign('sender_id')->references('id')->on('sender_i_d_s')->onDelete('cascade');
+
             $table->boolean('is_default')->default(false);
             $table->timestamps();
         });
