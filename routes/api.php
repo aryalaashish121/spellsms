@@ -7,6 +7,7 @@ use App\Http\Controllers\Authorization\RoleController;
 use App\Http\Controllers\ContactGroup\ContactGroupController;
 use App\Http\Controllers\Contacts\ContactController;
 use App\Http\Controllers\Message\CampaignsController;
+use App\Http\Controllers\Message\MessageController;
 use App\Http\Controllers\Message\SenderIdController;
 use App\Http\Controllers\Message\UserCreditController;
 use App\Http\Controllers\RouteController;
@@ -61,6 +62,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/add-template', [TemplateController::class, 'store']);
     Route::delete('/delete-template/{id}', [TemplateController::class, 'destroy']);
 
+    //send sms
+    Route::post('/send-sms',[MessageController::class,'sendSMS']);
+
     //CRUD Contact Groups
     Route::get('/all-contact-groups', [ContactGroupController::class, 'index']);
     Route::post('/add-contact-group', [ContactGroupController::class, 'store']);
@@ -84,7 +88,5 @@ Route::middleware('auth:sanctum')->get('/get-token', function () {
         'token' => $token
     ];
     return response($data);
-    Route::post('/send-sms', function (Request $request) {
-        return $request->all();
-    });
+ 
 });

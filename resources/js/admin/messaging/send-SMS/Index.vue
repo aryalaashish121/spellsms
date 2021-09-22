@@ -115,8 +115,7 @@
                           class="mt-3"
                           placeholder="Upload your documents"
                           label="Browse"
-                          multiple
-                          solo
+                          type="file"
                           prepend-icon="mdi-paperclip"
                           v-model="form_fields.excel_numbers"
                         >
@@ -238,19 +237,28 @@
               <div class="flex space-x-3 -mt-3">
                 <div>
                   <v-checkbox
-                    v-model="checkDuplicates"
+                    v-model="form_fields.remove_duplicate"
                     label="Remove Duplicates"
+                    value="1"
                   >
                   </v-checkbox>
                 </div>
 
                 <div>
-                  <v-checkbox v-model="checkInvalids" label="Remove Invalids">
+                  <v-checkbox
+                    v-model="form_fields.remove_invalids"
+                    label="Remove Invalids"
+                    value="1"
+                  >
                   </v-checkbox>
                 </div>
 
                 <div>
-                  <v-checkbox v-model="checkBlacklist" label="Blacklist">
+                  <v-checkbox
+                    v-model="form_fields.remove_blacklist"
+                    label="Blacklist"
+                    value="1"
+                  >
                   </v-checkbox>
                 </div>
               </div>
@@ -264,10 +272,10 @@
 
             <v-row>
               <div class="-mt-3">
-                <v-radio-group row>
-                  <v-radio label="Text"> </v-radio>
-                  <v-radio label="Unicode"> </v-radio>
-                  <v-radio label="Dynamic"> </v-radio>
+                <v-radio-group row v-model="form_fields.sms_type">
+                  <v-radio label="Text" value="text"> </v-radio>
+                  <v-radio label="Unicode" value="unicode"> </v-radio>
+                  <v-radio label="Dynamic" value="dynamic"> </v-radio>
                 </v-radio-group>
               </div>
             </v-row>
@@ -305,7 +313,7 @@
 
             <v-row>
               <div class="-mt-3">
-                <v-radio-group row>
+                <v-radio-group row v-model="form_fields.schedule">
                   <v-radio label="Now"> </v-radio>
                   <v-radio label="Later"> </v-radio>
                   <v-radio label="Long Course"> </v-radio>
@@ -431,28 +439,26 @@ export default {
     show() {
       console.log(self.contacts);
     },
-    sendMessage() {
+    async sendMessage() {
       const self = this;
       alert("hello");
-
+      self.url = "/send-sms";
       let data = {
+        campaign_id: self.form_fields.campaign_id,
         pasted_numbers: self.form_fields.pasted_numbers,
         excel_numbers: self.form_fields.excel_numbers,
         selected_numbers: self.form_fields.selected_numbers,
         contact_groups: self.form_fields.contact_groups,
         message: self.form_fields.message,
+        remove_duplicate: self.form_fields.remove_duplicate,
+        remove_invalids: self.form_fields.remove_invalids,
+        remove_blacklist: self.form_fields.remove_blacklist,
+        sms_type: self.form_fields.sms_type,
+        schedule: self.form_fields.schedule,
       };
 
-      Api()
-        .post(`api/send-sms`, data)
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-      console.log(self.form_fields);
+      let response = await self.post(data);
+      console.log(response);
     },
   },
 };
