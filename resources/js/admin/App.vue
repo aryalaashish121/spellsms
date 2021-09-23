@@ -358,6 +358,19 @@
             </router-link>
           </div>
         </v-list-group>
+
+        <router-link to="/accountControlPanel">
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon> mdi-account-cog </v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>
+                <span class="text-xs">Account Control Panel</span>
+              </v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
       </v-list>
       <!-- -->
     </v-navigation-drawer>
@@ -435,6 +448,16 @@
 
     <v-main>
       <div class="">
+        <div class="loader-wrapper">
+          <lottie-player
+            src="https://assets5.lottiefiles.com/packages/lf20_x62chJ.json"
+            background="transparent"
+            speed="3"
+            style="width: 100%; height: 100%"
+            loop
+            autoplay
+          ></lottie-player>
+        </div>
         <router-view></router-view>
       </div>
     </v-main>
@@ -447,6 +470,18 @@
 
 #inspire {
   font-family: "Poppins", sans-serif;
+}
+
+.loader-wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999999999;
 }
 </style>
 
@@ -461,6 +496,11 @@ export default {
       isFullScreen: false,
       timeout: 3000,
     };
+  },
+
+  created() {
+    const self = this;
+    self.loadPreloader();
   },
 
   methods: {
@@ -481,6 +521,12 @@ export default {
     },
     dialogCancel() {
       store.commit("dialogCancel");
+    },
+
+    loadPreloader() {
+      $(window).on("load", function () {
+        $(".loader-wrapper").fadeOut("slow");
+      });
     },
   },
   computed: {
