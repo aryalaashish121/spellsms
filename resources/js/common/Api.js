@@ -1,17 +1,16 @@
 import axios from "axios";
 
 let BaseApi = axios.create({
-  baseURL: "http://spellsms.test/api/"
+    baseURL: "http://spellsms.test/api/"
 });
+let Api = function() {
+    let token = localStorage.getItem("token");
 
-let Api = function () {
-  let token = localStorage.getItem("token");
+    if (token) {
+        BaseApi.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    }
 
-  if (token) {
-    BaseApi.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-  }
-
-  return BaseApi;
+    return BaseApi;
 };
 
 export default Api;

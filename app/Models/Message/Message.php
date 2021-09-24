@@ -2,6 +2,7 @@
 
 namespace App\Models\Message;
 
+use Illuminate\Bus\Queueable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

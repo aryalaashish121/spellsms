@@ -14,7 +14,7 @@ import AxiosAjaxDetect from "../common/axiosAxajDetect";
 import VMdDateRangePicker from "v-md-date-range-picker";
 // import "v-md-date-range-picker/dist/v-md-date-range-picker.css";
 import './tailwindcss.css'
-
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 Vue.use(eventBus);
 Vue.use(VMdDateRangePicker);
 const admin = new Vue({

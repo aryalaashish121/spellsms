@@ -19,7 +19,7 @@ class ContactGroupController extends Controller
      */
     public function index()
     {
-        $contactGroups = ContactGroup::all();
+        $contactGroups = ContactGroup::orderBy('created_at','desc')->get();
         return $this->respondOk($contactGroups);
     }
 

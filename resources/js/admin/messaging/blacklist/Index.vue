@@ -47,12 +47,9 @@
         </v-toolbar>
       </template>
 
-      <template v-slot:[`item.actions`]="{}">
+      <template v-slot:[`item.actions`]="{item}">
         <v-flex>
-          <v-btn class="ma-1" outlined x-small fab color="indigo">
-            <v-icon>mdi-pencil</v-icon>
-          </v-btn>
-          <v-btn class="ma-1" outlined x-small fab color="error">
+          <v-btn class="ma-1" outlined x-small fab color="error" @click="deleteData(item.id)">
             <v-icon>mdi-delete</v-icon>
           </v-btn>
         </v-flex>
@@ -69,6 +66,7 @@ export default {
     return {
       search: "",
       selected: [],
+      blacklistContacts: [],
 
       breadcrumbsItems: [
         {
@@ -87,23 +85,18 @@ export default {
           text: "Contact No.",
           align: "start",
           sortable: false,
-          value: "contact_no",
+          value: "mobile",
         },
-        { text: "Type", value: "type" },
+        { text: "Contact name", value: "name" },
         { text: "Actions", value: "actions", sortable: false },
       ],
 
-      blacklistContacts: [
-        {
-          contact_no: "+977 9876543211",
-          type: "Self",
-        },
-        {
-          contact_no: "+977 9855543211",
-          type: "Self",
-        },
-      ],
     };
+  },
+
+  mounted(){
+    const self = this;
+    self.loadBlackListData();
   },
 
   methods: {
@@ -111,6 +104,19 @@ export default {
       const self = this;
       self.$refs.AddBlacklist.create();
     },
+
+    async loadBlackListData(){
+      const self = this;
+      self.url = "/get-blacklist-contacts";
+      let response = await self.getAll();
+      self.blacklistContacts = response.data;
+    },
+    deleteData(id){
+      const self = this;
+      self.url = "/delete-blacklist-contact";
+      let response = self.delete(id);
+      self.loadBlackListData();
+    }
   },
 };
 </script>

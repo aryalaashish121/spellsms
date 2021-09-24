@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Message;
 use App\Components\Core\ResponseHelpers;
 use App\Http\Controllers\Controller;
 use App\Imports\ContactImport;
+use App\Models\BlackListContact;
+use App\Models\Contact;
+use app\Services\AakashSMSApiService;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class MessageController extends Controller
 {
     use ResponseHelpers;
+
     public function sendSMS(Request $request){
 
         $pasted_numbers = $request->pasted_numbers;
@@ -18,28 +22,57 @@ class MessageController extends Controller
         $selected_numbers = $request->selected_numbers;
         $message = $request->message;
 
-        $pastedList = preg_split("/\r\n|\n|\r/", $pasted_numbers);
+        $pastedList = "";
+        $contactGroupList = [];
+        $excelNumberList=[];
 
-        $excelNumberList = [];
-            // $data = Excel::toArray(new ContactImport,$request->file('excel_numbers'));
-            // foreach($data as $d){
-            //     foreach($d as $f){
-            //     array_push($excelNumberList,$f['mobile']);
-            //     }
-            // }
+        if($pasted_numbers){
+            $pastedList = preg_split("/\r\n|\n|\r/", $pasted_numbers);
+        }
+        // dd($request->all());
+        if($request->hasFile('excel_numbers')){
+            $path1 = $request->file('excel_numbers')->store('temp'); 
+            $path=storage_path('app').'/'.$path1;  
+                $data = Excel::toArray(new ContactImport,$path);
+                foreach($data as $d){
+                    foreach($d as $f){
+                    array_push($excelNumberList,$f['mobile']);
+                    }
+            }
+        }
+        
+
+        if($contact_groups){
+            foreach($contact_groups as $group){
+                $contacts = Contact::where('contact_group_id',$group['id'])->pluck('mobile');
+                $contactGroupList =  $contacts->ToArray();
+            }
+        }
+       $allList =  array_merge($excelNumberList,$pastedList, $contactGroupList,$selected_numbers);
 
 
-        $allList =  array_merge($excelNumberList,$pastedList);
-        $removing_duplicate = array_unique($allList);
+     
+        if($request->remove_duplicate){
+        $allList = array_unique($allList);
+        }
 
-        $print['allList']=$allList;
-        $print['removing_duplicate'] = $removing_duplicate;
+        
+        if($request->remove_blacklist){
+            $black_listed_contacts = BlackListContact::pluck('mobile');
+           $black_listed_contacts= $black_listed_contacts->toArray();
+            $allList = (array_diff($allList, $black_listed_contacts));
+        }
+
+        //checking phone number validity
 
         $tags = implode(', ', $allList);
+        return $tags;
 
-       $res =  $this->aakashSms($removing_duplicate,$message);
+        $aakashSMSApiService = new AakashSMSApiService();
+       $res =  $aakashSMSApiService->textSMS($allList,$message);
 
        return $res;
+       
     //    if($res['error']=="false"){
     //         return $this->respondSuccess($res['message'],$res['data']);
     //    }else{
