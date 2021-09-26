@@ -1,9 +1,11 @@
 <template>
   <div class="p-5 md:p-8">
-    <div class="grid gap-10 md:grid-cols-4">
+    <div
+      class="grid gap-10 md:grid-cols-4"
+      data-aos="fade-down"
+      data-aos-duration="700"
+    >
       <div
-        data-aos="fade-down"
-        data-aos-duration="800"
         class="
           bg-gradient-to-br
           from-blue-600
@@ -17,6 +19,7 @@
           transform
           hover:-translate-y-3
           hover:shadow-xl
+          cursor-pointer
         "
       >
         <a
@@ -41,9 +44,6 @@
       </div>
 
       <div
-        data-aos="fade-down"
-        data-aos-duration="800"
-        data-aos-delay="200"
         class="
           bg-gradient-to-br
           from-green-600
@@ -76,9 +76,6 @@
       </div>
 
       <div
-        data-aos="fade-down"
-        data-aos-duration="800"
-        data-aos-delay="400"
         class="
           bg-gradient-to-br
           from-yellow-500
@@ -111,9 +108,6 @@
       </div>
 
       <div
-        data-aos="fade-down"
-        data-aos-duration="800"
-        data-aos-delay="600"
         class="
           bg-gradient-to-br
           from-red-600

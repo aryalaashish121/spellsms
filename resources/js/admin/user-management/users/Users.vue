@@ -1,6 +1,7 @@
 <template>
   <div data-aos="zoom-out" data-aos-duration="1000" class="p-5 md:px-3 md:py-2">
     <AddUser ref="addUser"> </AddUser>
+    <OpenControlPanel ref="openControlPanel"> </OpenControlPanel>
     <div>
       <v-breadcrumbs :items="breadcrumbsItems">
         <template v-slot:divider>
@@ -38,6 +39,15 @@
           <v-btn color="primary" @click="addUser" class="capitalize">
             <v-icon left small> mdi-plus </v-icon>
             Add
+          </v-btn>
+
+          <v-btn
+            color="secondary"
+            @click="openControlPanel"
+            class="capitalize mx-2"
+          >
+            <v-icon left small> mdi-view-dashboard-variant </v-icon>
+            Control Panel
           </v-btn>
 
           <v-btn color="secondary" @click="exportData">
@@ -87,8 +97,9 @@ td {
 
 <script>
 import AddUser from "./Add";
+import OpenControlPanel from "./AccountControlPanel";
 export default {
-  components: { AddUser },
+  components: { AddUser, OpenControlPanel },
   data() {
     return {
       selectedList: [],
@@ -138,20 +149,25 @@ export default {
       self.$refs.addUser.add();
     },
 
-        async loadUsersData() {
-            const self = this;
-            self.url = "/users";
-            let response = await self.getAll();
-            self.usersList = response.data;
-        },
+    openControlPanel() {
+      const self = this;
+      self.$refs.openControlPanel.open();
+    },
 
-        exportData(){
-            const self = this;
-            self.url = "/export-users";
-             let response = self.post(self.selectedList);
-             console.log(response);
-            console.log(self.selectedList);
-        }
-    }
+    async loadUsersData() {
+      const self = this;
+      self.url = "/users";
+      let response = await self.getAll();
+      self.usersList = response.data;
+    },
+
+    exportData() {
+      const self = this;
+      self.url = "/export-users";
+      let response = self.post(self.selectedList);
+      console.log(response);
+      console.log(self.selectedList);
+    },
+  },
 };
 </script>

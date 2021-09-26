@@ -17,6 +17,13 @@ const routes = [
     },
 
     {
+        path: '/accountControlPanel',
+        name: 'admin.accountControlPanel',
+        component: require('./AccountControlPanel').default,
+        meta: { authOnly: true }
+    },
+
+    {
         path: '/admin/profile',
         name: 'admin.profile',
         component: require('./profile/Profile').default,

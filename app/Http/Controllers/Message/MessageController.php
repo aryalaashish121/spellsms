@@ -66,10 +66,10 @@ class MessageController extends Controller
         //checking phone number validity
 
         $tags = implode(', ', $allList);
-        return $tags;
+        // return $tags;
 
-        $aakashSMSApiService = new AakashSMSApiService();
-       $res =  $aakashSMSApiService->textSMS($allList,$message);
+        // $aakashSMSApiService = new AakashSMSApiService();
+       $res =  $this->aakashSms($allList,$message);
 
        return $res;
        

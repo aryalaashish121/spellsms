@@ -192,7 +192,7 @@
                         block: openTab === 1,
                       }"
                     >
-                      <div class="w-3/4 lg:w-2/6 flex-col rounded-lg">
+                      <div class="w-3/4 lg:w-2/4 flex-col rounded-lg">
                         <v-text-field
                           outlined
                           dense
@@ -259,8 +259,8 @@
                         block: openTab === 2,
                       }"
                     >
-                      <div class="flex w-full">
-                        <div class="w-1/2 h-auto pr-9 pt-5">
+                      <div class="flex w-full pt-5">
+                        <div class="w-1/2 h-auto pr-9">
                           <v-text-field
                             rounded
                             dense
@@ -306,11 +306,11 @@
                           <v-alert
                             colored-border
                             type="error"
-                            prominent
                             border="left"
                             outlined
                           >
-                            Passwords <b>must :</b>
+                           <p class=" text-xs font-normal">
+                              Passwords <b>must :</b>
                             <ul>
                               <li>
                                 * contain a minimum of 8 characters in length
@@ -325,6 +325,7 @@
                                 </ul>
                               </li>
                             </ul>
+                           </p>
                           </v-alert>
                         </div>
                       </div>
