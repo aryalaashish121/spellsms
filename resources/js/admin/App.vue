@@ -378,7 +378,9 @@
     <v-app-bar app color="primary" dark>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title> Admin Dashboard </v-toolbar-title>
+      <v-toolbar-title>
+        <span class="text-base">Admin Dashboard</span>
+      </v-toolbar-title>
 
       <v-spacer></v-spacer>
 

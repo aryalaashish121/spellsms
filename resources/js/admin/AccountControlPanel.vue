@@ -6,10 +6,38 @@
           <v-card>
             <v-card flat>
               <v-card-text>
-                <h1 class="text-xl flex">Overview</h1>
-                <div class="flex space-x-1 pl-1">
-                  <div class="w-10 h-1 bg-blue-400 rounded-full"></div>
-                  <div class="w-4 h-1 bg-blue-400 rounded-full"></div>
+                <div class="flex justify-between">
+                  <div>
+                    <h1 class="text-xl flex">Overview</h1>
+                    <div class="flex space-x-1 pl-1">
+                      <div class="w-10 h-1 bg-blue-400 rounded-full"></div>
+                      <div class="w-4 h-1 bg-blue-400 rounded-full"></div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="
+                      shadow-inner
+                      bg-gray-100
+                      rounded
+                      px-5
+                      py-2
+                      cursor-pointer
+                      group
+                      hover:bg-gray-400
+                      hover:text-white
+                      hover:shadow-lg
+                      transition
+                      ease-out
+                      duration-300
+                    "
+                  >
+                    <h2>
+                      <i class="mr-1 fas fa-map-signs group-hover:text-white">
+                      </i>
+                      <strong>Route : </strong> SMBIT22
+                    </h2>
+                  </div>
                 </div>
 
                 <div
@@ -65,6 +93,7 @@
                             :icon="item.icon"
                             :title="item.title"
                             :color="item.color"
+                            :href="item.href"
                           >
                           </tool-tip>
                         </div>
@@ -178,8 +207,38 @@
                       cursor-pointer
                     "
                   >
-                    <div class="w-full h-5 pt-3 pl-4">
-                      <h1 class="text-xs">Company Info</h1>
+                    <div class="w-full h-5 pt-3 pl-4 justify-between flex">
+                      <h1 class="text-xs">Company Info Info</h1>
+                      <v-speed-dial
+                        v-model="fab"
+                        transition="slide-x-transition"
+                        direction="bottom"
+                      >
+                        <template v-slot:activator>
+                          <v-btn
+                            v-model="fab"
+                            x-small
+                            class="mr-3 -mt-1"
+                            color="primary"
+                            dark
+                            fab
+                          >
+                            <v-icon v-if="fab"> mdi-close </v-icon>
+                            <v-icon v-else> mdi-pencil </v-icon>
+                          </v-btn>
+                        </template>
+                        <div class="mt-5 -ml-1.5">
+                          <tool-tip
+                            v-for="(item, index) in companyTooltips"
+                            :key="index"
+                            :icon="item.icon"
+                            :title="item.title"
+                            :color="item.color"
+                            :href="item.href"
+                          >
+                          </tool-tip>
+                        </div>
+                      </v-speed-dial>
                     </div>
                     <div class="flex-col mt-7">
                       <div
@@ -363,26 +422,26 @@
                   </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-5">
                   <div class="col-span-1 shadow rounded h-72 border">
                     <div class="flex flex-col p-3">
                       <div class="flex justify-between">
                         <h1 class="text-sm font-semibold">SMS Credits</h1>
                         <v-speed-dial
-                          v-model="fab2"
+                          v-model="fab"
                           transition="slide-x-transition"
                           direction="bottom"
                         >
                           <template v-slot:activator>
                             <v-btn
-                              v-model="fab2"
+                              v-model="fab"
                               x-small
                               class="mr-3 -mt-1"
                               color="green"
                               dark
                               fab
                             >
-                              <v-icon v-if="fab2"> mdi-close </v-icon>
+                              <v-icon v-if="fab"> mdi-close </v-icon>
                               <v-icon v-else> mdi-cog </v-icon>
                             </v-btn>
                           </template>
@@ -393,12 +452,13 @@
                               :title="item.title"
                               :icon="item.icon"
                               :color="item.color"
+                              :href="item.href"
                             >
                             </tool-tip>
                           </div>
                         </v-speed-dial>
                       </div>
-                      <div class="mx-auto">
+                      <div class="flex justify-center">
                         <DonutChart :height="220"></DonutChart>
                       </div>
                     </div>
@@ -412,7 +472,7 @@
                           <v-icon>mdi-cogs</v-icon>
                         </v-btn>
                       </div>
-                      <div class="mx-auto">
+                      <div class="flex justify-center overflow-hidden">
                         <LineChart :height="220"></LineChart>
                       </div>
                     </div>
@@ -467,6 +527,7 @@ export default {
           icon: "mdi-wrench",
           title: "Manage Credits",
           color: "green",
+          href: "/user/creditDebit",
         },
       ],
 
@@ -475,6 +536,7 @@ export default {
           icon: "mdi-lock-reset",
           title: "Reset Password",
           color: "blue darken-1",
+          href: "/user/resetPassword",
         },
         {
           icon: "mdi-briefcase-account",
@@ -490,6 +552,22 @@ export default {
           icon: "mdi-delete-outline",
           title: "Delete",
           color: "red",
+        },
+      ],
+
+      companyTooltips: [
+        {
+          icon: "mdi-credit-card-clock",
+          title: "Credit Log",
+          color: "cyan darken-3",
+          href: "/user/creditLog",
+        },
+
+        {
+          icon: "mdi-currency-inr",
+          title: "Recharge History",
+          color: "light-blue darken-1",
+          href: "/user/rechargeHistory",
         },
       ],
     };

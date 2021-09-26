@@ -139,6 +139,34 @@ const routes = [
         meta: { authOnly: true }
     },
 
+    {
+        path: '/user/creditLog',
+        name: 'admin.userCreditLogs',
+        component: require('../components/tables/CreditLogTable').default,
+        meta: { authOnly: true }
+    },
+
+    {
+        path: '/user/resetPassword',
+        name: 'admin.user-resetPassword',
+        component: require('../components/ResetPassword').default,
+        meta: { authOnly: true }
+    },
+
+    {
+        path: '/user/creditDebit',
+        name: 'admin.user-credit/Debit',
+        component: require('../components/CreditDebit').default,
+        meta: { authOnly: true }
+    },
+
+    {
+        path: '/user/rechargeHistory',
+        name: 'admin.userRechargeHistory',
+        component: require('../components/tables/RechargeHistoryTable').default,
+        meta: { authOnly: true }
+    },
+
 
     {
         path: '/login',

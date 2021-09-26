@@ -1,7 +1,15 @@
 <template>
   <v-tooltip right>
     <template v-slot:activator="{ on, attrs }">
-      <v-btn v-on="on" v-bind="attrs" fab dark x-small :color="color">
+      <v-btn
+        v-on="on"
+        v-bind="attrs"
+        fab
+        dark
+        x-small
+        :color="color"
+        :href="href"
+      >
         <v-icon>{{ icon }}</v-icon>
       </v-btn>
     </template>
@@ -11,6 +19,11 @@
 
 <script>
 export default {
-  props: { icon: String, title: String, color: String },
+  props: {
+    icon: String,
+    title: String,
+    color: String,
+    href: String,
+  },
 };
 </script>
