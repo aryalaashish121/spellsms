@@ -2,15 +2,15 @@
 
 namespace App\services;
 
-use App\Models\BlackListContact;
 use App\Models\UserRoute;
 use Carbon\Carbon;
-use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Sum;
 
 class SmsService{
         public function textSMS($contactList,$message){
-            return "ok comming";
+          
             $contacts = implode(',',$contactList);
+            dd($contacts);
+
             $args = http_build_query(array(
                 'auth_token'=> '24e37a4f557a608b2d05431670f25d75b464dea735d08297c7eb4ca26b5afbc8',
                 'to'    =>  $contacts,
@@ -68,6 +68,7 @@ class SmsService{
       }
 
       public function UseCreditsBalance($totalsms){
+        // return true;
         $credits = UserRoute::where('user_id',auth()->user()->id)
         ->where('validity','>=',Carbon::today())      //removing expired credits
         ->where('status',true) 
@@ -79,7 +80,7 @@ class SmsService{
         ->orderBy('validity','asc')                   //getting in asc order so that we can deduct from the low validatiy date
         ->first();
         
-
+      
         $remaing_credit = $credits->sum('balance')-$credits->sum('used');
         $update =  UserRoute::where('id',$credit->id)->update([
                         'used'=>$credit->used+$totalsms

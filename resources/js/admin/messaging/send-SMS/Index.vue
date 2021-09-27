@@ -38,32 +38,6 @@
                         </v-row>
 
                         <v-row>
-                            <v-select
-                                outlined
-                                :items="routeList"
-                                label="Select Route"
-                                prepend-inner-icon="mdi-routes"
-                                item-text="name"
-                                item-value="id"
-                                v-model="form_fields.route_id"
-                            >
-                            </v-select>
-                        </v-row>
-
-                        <v-row>
-                            <v-select
-                                outlined
-                                :items="senderList"
-                                label="Select Sender ID"
-                                prepend-inner-icon="mdi-card-account-details"
-                                item-value="id"
-                                item-text="sender_id"
-                                v-model="form_fields.senderid"
-                            >
-                            </v-select>
-                        </v-row>
-
-                        <v-row>
                             <v-card elevation="2" rounded="lg">
                                 <v-tabs dark background-color="blue darken-1">
                                     <v-tab>
@@ -494,7 +468,7 @@ export default {
             checkDuplicates: false,
             checkInvalids: false,
             checkBlacklist: false,
-            files: [],
+            selectedFile:null,
 
             form_fields: {
                 campaign_id: "", 
@@ -536,15 +510,9 @@ export default {
     methods: {
         onFileChange(e) {
             const self = this;
-            // console.log(e);
-            // self.excelfile = e.target.files[0];
-
-             let file = e.target.files[0];
-                let reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = e => {
-                    self.excelfile = e.target.result;
-                }
+            console.log(e);
+            self.selectedFile = e.target.files[0];
+            console.log(self.selectedFile);
         },
         async loadCampaignList() {
             const self = this;
@@ -576,31 +544,36 @@ export default {
             self.senderList = await self.getData();
         },
 
-        show() {
-            console.log(self.contacts);
-        },
+       
         async sendMessage() {
             const self = this;
             alert("hello");
             self.url = "/send-sms";
-            let data = {
-                headers: {
-                    "Content-Type": "multipart/form-data; charset=utf-8; boundary=" + Math.random().toString().substr(2),
-                },
-                campaign_id: self.form_fields.campaign_id,
-                pasted_numbers: self.form_fields.pasted_numbers,
-                excel_numbers: self.excelfile,
-                selected_numbers: self.form_fields.selected_numbers,
-                contact_groups: self.form_fields.contact_groups,
-                message: self.form_fields.message,
-                remove_duplicate: self.form_fields.remove_duplicate,
-                remove_invalids: self.form_fields.remove_invalids,
-                remove_blacklist: self.form_fields.remove_blacklist,
-                sms_type: self.form_fields.sms_type,
-                schedule: self.form_fields.schedule
-            };
-            console.log(data);
-            let response = await self.sendSms(data);
+            const formdata = new FormData();
+            let contactgrouplist = [];
+            // console.log(formdata);
+            if(self.selectedFile){
+            formdata.append('excel_numbers',self.selectedFile,self.selectedFile.name);
+            }
+            if(self.form_fields.contact_groups){
+                self.form_fields.contact_groups.forEach(element => {
+                   contactgrouplist.push(element.id);
+                });
+            }
+                   console.log(contactgrouplist);
+
+            formdata.append('campaign_id',self.form_fields.campaign_id);
+            formdata.append('pasted_numbers',self.form_fields.pasted_numbers);
+            formdata.append('selected_numbers',self.form_fields.selected_numbers);
+            formdata.append('contact_groups',contactgrouplist);
+            formdata.append('message',self.form_fields.message);
+            formdata.append('remove_duplicate',self.form_fields.remove_duplicate);
+            formdata.append('remove_invalids',self.form_fields.remove_invalids);
+            formdata.append('remove_blacklist',self.form_fields.remove_blacklist);
+            formdata.append('sms_type',self.form_fields.sms_type);
+            formdata.append('schedule',self.form_fields.schedule);
+            // console.log(formdata);
+            let response = await self.sendSms(formdata);
             console.log(response);
         },
 
