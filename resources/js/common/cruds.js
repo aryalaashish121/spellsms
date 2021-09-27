@@ -167,6 +167,45 @@ export default {
                 }
             }
         },
+        async sendSms(data = {}, callback) {
+            const self = this;
+            try {
+                let response = await Api().post(`${self.url}`, data);
+                if (response.status === 201 && response.data.success) {
+                    self.$store.commit("showSnackbar", {
+                        message: response.data.message,
+                        color: response.data.success
+                    });
+                    callback(response.data.data);
+                }
+            } catch (err) {
+                self.loading = false;
+                // alert(err);
+                if (err) {
+                    self.loading = false;
+                    let errResponse = err.response;
+                    if (errResponse && errResponse.status === 422) {
+                        self.isSaving = false;
+                        let data = errResponse.data;
+                        let keys = Object.keys(data.errors);
+
+                        keys.forEach(key => {
+                            for (let err of data.errors[key]) {
+                                self.$store.commit("showSnackbar", {
+                                    message: err,
+                                    color: errResponse.data.success
+                                });
+                            }
+                        });
+                    } else {
+                        self.$store.commit("showSnackbar", {
+                            message: errResponse.data.message,
+                            color: errResponse.data.success
+                        });
+                    }
+                }
+            }
+        },
         async exportPdf() {
             const self = this;
             try {

@@ -130,7 +130,13 @@
                                                     >
                                                     txt/csv/xls/xlsx
                                                 </v-chip>
-                                                 <input class="file-input" type="file" ref="import_file" name="file" @change="onFileChange">
+                                                <input
+                                                    class="file-input"
+                                                    type="file"
+                                                    ref="import_file"
+                                                    name="file"
+                                                    @change="onFileChange"
+                                                />
                                                 <!-- <v-file-input
                                                     class="mt-3"
                                                     placeholder="Upload your documents"
@@ -172,7 +178,7 @@
                                                     multiple
                                                     chips
                                                     solo
-                                                     filled
+                                                    filled
                                                     prepend-inner-icon="mdi-account-group"
                                                 >
                                                     <template
@@ -413,6 +419,8 @@
                                     outlined
                                     placeholder="Enter SMS Content here"
                                     v-model="form_fields.message"
+                                    ref="message_field_np"
+                                    v-on:keypress="changeToNepaliFont"
                                 >
                                 </v-textarea>
                             </div>
@@ -471,15 +479,9 @@
 <style></style>
 
 <script>
+import Conversions from "../../../common/conversions";
 export default {
     data() {
-        const srcs = {
-            1: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-            2: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-            3: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-            4: "https://cdn.vuetifyjs.com/images/lists/4.jpg",
-            5: "https://cdn.vuetifyjs.com/images/lists/5.jpg"
-        };
         return {
             contacts: "",
             select: [],
@@ -493,7 +495,20 @@ export default {
             checkInvalids: false,
             checkBlacklist: false,
             files: [],
-            form_fields: [],
+
+            form_fields: {
+                campaign_id: "", 
+                pasted_numbers: "",
+                excel_numbers: "",
+                selected_numbers: [],
+                contact_groups: [],
+                message: "",
+                remove_duplicate: "",
+                remove_invalids: "",
+                remove_blacklist: "",
+                sms_type: "",
+                schedule: ""
+            },
             excelfile: null,
 
             breadcrumbsItems: [
@@ -521,9 +536,15 @@ export default {
     methods: {
         onFileChange(e) {
             const self = this;
-            console.log(e);
-            self.excelfile = e.target.files[0];
-       
+            // console.log(e);
+            // self.excelfile = e.target.files[0];
+
+             let file = e.target.files[0];
+                let reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = e => {
+                    self.excelfile = e.target.result;
+                }
         },
         async loadCampaignList() {
             const self = this;
@@ -563,6 +584,9 @@ export default {
             alert("hello");
             self.url = "/send-sms";
             let data = {
+                headers: {
+                    "Content-Type": "multipart/form-data; charset=utf-8; boundary=" + Math.random().toString().substr(2),
+                },
                 campaign_id: self.form_fields.campaign_id,
                 pasted_numbers: self.form_fields.pasted_numbers,
                 excel_numbers: self.excelfile,
@@ -573,11 +597,22 @@ export default {
                 remove_invalids: self.form_fields.remove_invalids,
                 remove_blacklist: self.form_fields.remove_blacklist,
                 sms_type: self.form_fields.sms_type,
-                schedule: self.form_fields.schedule,
+                schedule: self.form_fields.schedule
             };
             console.log(data);
-            let response = await self.post(data);
+            let response = await self.sendSms(data);
             console.log(response);
+        },
+
+        changeToNepaliFont(e) {
+            if (this.form_fields.sms_type == "unicode") {
+                let convertedtext = new Conversions().translateNepali(
+                    this.$refs.message_field_np,
+                    e
+                );
+                this.form_fields.message =
+                    this.form_fields.message + convertedtext;
+            }
         }
     }
 };

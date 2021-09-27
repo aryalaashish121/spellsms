@@ -16,4 +16,9 @@ ShouldQueue
     protected $fillable = [
         'name','mobile'
     ];
+
+    public static function blackListedContacts(){
+        $contacts =  BlackListContact::pluck('mobile');
+        return $contacts->toArray();
+    }
 }

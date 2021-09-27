@@ -21,6 +21,7 @@ class CreateUserRoutesTable extends Migration
             $table->unsignedBigInteger('route_id');
             $table->foreign('route_id')->references('id')->on('routes')->onDelete('cascade');
             $table->integer('balance');
+            $table->integer('used')->default(0);
             $table->dateTime('validity')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();

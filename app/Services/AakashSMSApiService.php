@@ -1,9 +1,9 @@
 <?php
+namespace App\services;
 
-    namespace app\Services;
-
-class AakashSMSApiService{
+Class AakashSMSApiService{
     public function textSMS($contactList,$message){
+        return "ok comming";
         $contacts = implode(',',$contactList);
         $args = http_build_query(array(
             'auth_token'=> '24e37a4f557a608b2d05431670f25d75b464dea735d08297c7eb4ca26b5afbc8',
