@@ -167,6 +167,13 @@ const routes = [
         meta: { authOnly: true }
     },
 
+    {
+        path: '/user/sentSMS',
+        name: 'admin.userSentSMS',
+        component: require('../components/tables/SentSMStable').default,
+        meta: { authOnly: true }
+    },
+
 
     {
         path: '/login',

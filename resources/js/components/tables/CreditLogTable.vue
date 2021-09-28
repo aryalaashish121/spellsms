@@ -29,7 +29,7 @@
             show-year-select
             :show-custom-range-label="value"
             :opens="opens"
-            class="shadow-md text-xs mt-8"
+            class="shadow-md text-xs mt-8 z-50"
           ></v-md-date-range-picker>
         </v-toolbar>
       </template>

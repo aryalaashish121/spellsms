@@ -468,7 +468,13 @@
                     <div class="flex flex-col p-3">
                       <div class="flex justify-between">
                         <h1 class="text-sm font-semibold">SMS Sent</h1>
-                        <v-btn fab color="green" dark x-small>
+                        <v-btn
+                          fab
+                          color="green"
+                          dark
+                          x-small
+                          href="/user/sentSMS"
+                        >
                           <v-icon>mdi-cogs</v-icon>
                         </v-btn>
                       </div>
