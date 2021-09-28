@@ -24,7 +24,16 @@ class SendSmsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'campaign_id'=>'required',
+            'message'=>"required",
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'campaign_id.required'=>"Please select the campaign",
+            'message.required'=>"Sms text is required",
         ];
     }
 }

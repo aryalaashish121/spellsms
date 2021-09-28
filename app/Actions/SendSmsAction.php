@@ -1,31 +1,25 @@
 <?php
 
-namespace App\Http\Controllers\Message;
+namespace App\Actions;
 
-use App\Components\Core\ResponseHelpers;
-use App\Http\Controllers\Controller;
 use App\Imports\ContactImport;
-use App\Jobs\CheckJob;
-use App\Jobs\ScheduleSmsLaterJob;
 use App\Models\BlackListContact;
 use App\Models\Contact;
+use App\Models\Message\Message;
 use App\services\SmsService;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
-class MessageController extends Controller
-{
-    use ResponseHelpers;
+class SendSmsAction{
 
-    public function sendSMS(Request $request, SmsService $smsService){
-
-        
-        
+    public function handle(Request $request, SmsService $smsService)
+        {
         $pasted_numbers = $request->pasted_numbers;
         $contact_groups = $request->contact_groups;
         $selected_numbers = $request->selected_numbers;
         $message = $request->message;
 
+        // dd($request->all());
         $allList=[];
         $pastedList = [];
         $contactGroupList = [];
@@ -35,6 +29,7 @@ class MessageController extends Controller
         if($pasted_numbers){
             $pastedList = preg_split("/\r\n|\n|\r/", $pasted_numbers);
             $allList =  array_merge($allList,$pastedList);
+
         }
         if($selected_numbers){
             $selectedNumberList = explode(",",$selected_numbers);
@@ -59,31 +54,28 @@ class MessageController extends Controller
                array_push($contactGroupList,$contacts[0]);
             }
             $allList =  array_merge($allList,$contactGroupList);
-        }  
-        
-        
+        }    
 
+        // $response = $smsService->textSMS($allList,$message);
+    
         if($request->remove_duplicate){
         $allList = array_unique($allList);
         }
-
-        //dispatching message to queeue
-      
+        // dd($request->all());
         if($request->remove_blacklist){
            $black_listed_contacts= BlackListContact::blackListedContacts();
-            $allList = (array_diff($allList, $black_listed_contacts));     //check credit and actions
+            $allList = (array_diff($allList, $black_listed_contacts));
         }
+        // return $allList;
+        //check credit and actions
+       if($smsService->checkCredit(count($allList))){
+           $usecredit = $smsService->UseCreditsBalance(count($allList));
 
-       if($smsService->checkCredit(count($allList))){ //check credit and actions
-           $usecredit = $smsService->UseCreditsBalance(count($allList)); 
-           $data =[];
-           $data['allList'] = $allList;
-           $data['message'] = $message;
-        //   $response =  dispatch(new ScheduleSmsLaterJob($data));
-               $response = $smsService->textSMS($allList,$message);
-         return $response;
+        //    return "done with deduting amout";
+        $response = $smsService->textSMS($allList,$message);
+        return $response;
        };
        return "Low credits";
     }
-
+ 
 }

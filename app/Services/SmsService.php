@@ -7,10 +7,9 @@ use Carbon\Carbon;
 
 class SmsService{
         public function textSMS($contactList,$message){
-          
             $contacts = implode(',',$contactList);
-            dd($contacts);
 
+           
             $args = http_build_query(array(
                 'auth_token'=> '24e37a4f557a608b2d05431670f25d75b464dea735d08297c7eb4ca26b5afbc8',
                 'to'    =>  $contacts,
@@ -87,23 +86,9 @@ class SmsService{
         ]);
         return true;
 
-        // for($totalsms;$totalsms!=0;$totalsms){
-            
-        // }
+      }
 
-        // foreach($credits as $credit){
-        //     while($totalsms!=0){
-        //         $totalsms = ($credit->balance - $credit->used)-$totalsms;
-        //         if($totalsms<0){
-        //             $totalsms = abs($totalsms);
-        //             return $totalsms;
-        //         }
-        //         //update 
-        //         $updateChanges = UserRoute::where('id',$credit->id)->update([
-        //             'used'=>$totalsms
-        //         ]);
-        //     }
-        // }
+      public function filterNumbers(){
 
       }
 }

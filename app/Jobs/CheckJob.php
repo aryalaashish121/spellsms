@@ -12,14 +12,16 @@ class CheckJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+
+    protected $data;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->data = $data;
     }
 
     /**
@@ -29,6 +31,6 @@ class CheckJob implements ShouldQueue
      */
     public function handle()
     {
-       dd("hello");
+       dd($this->data);
     }
 }

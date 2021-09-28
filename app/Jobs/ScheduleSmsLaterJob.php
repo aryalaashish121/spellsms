@@ -2,8 +2,8 @@
 
 namespace App\Jobs;
 
+use App\services\SmsService;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -21,9 +21,8 @@ class ScheduleSmsLaterJob implements ShouldQueue
      */
     public function __construct($data)
     {
-        $this->data = $data;
+        $this->data= $data;
     }
-
     /**
      * Execute the job.
      *
@@ -31,6 +30,10 @@ class ScheduleSmsLaterJob implements ShouldQueue
      */
     public function handle()
     {
-        //
+
+        //here allList is in form of array
+        $smsService = new SmsService();
+        $response = $smsService->textSMS($this->data['allList'],$this->data['message']);
+        return $response;
     }
 }
