@@ -5,70 +5,84 @@ namespace App\Http\Controllers\Message;
 use App\Components\Core\ResponseHelpers;
 use App\Http\Controllers\Controller;
 use App\Imports\ContactImport;
+use App\Jobs\CheckJob;
+use App\Models\BlackListContact;
+use App\Models\Contact;
+use App\Models\UserRoute;
+use App\services\AakashSMSApiService;
+use App\services\SmsService;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use SebastianBergmann\Environment\Console;
 
 class MessageController extends Controller
 {
     use ResponseHelpers;
-    public function sendSMS(Request $request){
+
+    public function sendSMS(Request $request, SmsService $smsService){
 
         $pasted_numbers = $request->pasted_numbers;
         $contact_groups = $request->contact_groups;
         $selected_numbers = $request->selected_numbers;
         $message = $request->message;
 
-        $pastedList = preg_split("/\r\n|\n|\r/", $pasted_numbers);
+        // dd($request->all());
+        $allList=[];
+        $pastedList = [];
+        $contactGroupList = [];
+        $excelNumberList=[];
+        $selectedNumberList = [];
 
-        $excelNumberList = [];
-            // $data = Excel::toArray(new ContactImport,$request->file('excel_numbers'));
-            // foreach($data as $d){
-            //     foreach($d as $f){
-            //     array_push($excelNumberList,$f['mobile']);
-            //     }
-            // }
+        if($pasted_numbers){
+            $pastedList = preg_split("/\r\n|\n|\r/", $pasted_numbers);
+            $allList =  array_merge($allList,$pastedList);
 
+        }
+        if($selected_numbers){
+            $selectedNumberList = explode(",",$selected_numbers);
+            $allList =  array_merge($allList,$selectedNumberList);
+        }
+        // dd($request->all());
+        if($request->hasFile('excel_numbers')){
+            $data = Excel::toArray(new ContactImport,$request->file('excel_numbers'));
+                foreach($data as $d){
+                    foreach($d as $f){
+                    array_push($excelNumberList,$f['mobile']);
+                    }
+            }
+           
+            $allList =  array_merge($allList,$excelNumberList);
+        }
+        
+        if($contact_groups){
+            $data = explode(",",$contact_groups);
+            foreach($data as $group){
+               $contacts = Contact::where('contact_group_id',$group)->pluck('mobile')->values();
+               array_push($contactGroupList,$contacts[0]);
+            }
+            $allList =  array_merge($allList,$contactGroupList);
+        }    
 
-        $allList =  array_merge($excelNumberList,$pastedList);
-        $removing_duplicate = array_unique($allList);
+        // $response = $smsService->textSMS($allList,$message);
+    
+        if($request->remove_duplicate){
+        $allList = array_unique($allList);
+        }
+        // dd($request->all());
+        if($request->remove_blacklist){
+           $black_listed_contacts= BlackListContact::blackListedContacts();
+            $allList = (array_diff($allList, $black_listed_contacts));
+        }
+        // return $allList;
+        //check credit and actions
+       if($smsService->checkCredit(count($allList))){
+           $usecredit = $smsService->UseCreditsBalance(count($allList));
 
-        $print['allList']=$allList;
-        $print['removing_duplicate'] = $removing_duplicate;
-
-        $tags = implode(', ', $allList);
-
-       $res =  $this->aakashSms($removing_duplicate,$message);
-
-       return $res;
-    //    if($res['error']=="false"){
-    //         return $this->respondSuccess($res['message'],$res['data']);
-    //    }else{
-    //     return $this->respondError($res['message'],$res['data']);
-
-    //    }
-      
+        //    return "done with deduting amout";
+        $response = $smsService->textSMS($allList,$message);
+        return $response;
+       };
+       return "Low credits";
     }
 
-    public function aakashSms($contactList,$message){
-
-        $contacts = implode(',',$contactList);
-        $args = http_build_query(array(
-            'auth_token'=> '24e37a4f557a608b2d05431670f25d75b464dea735d08297c7eb4ca26b5afbc8',
-            'to'    =>  $contacts,
-            'text'  => $message
-        ));
-    $url = "https://sms.aakashsms.com/sms/v3/send/";
-
-    # Make the call using API.
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_POST, 1); ///
-    curl_setopt($ch, CURLOPT_POSTFIELDS,$args);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
-    // Response
-    $response = curl_exec($ch);
-    curl_close($ch);     
-       
-       return $response;
-    }
 }

@@ -18,7 +18,7 @@ class UserTableSeeder extends Seeder
         
         User::create(
             [
-                'parent_id'=>1,
+                'parent_id'=>null,
                 'login_id'=>'aashish121',
                 'phone'=>'9867182424',
                 'address'=>'Maitidevi ktm',

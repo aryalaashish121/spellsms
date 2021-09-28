@@ -16,7 +16,7 @@ class ContactImport implements ToModel, WithHeadingRow
         public function model(array $row)
         {
             return [
-               
+               'mobile'
             ];
         }
     

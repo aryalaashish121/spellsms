@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +14,5 @@ class UserRoute extends Model
         'user_id','balance','validity','status','route_id',
     ];
 
-    public static function selfUserCredit(){
-        return UserRoute::where('user_id',14);
-    }
+  
 }

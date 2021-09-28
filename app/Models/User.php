@@ -83,4 +83,21 @@ class User extends Authenticatable
     public static function selfUsers(){
         return User::with('roles','parent')->where('parent_id',auth()->user()->id);
     }
+    
+    public static function getMyTree(){
+        $allusers = User::get();
+        $users = User::where('parent_id',12)->get();
+        self::formatTree($users,$allusers);
+        return $users;
+     
+    }
+
+    private static function formatTree($users,$allusers){
+        foreach($users as $user){
+            $user->children = $allusers->where('parent_id',$user->id)->values();
+            if($user->children->isNotEmpty()){
+                self::formatTree($user->children,$allusers);
+            }
+        }
+    }
 }

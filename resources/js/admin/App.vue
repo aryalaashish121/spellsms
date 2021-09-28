@@ -32,6 +32,7 @@
                 alt=""
             /></v-avatar>
             SpellSMS
+
           </span>
         </v-list-item-title>
       </v-list-item>
@@ -95,7 +96,8 @@
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title>
-                    <span class="text-xs"> Announcements </span>
+                    <span class="text-xs"> Announcements
+                       </span>
                   </v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
