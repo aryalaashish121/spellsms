@@ -36,8 +36,10 @@ class AuthenticationController extends Controller
 
     public function logout(Request $request)
     {
-        // return request()->all();
-        $request->user()->tokens()->delete();
+        //delete all my access tokens
+        // $request->user()->tokens()->delete();
+        //delete curently used access token
+        $request->user()->currentAccessToken()->delete();
         return $this->respondSuccess("Logged out successfully");
     }
 }
