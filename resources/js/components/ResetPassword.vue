@@ -20,7 +20,7 @@
           rounded
           outlined
           dense
-          v-model="newPassword"
+          v-model="password"
           :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
           :type="show1 ? 'text' : 'password'"
           name="input-10-1"
@@ -34,7 +34,7 @@
           rounded
           outlined
           dense
-          v-model="confirmPassword"
+          v-model="confirm_password"
           :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
           :type="show2 ? 'text' : 'password'"
           name="input-10-1"
@@ -52,7 +52,7 @@
           <ul>
             <li>* contain a minimum of 8 characters in length</li>
             <li>
-              * contain one of each :
+              * Best Formated password seems to be :
               <ul>
                 <li>i. Uppercase letter (A-Z)</li>
                 <li>ii. Lowercase letter (a-z)</li>
@@ -70,12 +70,26 @@
 export default {
   data() {
     return {
-      newPassword: "",
-      confirmPassword: "",
+      password: "",
+      confirm_password: "",
 
       show1: false,
       show2: false,
-    };
+    }
   },
+
+  methods:{
+    changePassword(){
+      const self = this;
+      self.url = "/reset/password";
+      let id = this.$route.params.id;
+      let data = {
+        password:self.password,
+        confirm_password:self.confirm_password
+      };
+
+      let response = self.put(id,data);
+    }
+  }
 };
 </script>

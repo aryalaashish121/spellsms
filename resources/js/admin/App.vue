@@ -438,7 +438,7 @@
             </v-list-item-content>
           </v-list-item>
 
-          <v-list-item class="elevation-0" link @click="clickLogout()">
+          <v-list-item class="elevation-0" link @click="clickLogout">
             <v-list-item-icon>
               <v-icon>mdi-logout</v-icon>
             </v-list-item-icon>
@@ -492,7 +492,7 @@
 <script>
 import { toggleFullScreen } from "../utils";
 import store from "../common/store";
-
+import Api from '../common/Api';
 export default {
   data() {
     return {
@@ -508,6 +508,38 @@ export default {
   },
 
   methods: {
+     async clickLogout() {
+        const self = this;
+        self.url = "/logout";
+        let data = {
+          token:localStorage.getItem('token')
+        }
+        try {
+            let response = await Api().post(`/logout`,data);
+            if (response.status === 200 && response.data.success) {
+                self.$store.commit("showSnackbar", {
+                    message: "Logged Out successfully",
+                    color: response.data.success
+                });
+                localStorage.removeItem('token');
+                self.$router.push('/login');
+               
+            }
+        } catch (err) {
+            self.loading = false;
+            // alert(err);
+            if (err) {
+                self.loading = false;
+                let errResponse = err.response;
+                self.$store.commit("showSnackbar", {
+                    message: errResponse.data.message,
+                    color: errResponse.data.success
+                });
+            }
+        }
+    },
+    
+    
     toggleFullScreen() {
       if (this.isFullScreen) {
         this.isFullScreen = false;

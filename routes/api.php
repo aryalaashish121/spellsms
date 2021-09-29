@@ -27,7 +27,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/user/create', [UserController::class, 'store']);
     Route::put('user/update/{slug}', [UserController::class, 'update']);
     Route::post('/export-users', [UserController::class, 'export']);
-
+    Route::get('/account/settings/{id}',[UserController::class,'getUserDetailsBySlug']);
+    Route::put('/reset/password/{id}',[UserController::class,'resetClientPassword']);
+    Route::post('/logout',[AuthenticationController::class,'logout']);
 
     //account manager
     Route::post('/add-account-manager', [AccountManagerController::class, 'store']);

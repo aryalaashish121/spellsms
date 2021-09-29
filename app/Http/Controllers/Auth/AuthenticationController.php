@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Components\Core\ResponseHelpers;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -10,6 +11,7 @@ use Illuminate\Validation\ValidationException;
 
 class AuthenticationController extends Controller
 {
+    use ResponseHelpers;
 
     public function login(Request $request)
     {
@@ -34,6 +36,8 @@ class AuthenticationController extends Controller
 
     public function logout(Request $request)
     {
+        // return request()->all();
         $request->user()->tokens()->delete();
+        return $this->respondSuccess("Logged out successfully");
     }
 }

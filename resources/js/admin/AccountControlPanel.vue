@@ -493,7 +493,7 @@
 </template> 
 
 <script>
-import DonutChart from "./charts/CreditsDonutChart.vue";
+import DonutChart from "../charts/CreditsDonutChart.vue";
 import LineChart from "./charts/SMS-sent-LineChart.vue";
 import ToolTip from "../components/ToolTips.vue";
 export default {

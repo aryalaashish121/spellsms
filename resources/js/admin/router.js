@@ -17,9 +17,9 @@ const routes = [
     },
 
     {
-        path: '/accountControlPanel',
+        path: '/account/settings/:id',
         name: 'admin.accountControlPanel',
-        component: require('./AccountControlPanel').default,
+        component: require('../admin/user-management/users/ControlPanel').default,
         meta: { authOnly: true }
     },
 
@@ -147,7 +147,7 @@ const routes = [
     },
 
     {
-        path: '/user/resetPassword',
+        path: '/user/reset/password/:id',
         name: 'admin.user-resetPassword',
         component: require('../components/ResetPassword').default,
         meta: { authOnly: true }

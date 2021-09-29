@@ -47,10 +47,11 @@ export default {
             try {
                 const self = this;
                 let response = await Api().get(`${self.url}/${id}`);
+                console.log(response);
                 if (response.status === 200 && response.data.success)
                     return response.data;
             } catch (error) {
-                // console.log(error.response);
+                console.log(error);
             }
         },
 
@@ -67,12 +68,14 @@ export default {
         async post(data = {}, callback) {
             const self = this;
             try {
-                let response = await Api().post(`${self.url}`, data,
-                // {
-                //     headers: {
-                //       'Content-Type': "multipart/form-data; charset=utf-8; boundary=" + Math.random().toString().substr(2)
-                //     }
-                //   }
+                let response = await Api().post(
+                    `${self.url}`,
+                    data
+                    // {
+                    //     headers: {
+                    //       'Content-Type': "multipart/form-data; charset=utf-8; boundary=" + Math.random().toString().substr(2)
+                    //     }
+                    //   }
                 );
                 if (response.status === 201 && response.data.success) {
                     self.$store.commit("showSnackbar", {
@@ -224,6 +227,8 @@ export default {
             console.log("Request Completed...");
         }
     },
+
+    
     computed: {
         appSetting() {
             return this.$store.getters.appSetting;

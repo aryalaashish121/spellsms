@@ -6,6 +6,7 @@ use App\Components\Core\ResponseHelpers;
 use App\Exports\SelectedUsersExport;
 use App\Exports\UserExport;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ResetPasswordUpdateRequest;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -89,20 +90,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function getUserDetailsBySlug($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+   try{
+    $user = User::with('manager','roles')->where('slug',$id)->first();
+    return $this->respondOk($user);
+   }catch(\Exception $err){
+       return $this->respondWithError($err->getMessage());
+   }
+        
     }
 
     /**
@@ -143,6 +139,19 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function resetClientPassword(ResetPasswordUpdateRequest $request,$id){
+        $user = User::where('slug',$id)->first();
+        if(!$user){
+            return $this->respondNotFound();
+            // abort(401);
+        }
+
+        $user->update([
+            'password'=>Hash::make($request->password)
+        ]);
+        return $this->respondUpdated("User password updated");
     }
 
     public function export(Request $request)

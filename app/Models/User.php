@@ -53,10 +53,6 @@ class User extends Authenticatable
         ];
     }
 
-    public function getRouteKeyName()
-    {
-    return 'slug';
-    }
 
     /**
      * The attributes that should be cast.
@@ -66,7 +62,6 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
 
     public function balance(){
         return $this->hasMany(UserBalance::class,'user_id','id');
@@ -82,6 +77,10 @@ class User extends Authenticatable
 
     public static function selfUsers(){
         return User::with('roles','parent')->where('parent_id',auth()->user()->id);
+    }
+
+    public function manager(){
+        return $this->hasOne(AccountManager::class,'id','manager_id');
     }
     
     public static function getMyTree(){
