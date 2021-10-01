@@ -74,16 +74,18 @@ class ContactController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function getContactById($id)
     {
-        //
+        try{
+            $contact = Contacts::where('id',$id)->first();
+            if(!$contact){
+                return $this->respondNotFound();
+            }
+            return $this->respondOk($contact);
+        }catch(\Exception $err){
+            return $this->respondWithError($err->getMessage());
+        }
+   
     }
 
     /**

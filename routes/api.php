@@ -76,6 +76,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/add-contact', [ContactController::class, 'store']);
     Route::delete('/delete-contact/{id}', [ContactController::class, 'destroy']);
     Route::post('/upload-new-contacts',[ContactController::class,'uploadFromFile']);
+    Route::get('/get-contact-by-id/{id}/edit',[ContactController::class,'getContactById']);
+    Route::put('/update-contact/{id}',[ContactController::class,'updateContact']);
 
     //blacklist contact
     Route::get('/get-blacklist-contacts',[BlackListCotactController::class,'index']);

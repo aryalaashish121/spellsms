@@ -5,6 +5,7 @@
         class="p-5 md:px-3 md:py-2"
     >
         <AddNewContact ref="AddNewContact"> </AddNewContact>
+        <EditContact ref="editContact"> </EditContact>
         <UploadFile ref="UploadFile"> </UploadFile>
         <div>
             <v-breadcrumbs :items="breadcrumbsItems">
@@ -84,7 +85,7 @@
 
             <template v-slot:[`item.actions`]="{ item }">
                 <v-flex>
-                    <v-btn class="ma-1" outlined x-small fab color="indigo">
+                    <v-btn class="ma-1" outlined x-small fab color="indigo" @click="editContact(item.id)">
                         <v-icon>mdi-pencil</v-icon>
                     </v-btn>
                     <v-btn
@@ -105,9 +106,10 @@
 
 <script>
 import AddNewContact from "./Add";
+import EditContact from "./Edit.vue";
 import UploadFile from "./Upload";
 export default {
-    components: { AddNewContact, UploadFile },
+    components: { AddNewContact, UploadFile, EditContact },
     data() {
         return {
             search: "",
@@ -168,7 +170,10 @@ export default {
             const self = this;
             self.$refs.AddNewContact.create();
         },
-
+        editContact(id) {
+            const self = this;
+            self.$refs.editContact.edit(id);
+        },
         uploadFile() {
             const self = this;
             self.$refs.UploadFile.upload();
