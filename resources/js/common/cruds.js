@@ -248,6 +248,18 @@ export default {
                 this.$store.commit("hideLoader");
             }
         },
+
+        async deleteSelected(data) {
+            try {
+                const self = this;
+                let response = await Api().post(`${self.url}`,data);
+                if (response.status === 200 && response.data.success)
+                    return response.data;
+            } catch (error) {
+                console.log(error.response);
+            }
+        },
+
         async exportPdf() {
             const self = this;
             try {

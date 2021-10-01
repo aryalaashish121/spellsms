@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AccountManagerController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\Auth\AuthenticationController;
 use App\Http\Controllers\Authorization\RoleController;
 use App\Http\Controllers\BlackListCotactController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Template\TemplateController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
+use App\Models\Announcement;
 
 Route::post('/login', [AuthenticationController::class, 'login']);
 
@@ -74,16 +76,21 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     //CRUD Contacts
     Route::get('/all-contacts', [ContactController::class, 'index']);
     Route::post('/add-contact', [ContactController::class, 'store']);
+    Route::put('/update-contact/{id}',[ContactController::class,'update']);
     Route::delete('/delete-contact/{id}', [ContactController::class, 'destroy']);
     Route::post('/upload-new-contacts',[ContactController::class,'uploadFromFile']);
     Route::get('/get-contact-by-id/{id}/edit',[ContactController::class,'getContactById']);
-    Route::put('/update-contact/{id}',[ContactController::class,'updateContact']);
 
     //blacklist contact
     Route::get('/get-blacklist-contacts',[BlackListCotactController::class,'index']);
     Route::post('/add-blacklist-contact',[BlackListCotactController::class,'store']);
     Route::delete('/delete-blacklist-contact/{id}',[BlackListCotactController::class,'destroy']);
 
+    //notification announcements
+    Route::post('/create-announcement',[AnnouncementController::class,'createNotification']);
+    Route::get('/load-announcement',[AnnouncementController::class,'index']);
+    Route::delete('/delete-announcement/{id}',[AnnouncementController::class,'destroy']);
+    Route::post('/delete-selected-announcement',[AnnouncementController::class,'deleteSelected']);
 
 });
 

@@ -8,3 +8,5 @@ const app = new Vue({
     el: '#app',
     vuetify,
 });
+
+// http://template.themeton.com/tana/?storefront=envato-elements
