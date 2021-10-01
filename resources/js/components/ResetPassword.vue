@@ -43,6 +43,16 @@
           counter
           @click:append="show2 = !show2"
         ></v-text-field>
+
+        <v-btn
+        rounded
+        outlined
+        dense
+        @click="changePassword"
+        :loading="loading"
+        >
+          Reset Password
+        </v-btn>
       </div>
 
       <div class="w-1/2 h-auto">
@@ -72,15 +82,18 @@ export default {
     return {
       password: "",
       confirm_password: "",
-
+      userSlug:"",
       show1: false,
       show2: false,
+      loading:false,
     }
   },
+
 
   methods:{
     changePassword(){
       const self = this;
+      self.loading = true;
       self.url = "/reset/password";
       let id = this.$route.params.id;
       let data = {
@@ -88,7 +101,13 @@ export default {
         confirm_password:self.confirm_password
       };
 
-      let response = self.put(id,data);
+      self.put(id,data).then((res)=>{
+        self.loading=false;
+        self.confirm_password = "";
+        self.password="";
+      }).catch((err)=>{
+        self.loading = false;
+      });
     }
   }
 };

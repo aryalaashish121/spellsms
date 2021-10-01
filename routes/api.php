@@ -16,7 +16,6 @@ use App\Http\Controllers\Template\TemplateController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
-use App\Models\BlackListContact;
 
 Route::post('/login', [AuthenticationController::class, 'login']);
 
@@ -76,11 +75,14 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/all-contacts', [ContactController::class, 'index']);
     Route::post('/add-contact', [ContactController::class, 'store']);
     Route::delete('/delete-contact/{id}', [ContactController::class, 'destroy']);
+    Route::post('/upload-new-contacts',[ContactController::class,'uploadFromFile']);
 
     //blacklist contact
     Route::get('/get-blacklist-contacts',[BlackListCotactController::class,'index']);
     Route::post('/add-blacklist-contact',[BlackListCotactController::class,'store']);
     Route::delete('/delete-blacklist-contact/{id}',[BlackListCotactController::class,'destroy']);
+
+
 });
 
 

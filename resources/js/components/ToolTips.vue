@@ -8,7 +8,8 @@
         dark
         x-small
         :color="color"
-        :href="href"
+        @click="gotToLink"
+ 
       >
         <v-icon>{{ icon }}</v-icon>
       </v-btn>
@@ -20,10 +21,25 @@
 <script>
 export default {
   props: {
+    data:{
+      type:Array
+    },
     icon: String,
     title: String,
     color: String,
     href: String,
   },
+
+  methods:{
+    gotToLink(){
+      const self = this;
+      alert(this.data.slug)
+    
+      self.$router.push({
+        name:this.href,
+        params:{id:this.data.slug}
+      });
+    }
+  }
 };
 </script>

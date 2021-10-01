@@ -21,11 +21,11 @@ class CreateContactsTable extends Migration
             $table->unsignedBigInteger('contact_group_id');
             $table->foreign('contact_group_id')->references('id')->on('contact_groups')->onDelete('cascade');
 
-            $table->string('name');
-            $table->string('mobile')->unique();
-            $table->string('email')->unique();
-            $table->string('company');
-            $table->string('address');
+            $table->string('name')->nullable();
+            $table->string('mobile');
+            $table->string('email')->nullable();
+            $table->string('company')->nullable();
+            $table->string('address')->nullable();
             $table->string('note')->nullable();
             $table->timestamps();
         });

@@ -9,8 +9,7 @@
       container
       justify-center
       pt-20
-      items-center
-    "
+      items-center"
   >
     <div class="w-3/4 h-96 shadow-lg rounded-xl mt-auto">
       <div class="grid grid-cols-2 divide-x border rounded-xl">
@@ -63,6 +62,7 @@
 </template>
 
 <script>
+import store from '../common/store';
 export default {
   data() {
     return {
@@ -83,7 +83,6 @@ export default {
 
       let response = self.login(data);
       console.log(response);
-      console.log("okey i m handling login");
     },
   },
 };

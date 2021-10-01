@@ -24,7 +24,8 @@ class ResetPasswordUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'password'=>['required','min:8','string','confirmed'],
+            'password'=>['required','min:8','string'],
+            'confirm_password'=>['required','same:password'],
         ];
     }
 }

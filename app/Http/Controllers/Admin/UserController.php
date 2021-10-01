@@ -145,18 +145,24 @@ class UserController extends Controller
         $user = User::where('slug',$id)->first();
         if(!$user){
             return $this->respondNotFound();
-            // abort(401);
         }
-
         $user->update([
             'password'=>Hash::make($request->password)
         ]);
         return $this->respondUpdated("User password updated");
     }
 
+    public function makeReseller($id){
+        $user = User::where('slug',$id)->first();
+        if(!$user){
+            return $this->respondNotFound();
+        }
+        $user->syncRoles(['writer', 'admin']);
+    }
+
     public function export(Request $request)
     {
         $collection = new Collection($request->selectedList);
-        // return Excel::download(new SelectedUsersExport(), 'users.xlsx');
+        return Excel::download(new SelectedUsersExport($collection), 'users.xlsx');
     }
 }

@@ -20,7 +20,10 @@ class CampaignsController extends Controller
      */
     public function index()
     {
-        $data = Campaigns::with('route','category')->orderBy('created_at','desc')->get();
+        $data = Campaigns::with('route','category')
+        ->where('parent_id',auth()->user()->id)
+        ->orderBy('created_at','desc')
+        ->get();
         return $this->respondOk($data);
     }
 

@@ -12,6 +12,7 @@
                 </template>
             </v-breadcrumbs>
         </div>
+
         <v-data-table
             @click:row="openControlPanel"
             v-model="selectedList"
@@ -45,18 +46,17 @@
                         Add
                     </v-btn>
 
-                    <!-- <v-btn
-            color="secondary"
-            @click="openControlPanel"
-            class="capitalize mx-2"
-          >
-            <v-icon left small> mdi-view-dashboard-variant </v-icon>
-            Control Panel
-          </v-btn> -->
-
-                    <v-btn color="secondary" @click="exportData">
-                        <v-icon left small> mdi-export </v-icon>
-                    </v-btn>
+                    <download-excel
+                        class="btn btn-default"
+                        :data="selectedList"
+                        :fields="excel_file_header"
+                        name="users.xls"
+                        
+                    >
+                        <v-btn color="secondary">
+                            <v-icon left small> mdi-export </v-icon>
+                        </v-btn>
+                    </download-excel>
                 </v-toolbar>
             </template>
             <template v-slot:[`item.user_type`]="{ item }">
@@ -121,7 +121,26 @@ export default {
                     disabled: true
                 }
             ],
-
+            excel_file_header: {
+                "Client Name": "name",
+                "Company Name": "name",
+                Address: "address",
+                Mobile: "phone",
+                LoginID: "login_id",
+                Email: "email",
+                "User type":{
+                    field: "roles[0].name",
+                    callback: value => {
+                        return `${value}`;
+                    }
+                },
+                Reseller: {
+                    field: "parent.name",
+                    callback: value => {
+                        return `Name: - ${value}`;
+                    }
+                }
+            },
             headers: [
                 {
                     text: "Client Name",
@@ -155,7 +174,7 @@ export default {
 
         openControlPanel(item, row) {
             const self = this;
-        
+
             self.$router.push({
                 name: "admin.accountControlPanel",
                 params: { id: item.slug }
@@ -167,15 +186,18 @@ export default {
             self.url = "/users";
             let response = await self.getAll();
             self.usersList = response.data;
+            console.log(this.usersList);
         },
 
         exportData() {
             const self = this;
             self.url = "/export-users";
-            let response = self.post(self.selectedList);
+            let response = self.exportExcel(self.selectedList);
             console.log(response);
             console.log(self.selectedList);
-        }
+        },
+
+        exportNow() {}
     }
 };
 </script>

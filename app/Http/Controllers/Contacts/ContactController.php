@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Contacts;
 use App\Components\Core\ResponseHelpers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ContactStoreRequest;
+use App\Imports\ContactImportUpload;
+use App\Models\Contact;
 use App\Models\Contacts;
 use Exception;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ContactController extends Controller
 {
@@ -27,15 +30,6 @@ class ContactController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -64,26 +58,20 @@ class ContactController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+    public function uploadFromFile(Request $request){
+        try {
+            $data = Excel::toArray(new ContactImportUpload(),$request->file('excel_numbers'));
+        foreach($data as $contact){
+            foreach($contact as $data){
+                $data['contact_group_id']=$request->contact_group_id;
+                $data['parent_id'] = auth()->user()->id;
+                Contacts::create($data);
+            }
+        }
+            return $this->respondCreated("Contact uploaded successfully");
+        } catch (\Exception $err) {
+            return $this->respondWithError($err->getMessage());
+        }
     }
 
     /**

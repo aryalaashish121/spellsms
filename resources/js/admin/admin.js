@@ -12,11 +12,13 @@ import store from '../common/store';
 import { toggleFullScreen } from "../utils";
 import AxiosAjaxDetect from "../common/axiosAxajDetect";
 import VMdDateRangePicker from "v-md-date-range-picker";
+import JsonExcel from 'vue-json-excel'
 // import "v-md-date-range-picker/dist/v-md-date-range-picker.css";
 import './tailwindcss.css'
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
 Vue.use(eventBus);
 Vue.use(VMdDateRangePicker);
+Vue.component('downloadExcel', JsonExcel)
 const admin = new Vue({
     router,
     eventBus,

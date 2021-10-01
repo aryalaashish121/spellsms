@@ -29,6 +29,7 @@ class CreateUsersTable extends Migration
           
             $table->string('address');
             $table->boolean('status')->default(true);
+            $table->text('remark')->nullable();
             $table->boolean('expire_password')->default(false);
             $table->rememberToken();
             $table->timestamps();

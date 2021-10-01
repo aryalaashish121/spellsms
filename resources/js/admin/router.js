@@ -147,15 +147,15 @@ const routes = [
     },
 
     {
-        path: '/user/reset/password/:id',
+        path: '/reset/password/:id',
         name: 'admin.user-resetPassword',
         component: require('../components/ResetPassword').default,
         meta: { authOnly: true }
     },
 
     {
-        path: '/user/creditDebit',
-        name: 'admin.user-credit/Debit',
+        path: '/user/creditDebit/:id',
+        name: 'admin.user-credit_Debit',
         component: require('../components/CreditDebit').default,
         meta: { authOnly: true }
     },

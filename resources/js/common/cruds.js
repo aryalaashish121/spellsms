@@ -10,17 +10,38 @@ export default {
         };
     },
     methods: {
-        async login(data) {
+        async login(data,callback) {
             try {
                 const self = this;
                 self.url = "/login";
                 let response = await Api().post(self.url, data);
-                if (response.status === 200)
-                    localStorage.setItem("token", response.data);
-                this.$router.push({ name: "admin.dashboard" });
-                return response.data.data;
-            } catch (error) {
-                console.log(error.response);
+                if (response.status === 200 && response.data.success) {
+                    console.log(response.data.data);
+                    localStorage.setItem("token", response.data.data);
+                    this.$router.push({ name: "admin.dashboard" });
+                    callback(response.data.data);
+                }else{
+                    alert(response.data.message);
+                    console.log(response.data);
+                }
+            } catch (err) {
+                if (err) {
+                    let errResponse = err.response;
+                 
+                    if (errResponse && errResponse.status === 422) {
+                        self.isSaving = false;
+                        let data = errResponse.data;
+                        let keys = Object.keys(data.errors);
+                       
+                        keys.forEach(key => {
+                            for (let err of data.errors[key]) {
+                               alert(err);   
+                            }
+                        });
+                    } else {
+                       console.log(errResponse.data.message);
+                    }
+                }
             }
         },
         async getData() {
@@ -209,6 +230,24 @@ export default {
                 }
             }
         },
+        async exportExcel(data) {
+            const self = this;
+            try {
+                this.$store.commit("showLoader");
+                let response = await Api().post(self.url, data, {responseType: 'arraybuffer'});
+                if (response.status === 200) {
+                    var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+                    var fileLink = document.createElement('a');
+                    fileLink.href = fileURL;
+                    fileLink.setAttribute('download', 'users.xlsx');
+                   document.body.appendChild(fileLink);
+                   fileLink.click();
+                }
+            } catch (err) {
+                console.log(err);
+                this.$store.commit("hideLoader");
+            }
+        },
         async exportPdf() {
             const self = this;
             try {
@@ -228,7 +267,6 @@ export default {
         }
     },
 
-    
     computed: {
         appSetting() {
             return this.$store.getters.appSetting;

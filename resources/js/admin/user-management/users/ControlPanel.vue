@@ -78,6 +78,7 @@
                                             <h1 class="text-xs">
                                                 Account Info
                                             </h1>
+
                                             <v-speed-dial
                                                 v-model="fab"
                                                 transition="slide-x-transition"
@@ -109,6 +110,7 @@
                                                         :title="item.title"
                                                         :color="item.color"
                                                         :href="item.href"
+                                                        :data="userdetails"
                                                     >
                                                     </tool-tip>
                                                 </div>
@@ -286,6 +288,7 @@
                                                         :title="item.title"
                                                         :color="item.color"
                                                         :href="item.href"
+                                                        :data="userdetails"
                                                     >
                                                     </tool-tip>
                                                 </div>
@@ -564,6 +567,7 @@
                                                             :icon="item.icon"
                                                             :color="item.color"
                                                             :href="item.href"
+                                                            :data="userdetails"
                                                         >
                                                         </tool-tip>
                                                     </div>
@@ -614,7 +618,6 @@
         </v-card>
     </div>
 </template>
-
 <script>
 import DonutChart from "../../charts/CreditsDonutChart.vue";
 import LineChart from "../../charts/SMS-sent-LineChart.vue";
@@ -625,7 +628,7 @@ export default {
         return {
             actionSwitch: true,
             userdetails: [],
-            slug:"",
+            slug: "",
             headers: [
                 {
                     text: "Route Title",
@@ -644,7 +647,6 @@ export default {
                     value: "info"
                 }
             ],
-
             route: [
                 { route: "SMSBIT (RouteID: 116)", info: "5 SMS available" }
             ],
@@ -662,13 +664,12 @@ export default {
                     href: "/user/creditDebit"
                 }
             ],
-
             profileTooltips: [
                 {
                     icon: "mdi-lock-reset",
                     title: "Reset Password",
                     color: "blue darken-1",
-                    href: "/user/reset/password"
+                    href: "admin.user-credit_Debit"
                 },
                 {
                     icon: "mdi-briefcase-account",
@@ -686,7 +687,6 @@ export default {
                     color: "red"
                 }
             ],
-
             companyTooltips: [
                 {
                     icon: "mdi-credit-card-clock",
@@ -712,7 +712,6 @@ export default {
             this.$router.push("/");
         }
         self.getUserDetails(user);
-      
     },
     methods: {
         async getUserDetails(user) {
