@@ -26,12 +26,12 @@ class ContactStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'mobile' => ['required', 'unique:contacts,mobile', 'integer'],
-            'name' => ['required', 'string'],
-            'email' => ['required', 'unique:contacts,email', 'string'],
-            'company' => ['required', 'string'],
-            'address' => ['required', 'string'],
-            'note' => ['required', 'string'],
+            'mobile' => ['required'],
+            'name' => ['nullable', 'string'],
+            'email' => ['nullable',],
+            'company' => ['nullable', 'string'],
+            'address' => ['nullable', 'string'],
+            'note' => ['nullable', 'string'],
             'contact_group_id' => 'required',
         ];
     }

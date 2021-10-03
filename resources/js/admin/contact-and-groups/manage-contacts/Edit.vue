@@ -100,7 +100,7 @@
                     <v-btn color="error" text v-on:click="dialog = false">
                         <v-icon left> mdi-close</v-icon>Cancel
                     </v-btn>
-                    <v-btn text color="primary" @click="updateContact">
+                    <v-btn text color="primary" @click="updateContact(form_fields.id)">
                         Update <v-icon right> mdi-content-save</v-icon>
                     </v-btn>
                 </v-card-actions>
@@ -154,12 +154,12 @@ export default {
 
         async updateContact(id) {
             const self = this;
+            console.log(self.form_fields);
             self.url = "/update-contact";
             try {
-                
                 let response = self.put(id,self.form_fields);
+                console.log(response);
                 self.$eventBus.$emit("contacts_data");
-                self.dialog = false;
             } catch (err) {
                 console.log(err);
             }

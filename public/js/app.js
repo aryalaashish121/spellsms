@@ -2128,7 +2128,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 var app = new vue__WEBPACK_IMPORTED_MODULE_1__["default"]({
   el: '#app',
   vuetify: _Vuetify__WEBPACK_IMPORTED_MODULE_0__["default"]
-});
+}); // http://template.themeton.com/tana/?storefront=envato-elements
 
 /***/ }),
 

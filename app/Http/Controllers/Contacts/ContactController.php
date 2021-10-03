@@ -58,6 +58,24 @@ class ContactController extends Controller
         }
     }
 
+    public function update(ContactStoreRequest $request, $id){
+        $data = $request->validated();
+        try {
+            $store_contact = Contacts::where('id',$id)->update([
+                'name' => $data['name'],
+                'mobile' => $data['mobile'],
+                'email' => $data['email'],
+                'company' => $data['company'],
+                'address' => $data['address'],
+                'note' => $data['note'],
+                'contact_group_id' => $data['contact_group_id'],
+            ]);
+            return $this->respondUpdated("Contact updated successfully");
+        } catch (\Exception $err) {
+            return $this->respondWithError($err->getMessage());
+        }
+    }
+
     public function uploadFromFile(Request $request){
         try {
             $data = Excel::toArray(new ContactImportUpload(),$request->file('excel_numbers'));
