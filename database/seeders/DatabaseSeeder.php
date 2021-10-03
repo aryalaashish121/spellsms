@@ -13,8 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(SmsTypeTableSeeder::class);
         $this->call(CampaignCategoryTableSeeder::class);
-      
+        
         $this->call(RouteTableSeeder::class);
         $this->call(UserTypeTableSeeder::class);
         $this->call(UserTableSeeder::class);

@@ -8,7 +8,7 @@ use Carbon\Carbon;
 class SmsService{
         public function textSMS($contactList,$message){
             $contacts = implode(',',$contactList);
-
+            dd($message);
            
             $args = http_build_query(array(
                 'auth_token'=> '24e37a4f557a608b2d05431670f25d75b464dea735d08297c7eb4ca26b5afbc8',
@@ -88,7 +88,7 @@ class SmsService{
 
       }
 
-      public function filterNumbers(){
+      public function dynamicMessage(){
 
       }
 }
