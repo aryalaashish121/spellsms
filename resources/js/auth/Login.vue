@@ -9,10 +9,11 @@
       container
       justify-center
       pt-20
-      items-center"
+      items-center
+    "
   >
     <div class="w-3/4 h-96 shadow-lg rounded-xl mt-auto">
-      <div class="grid grid-cols-2 divide-x border rounded-xl">
+      <div class="grid grid-cols-1 lg:grid-cols-2 divide-x border rounded-xl">
         <div class="col-span-1 h-96 p-10">
           <h1 class="text-lg">Login</h1>
           <div class="flex space-x-1 mt-1">
@@ -46,7 +47,9 @@
             Login
           </v-btn>
         </div>
-        <div class="col-span-1 h-96 rounded-r-xl overflow-hidden">
+        <div
+          class="col-span-1 h-96 rounded-r-xl overflow-hidden hidden lg:block"
+        >
           <lottie-player
             src="https://assets1.lottiefiles.com/packages/lf20_1z0fledt.json"
             background="transparent"
@@ -62,7 +65,7 @@
 </template>
 
 <script>
-import store from '../common/store';
+import store from "../common/store";
 export default {
   data() {
     return {
@@ -74,14 +77,14 @@ export default {
     console.log("login mounted successfully");
   },
   methods: {
-    handleLogin() {
+    async handleLogin() {
       const self = this;
       let data = {
         email: self.email,
         password: self.password,
       };
 
-      let response = self.login(data);
+      let response = await self.login(data);
       console.log(response);
     },
   },

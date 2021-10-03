@@ -19,7 +19,7 @@ class TemplateController extends Controller
      */
     public function index()
     {
-        $templates = Template::all();
+        $templates = Template::where('parent_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
         return $this->respondOk($templates);
     }
 
@@ -59,7 +59,12 @@ class TemplateController extends Controller
      */
     public function show($id)
     {
-        //
+        $template  = Template::where('id', $id)->first();
+        if ($template) {
+            return $this->respondOk($template);
+        } else {
+            return $this->respondNotFound();
+        }
     }
 
     /**

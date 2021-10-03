@@ -25,7 +25,7 @@ const admin = new Vue({
     vuetify,
     store,
     components: {
-        App,Login
+        App, Login
     },
     el: "#admin",
     data() {
@@ -47,7 +47,7 @@ const admin = new Vue({
         //         self.$Progress.finish();
         //     }
         // );
-       
+
     },
     methods: {
         toggleFullScreen() {

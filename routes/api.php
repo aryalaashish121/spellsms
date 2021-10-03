@@ -26,9 +26,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/user/create', [UserController::class, 'store']);
     Route::put('user/update/{slug}', [UserController::class, 'update']);
     Route::post('/export-users', [UserController::class, 'export']);
-    Route::get('/account/settings/{id}',[UserController::class,'getUserDetailsBySlug']);
-    Route::put('/reset/password/{id}',[UserController::class,'resetClientPassword']);
-    Route::post('/logout',[AuthenticationController::class,'logout']);
+    Route::get('/account/settings/{id}', [UserController::class, 'getUserDetailsBySlug']);
+    Route::put('/reset/password/{id}', [UserController::class, 'resetClientPassword']);
+    Route::post('/logout', [AuthenticationController::class, 'logout']);
 
     //account manager
     Route::post('/add-account-manager', [AccountManagerController::class, 'store']);
@@ -49,6 +49,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/route', [RouteController::class, 'index']);
     Route::get('/all-templates', [TemplateController::class, 'index']);
     Route::post('/add-template', [TemplateController::class, 'store']);
+    Route::get('/get-template-byid/{id}', [TemplateController::class, 'show']);
 
     Route::get('/route', [RouteController::class, 'index']);
 
@@ -64,7 +65,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::delete('/delete-template/{id}', [TemplateController::class, 'destroy']);
 
     //send sms
-    Route::post('/send-sms',[MessageController::class,'sendSMS']);
+    Route::post('/send-sms', [MessageController::class, 'sendSMS']);
 
     //CRUD Contact Groups
     Route::get('/all-contact-groups', [ContactGroupController::class, 'index']);
@@ -75,16 +76,14 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/all-contacts', [ContactController::class, 'index']);
     Route::post('/add-contact', [ContactController::class, 'store']);
     Route::delete('/delete-contact/{id}', [ContactController::class, 'destroy']);
-    Route::post('/upload-new-contacts',[ContactController::class,'uploadFromFile']);
-    Route::get('/get-contact-by-id/{id}/edit',[ContactController::class,'getContactById']);
-    Route::put('/update-contact/{id}',[ContactController::class,'updateContact']);
+    Route::post('/upload-new-contacts', [ContactController::class, 'uploadFromFile']);
+    Route::get('/get-contact-by-id/{id}/edit', [ContactController::class, 'getContactById']);
+    Route::put('/update-contact/{id}', [ContactController::class, 'updateContact']);
 
     //blacklist contact
-    Route::get('/get-blacklist-contacts',[BlackListCotactController::class,'index']);
-    Route::post('/add-blacklist-contact',[BlackListCotactController::class,'store']);
-    Route::delete('/delete-blacklist-contact/{id}',[BlackListCotactController::class,'destroy']);
-
-
+    Route::get('/get-blacklist-contacts', [BlackListCotactController::class, 'index']);
+    Route::post('/add-blacklist-contact', [BlackListCotactController::class, 'store']);
+    Route::delete('/delete-blacklist-contact/{id}', [BlackListCotactController::class, 'destroy']);
 });
 
 
@@ -99,5 +98,4 @@ Route::middleware('auth:sanctum')->get('/get-token', function () {
         'token' => $token
     ];
     return response($data);
- 
 });
