@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Components\Core\ResponseHelpers;
 use App\Exports\SelectedUsersExport;
-use App\Exports\UserExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ResetPasswordUpdateRequest;
 use App\Http\Requests\UserStoreRequest;
@@ -57,7 +56,6 @@ class UserController extends Controller
                 'password' => Hash::make($userdata['password']),
                 'expire_password' => $userdata['expire_password'],
             ]);
-
             $userrole = $user->assignRole($userdata['account_type']);
 
             $token = $user->createToken($userdata['name']);
@@ -74,9 +72,7 @@ class UserController extends Controller
                 DB::commit();
                 return $this->respondCreated($user, "New User created successfully");
             }
-
             //assing default campaign to user
-            
             return $this->respondError("Could not create new user");
         } catch (Exception $err) {
             DB::rollBack();
@@ -149,6 +145,7 @@ class UserController extends Controller
 
     public function export(Request $request)
     {
+
         $collection = new Collection($request->selectedList);
         return Excel::download(new SelectedUsersExport($collection), 'users.xlsx');
     }
