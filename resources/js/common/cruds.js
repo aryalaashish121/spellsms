@@ -10,7 +10,7 @@ export default {
         };
     },
     methods: {
-        async login(data,callback) {
+        async login(data, callback) {
             try {
                 const self = this;
                 self.url = "/login";
@@ -20,26 +20,26 @@ export default {
                     localStorage.setItem("token", response.data.data);
                     this.$router.push({ name: "admin.dashboard" });
                     callback(response.data.data);
-                }else{
+                } else {
                     alert(response.data.message);
                     console.log(response.data);
                 }
             } catch (err) {
                 if (err) {
                     let errResponse = err.response;
-                 
+
                     if (errResponse && errResponse.status === 422) {
                         self.isSaving = false;
                         let data = errResponse.data;
                         let keys = Object.keys(data.errors);
-                       
+
                         keys.forEach(key => {
                             for (let err of data.errors[key]) {
-                               alert(err);   
+                                alert(err);
                             }
                         });
                     } else {
-                       console.log(errResponse.data.message);
+                        console.log(errResponse.data.message);
                     }
                 }
             }
@@ -148,6 +148,22 @@ export default {
                 console.log(err);
             }
         },
+        async deleteSelected(data,callback) {
+            try {
+                const self = this;
+                let response = await Api().post(`${self.url}`, data);
+                if (response.status === 200 && response.data.success) {
+                    self.$store.commit("showSnackbar", {
+                        message: response.data.message,
+                        color: response.data.success
+                    });
+                    callback();
+                }
+            } catch (error) {
+                console.log(error.response);
+            }
+        },
+
         async put(id, data = {}, callback) {
             const self = this;
             try {
@@ -234,14 +250,18 @@ export default {
             const self = this;
             try {
                 this.$store.commit("showLoader");
-                let response = await Api().post(self.url, data, {responseType: 'arraybuffer'});
+                let response = await Api().post(self.url, data, {
+                    responseType: "arraybuffer"
+                });
                 if (response.status === 200) {
-                    var fileURL = window.URL.createObjectURL(new Blob([response.data]));
-                    var fileLink = document.createElement('a');
+                    var fileURL = window.URL.createObjectURL(
+                        new Blob([response.data])
+                    );
+                    var fileLink = document.createElement("a");
                     fileLink.href = fileURL;
-                    fileLink.setAttribute('download', 'users.xlsx');
-                   document.body.appendChild(fileLink);
-                   fileLink.click();
+                    fileLink.setAttribute("download", "users.xlsx");
+                    document.body.appendChild(fileLink);
+                    fileLink.click();
                 }
             } catch (err) {
                 console.log(err);
@@ -249,17 +269,7 @@ export default {
             }
         },
 
-        async deleteSelected(data) {
-            try {
-                const self = this;
-                let response = await Api().post(`${self.url}`,data);
-                if (response.status === 200 && response.data.success)
-                    return response.data;
-            } catch (error) {
-                console.log(error.response);
-            }
-        },
-
+ 
         async exportPdf() {
             const self = this;
             try {

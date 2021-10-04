@@ -16,8 +16,33 @@
         </v-btn>
       </template>
     </v-snackbar>
-    <!-- snackbar ends here  -->
+    
+    <!-- dialog for confirmation -->
+   <v-dialog persistent v-model="showDialog" absolute max-width="450px">
+   <v-card>
+       <v-card-title class="primary white--text">
+           <v-icon dark class="mr-3" v-if="dialogIcon" medium>{{dialogIcon}}</v-icon>
+           <span>{{dialogTitle}}</span>
+       </v-card-title>
 
+       <v-card-text>
+          {{dialogMessage}}
+       </v-card-text>
+
+       <v-card-actions v-if="dialogType == 'confirm'">
+           <v-spacer></v-spacer>
+           <v-btn text dark color="error" @click.native="dialogCancel">Cancel</v-btn>
+           <v-btn text dark color="primary" @click.native="dialogOk">Ok</v-btn>
+       </v-card-actions>
+   </v-card>
+</v-dialog>
+  
+    <!-- snackbar ends here  -->
+  <div v-if="showLoader" class="wask_loader bg_half_transparent">
+            <scale-loader position="fixed" color="white"></scale-loader>
+      </div>
+
+      <!--loader ends here-->
     <v-navigation-drawer v-model="drawer" app class="elevation-3">
       <v-list-item class="px-2 pb-2">
         <v-list-item-avatar>
@@ -377,19 +402,32 @@
             <v-icon>mdi-bell</v-icon>
           </v-btn>
         </template>
-        <v-list>
-          <v-list-item v-for="(item, i) in notifications" :key="i">
+        <v-list >
+          <v-list-item v-for="(notification, i) in mynotifications" :key="i" v-if="mynotifications">
+            <v-list-item-title>
+              <p class="text-xs cursor-pointer">
+                
+                  {{ notification.data.title }}
+               
+                {{ notification.data.content }}
+                <v-divider class="mt-2"></v-divider>
+              </p>
+            </v-list-item-title>
+           
+          </v-list-item>
+          <v-list-item v-else>
             <v-list-item-title>
               <p class="text-xs cursor-pointer">
                 <v-icon left small>
-                  {{ item.icon }}
+                  
                 </v-icon>
-                {{ item.title }}
+                No notification avaiable
                 <v-divider class="mt-2"></v-divider>
               </p>
             </v-list-item-title>
           </v-list-item>
         </v-list>
+      
       </v-menu>
 
       <v-btn @click="toggleTheme" icon>
@@ -506,15 +544,13 @@ export default {
       drawer: true,
       isFullScreen: false,
       timeout: 3000,
-
-      notifications: [
-        { title: "Low credit balance", icon: "mdi-alert" },
-        {
-          title: "Recharge of 5000 SMS successfull",
-          icon: "mdi-check-circle-outline",
-        },
-      ],
+      mynotifications: [],
     };
+  },
+
+  mounted(){
+    const self = this;
+    self.notifications();
   },
 
   created() {
@@ -523,6 +559,13 @@ export default {
   },
 
   methods: {
+    async notifications(){
+      const self = this;
+      self.url = "/my-notifications";
+      let response = await self.getAll();
+      self.mynotifications = response.data;
+      console.log(self.mynotifications);
+    },
     async clickLogout() {
       const self = this;
       self.url = "/logout";

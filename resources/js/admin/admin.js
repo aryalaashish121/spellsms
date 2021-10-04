@@ -75,7 +75,16 @@ const admin = new Vue({
                 ? "mdi-fullscreen-exit"
                 : "mdi-fullscreen";
         },
+        showDialog: {
+            get() {
+              return store.getters.showDialog;
+            },
+            set(val) {
+              if (!val) store.commit("hideDialog");
+            },
+          },
     }
+
 });
 
 export default admin;

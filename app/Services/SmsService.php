@@ -73,6 +73,7 @@ class SmsService{
         ->where('status',true) 
         ->orderBy('validity','asc')                   //getting in asc order so that we can deduct from the low validatiy date
         ->get();
+
         $credit = UserRoute::where('user_id',auth()->user()->id)
         ->where('validity','>=',Carbon::today())      //removing expired credits
         ->where('status',true) 
@@ -88,6 +89,21 @@ class SmsService{
 
       }
 
+      public function crediting()
+    {
+      $credits = UserRoute::where('user_id',1)
+      ->where('validity','>=',Carbon::today())      //removing expired credits
+      ->where('status',true) 
+      ->orderBy('validity','asc')                   //getting in asc order so that we can deduct from the low validatiy date
+      ->get();
+
+      $requiredCredit = 50;
+      foreach($credits as $credit){
+        $remaing = 0;
+        $haveCredit = 10;
+        
+      }
+    }
       public function dynamicMessage(){
 
       }

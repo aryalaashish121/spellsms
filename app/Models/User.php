@@ -76,7 +76,8 @@ class User extends Authenticatable
     }
 
     public static function selfUsers(){
-        return User::with('roles','parent')->where('parent_id',auth()->user()->id);
+        return User::with('roles','parent')
+        ->where('parent_id',auth()->user()->id);
     }
 
     public function manager(){

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Components\Core\ResponseHelpers;
 use App\Exports\SelectedUsersExport;
-use App\Exports\UserExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ResetPasswordUpdateRequest;
 use App\Http\Requests\UserStoreRequest;
@@ -28,18 +27,18 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::selfUsers()->orderBy('created_at', 'desc')->get();
+        $users = User::selfUsers()
+        ->where('status',true)
+        ->orderBy('created_at', 'desc')->get();
         // $users = User::with('roles','parent')->orderBy('created_at','desc')->get();
         return $this->respondOk(new UserResource($users));
     }
 
+    public function suspenUserDetails(){
+        $suspenderUsers = User::selfUsers()->where('status',false)->orderBy('updated_at','desc')->get();
+        return $this->respondOk($suspenderUsers);
+    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(UserStoreRequest $request)
     {
         $userdata = $request->validated();
@@ -57,7 +56,6 @@ class UserController extends Controller
                 'password' => Hash::make($userdata['password']),
                 'expire_password' => $userdata['expire_password'],
             ]);
-
             $userrole = $user->assignRole($userdata['account_type']);
 
             $token = $user->createToken($userdata['name']);
@@ -74,9 +72,7 @@ class UserController extends Controller
                 DB::commit();
                 return $this->respondCreated($user, "New User created successfully");
             }
-
             //assing default campaign to user
-            
             return $this->respondError("Could not create new user");
         } catch (Exception $err) {
             DB::rollBack();
@@ -84,12 +80,6 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function getUserDetailsBySlug($id)
     {
    try{
@@ -101,13 +91,6 @@ class UserController extends Controller
         
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $slug)
     {
         $userdata = $request->validated();
@@ -162,6 +145,7 @@ class UserController extends Controller
 
     public function export(Request $request)
     {
+
         $collection = new Collection($request->selectedList);
         return Excel::download(new SelectedUsersExport($collection), 'users.xlsx');
     }
