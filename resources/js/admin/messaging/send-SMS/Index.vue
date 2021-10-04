@@ -1,6 +1,8 @@
 <template>
   <div data-aos="zoom-out" data-aos-duration="1000" class="p-5 md:px-3 md:py-2">
     <UseTemplate ref="useTemplate"></UseTemplate>
+    <LaterDate ref="laterDate"></LaterDate>
+    <LongCourseDate ref="longCourseDate"></LongCourseDate>
     <div>
       <v-breadcrumbs :items="breadcrumbsItems">
         <template v-slot:divider>
@@ -9,26 +11,52 @@
       </v-breadcrumbs>
     </div>
 
-    <div class="w-full h-auto border py-3 rounded-lg flex space-x-2">
+    <div class="w-full h-auto border rounded-lg flex space-x-2">
       <div class="w-full lg:w-7/12 px-5 rounded-lg">
-        <div>
+        <v-card flat>
           <v-card-text>
-            <v-row>
-              <v-select
-                outlined
-                :items="campaignList"
-                label="Select Campaign"
-                prepend-inner-icon="mdi-sign-text"
-                item-text="name"
-                item-value="id"
-                v-model="form_fields.campaign_id"
-              >
-              </v-select>
-            </v-row>
+            <v-card outlined elevation="1" rounded="xl" class="px-4 py-2 mt-3">
+              <v-card-text>
+                <p class="text-base font-bold">Campaign :</p>
+                <v-col cols="12" md="8" class="-ml-3">
+                  <v-select
+                    outlined
+                    :items="campaignList"
+                    label="Select Campaign"
+                    prepend-inner-icon="mdi-sign-text"
+                    item-text="name"
+                    item-value="id"
+                    v-model="form_fields.campaign_id"
+                  >
+                  </v-select>
+                </v-col>
+                <div
+                  class="
+                    hidden
+                    overflow-hidden
+                    p-3
+                    lg:block
+                    rounded-full
+                    w-20
+                    h-20
+                    absolute
+                    top-5
+                    right-5
+                  "
+                >
+                  <img
+                    src="/images/email.png"
+                    class="object-cover w-full h-full"
+                    alt=""
+                    srcset=""
+                  />
+                </div>
+              </v-card-text>
+            </v-card>
 
-            <v-row>
-              <v-card elevation="2" rounded="lg">
-                <v-tabs dark show-arrows background-color="blue darken-1">
+            <v-card outlined elevation="1" rounded="xl" class="mt-4">
+              <v-card-text>
+                <v-tabs show-arrows>
                   <v-tab>
                     <v-icon left> mdi-content-copy </v-icon>
                     Copy / Paste
@@ -218,112 +246,186 @@
                     </v-card>
                   </v-tab-item>
                 </v-tabs>
-              </v-card>
-            </v-row>
+              </v-card-text>
+            </v-card>
 
-            <v-row class="mt-9">
-              <label for="" class="text-base">
-                <v-icon small>mdi-cog</v-icon> Options :
-              </label>
-            </v-row>
+            <v-card outlined elevation="1" rounded="xl" class="px-4 py-2 mt-4">
+              <v-card-text>
+                <p class="text-base font-bold">Options :</p>
 
-            <v-row>
-              <div class="flex space-x-3 mt-2">
-                <div class="chipWrapper">
-                  <v-checkbox
-                    v-model="form_fields.remove_duplicate"
-                    label="Remove Duplicates"
-                    value="1"
-                  >
-                  </v-checkbox>
-                </div>
-
-                <div class="chipWrapper">
-                  <v-checkbox
-                    v-model="form_fields.remove_invalids"
-                    label="Remove Invalids"
-                    value="1"
-                  >
-                  </v-checkbox>
-                </div>
-
-                <div class="chipWrapper">
-                  <v-checkbox
-                    v-model="form_fields.remove_blacklist"
-                    label="Blacklist"
-                    value="1"
-                  >
-                  </v-checkbox>
-                </div>
-              </div>
-            </v-row>
-
-            <v-row>
-              <label for="" class="text-base mt-5">
-                <v-icon small>mdi-message-cog</v-icon> SMS Type :
-              </label>
-            </v-row>
-
-            <v-row>
-              <div>
-                <v-radio-group row v-model="form_fields.sms_type">
-                  <v-radio label="Text" value="text"> </v-radio>
-                  <v-radio label="Unicode" value="unicode"> </v-radio>
-                  <v-radio label="Dynamic" value="dynamic"> </v-radio>
-                </v-radio-group>
-              </div>
-            </v-row>
-
-            <v-row>
-              <div class="flex space-x-2">
-                <div>
-                  <label for="" class="text-lg">
-                    <v-icon small>mdi-message-draw</v-icon>
-                    SMS Content :
-                  </label>
-                </div>
-                <div>
-                  <v-btn
-                    small
-                    text
-                    class="italic capitalize"
-                    @click="useTemplate"
-                  >
-                    Use Template
-                  </v-btn>
-                </div>
-              </div>
-            </v-row>
-
-            <v-row>
-              <div class="w-full mt-2">
-                <v-textarea
-                  outlined
-                  placeholder="Enter SMS Content here"
-                  v-model="form_fields.message"
-                  ref="message_field_np"
-                  v-on:keypress="changeToNepaliFont"
+                <v-checkbox
+                  v-model="form_fields.remove_duplicate"
+                  label="Remove Duplicates"
+                  value="1"
                 >
-                </v-textarea>
-              </div>
-            </v-row>
+                </v-checkbox>
 
-            <v-row>
-              <label for="" class="text-lg">
-                <v-icon small>mdi-clock</v-icon> Schedule :
-              </label>
-            </v-row>
+                <v-checkbox
+                  v-model="form_fields.remove_invalids"
+                  label="Remove Invalids"
+                  value="1"
+                >
+                </v-checkbox>
 
-            <v-row>
-              <div class="-mt-3">
-                <v-radio-group row v-model="form_fields.schedule">
-                  <v-radio label="Now"> </v-radio>
-                  <v-radio label="Later"> </v-radio>
-                  <v-radio label="Long Course"> </v-radio>
-                </v-radio-group>
-              </div>
-            </v-row>
+                <v-checkbox
+                  v-model="form_fields.remove_blacklist"
+                  label="Blacklist"
+                  value="1"
+                >
+                </v-checkbox>
+
+                <div
+                  class="
+                    hidden
+                    overflow-hidden
+                    p-3
+                    lg:block
+                    rounded-full
+                    w-20
+                    h-20
+                    absolute
+                    top-5
+                    right-5
+                  "
+                >
+                  <img
+                    src="/images/settings.png"
+                    class="object-cover w-full h-full"
+                    alt=""
+                    srcset=""
+                  />
+                </div>
+              </v-card-text>
+            </v-card>
+
+            <v-card rounded="xl" outlined elevation="1" class="px-4 py-2 mt-4">
+              <v-card-text>
+                <p class="text-base font-bold">SMS Type :</p>
+
+                <v-row class="ml-1">
+                  <div class="-mt-3">
+                    <v-radio-group row v-model="form_fields.sms_type">
+                      <v-radio label="Text" value="text"> </v-radio>
+                      <v-radio label="Unicode" value="unicode"> </v-radio>
+                      <v-radio label="Dynamic" value="dynamic"> </v-radio>
+                    </v-radio-group>
+                  </div>
+                </v-row>
+
+                <div class="flex space-x-2 mt-4">
+                  <div>
+                    <p class="text-base">SMS Content :</p>
+                  </div>
+                  <div>
+                    <v-btn
+                      x-small
+                      rounded
+                      dark
+                      color="blue darken-1"
+                      class="italic capitalize"
+                      @click="useTemplate"
+                    >
+                      Use Template
+                    </v-btn>
+                  </div>
+                </div>
+
+                <v-row>
+                  <div class="w-full mt-2">
+                    <v-textarea
+                      outlined
+                      class="caption"
+                      placeholder="Enter SMS Content here"
+                      v-model="form_fields.message"
+                      ref="message_field_np"
+                      v-on:keypress="changeToNepaliFont"
+                    >
+                    </v-textarea>
+                  </div>
+                </v-row>
+                <div
+                  class="
+                    hidden
+                    overflow-hidden
+                    p-3
+                    lg:block
+                    rounded-full
+                    w-20
+                    h-20
+                    absolute
+                    top-5
+                    right-5
+                  "
+                >
+                  <img
+                    src="/images/sms.png"
+                    class="object-cover w-full h-full"
+                    alt=""
+                    srcset=""
+                  />
+                </div>
+              </v-card-text>
+            </v-card>
+
+            <v-card rounded="xl" outlined elevation="1" class="px-4 py-2 mt-4">
+              <v-card-text>
+                <p class="text-base font-semibold">Schedule :</p>
+
+                <v-row class="ml-0.5">
+                  <div class="-mt-3">
+                    <v-radio-group
+                      row
+                      mandatory
+                      v-model="form_fields.schedule"
+                      @change="chooseSmsSchedule"
+                    >
+                      <v-radio label="Now" value="now"> </v-radio>
+                      <v-radio label="Later" value="later"> </v-radio>
+                      <v-radio label="Long Course" value="longCourse">
+                      </v-radio>
+                    </v-radio-group>
+                  </div>
+                </v-row>
+
+                <div class="mt-4">
+                  <label for="" class="text-base">
+                    Scheduled Date & Time :
+                  </label>
+                  <br />
+                  <v-text-field
+                    readonly
+                    class="mt-2"
+                    solo
+                    dense
+                    v-model="scheduledDateTime"
+                  ></v-text-field>
+                </div>
+
+                <div
+                  class="
+                    hidden
+                    overflow-hidden
+                    p-3
+                    lg:block
+                    rounded-full
+                    w-20
+                    h-20
+                    absolute
+                    top-5
+                    right-5
+                  "
+                >
+                  <img
+                    src="/images/schedule.png"
+                    class="object-cover w-full h-full"
+                    alt=""
+                    srcset=""
+                  />
+                </div>
+              </v-card-text>
+            </v-card>
           </v-card-text>
+
           <v-divider></v-divider>
 
           <v-card-actions class="justify-end">
@@ -332,11 +434,11 @@
               <v-icon right> mdi-send </v-icon>
             </v-btn>
           </v-card-actions>
-        </div>
+        </v-card>
       </div>
 
       <div
-        class="w-5/12 h-auto hidden lg:block flex justify-center pt-20"
+        class="w-5/12 h-auto hidden lg:block flex justify-center pt-10"
         data-aos="zoom-in"
         data-aos-duration="500"
       >
@@ -365,7 +467,7 @@
   transition-duration: 400;
   backdrop-filter: blur(4px) saturate(174%);
   -webkit-backdrop-filter: blur(4px) saturate(174%);
-  background-color: rgba(17, 25, 40, 0.28);
+  background-color: rgba(229, 231, 235);
 
   padding-left: 0.75rem /* 12px */;
   padding-right: 0.75rem /* 12px */;
@@ -382,8 +484,10 @@
 <script>
 import Conversions from "../../../common/conversions";
 import UseTemplate from "../../../components/Dialogues/UseTemplate.vue";
+import LaterDate from "../../../components/Dialogues/LaterDateSMS.vue";
+import LongCourseDate from "../../../components/Dialogues/LongCourseSMS.vue";
 export default {
-  components: { UseTemplate },
+  components: { UseTemplate, LaterDate, LongCourseDate },
   data() {
     return {
       contacts: "",
@@ -398,7 +502,8 @@ export default {
       checkInvalids: false,
       checkBlacklist: false,
       selectedFile: null,
-
+      sendlater: "",
+      sendnow: "",
       form_fields: {
         campaign_id: "",
         pasted_numbers: "",
@@ -525,6 +630,15 @@ export default {
     useTemplate() {
       const self = this;
       self.$refs.useTemplate.open();
+    },
+
+    chooseSmsSchedule(e) {
+      const self = this;
+      if (self.form_fields.schedule == "later") {
+        self.$refs.laterDate.open();
+      } else if (self.form_fields.schedule == "longCourse") {
+        self.$refs.longCourseDate.open();
+      }
     },
   },
 };
