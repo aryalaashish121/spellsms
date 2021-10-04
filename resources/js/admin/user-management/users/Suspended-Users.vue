@@ -15,6 +15,7 @@
       :search="search"
       item-key="client_name"
       show-select
+      :loading="loading"
     >
       <template v-slot:top>
         <v-toolbar flat class="rounded-md">
@@ -35,15 +36,20 @@
           <v-spacer></v-spacer>
         </v-toolbar>
       </template>
-
+ <template v-slot:[`item.user_type`]="{ item }">
+        <v-flex v-if="item.roles[0]">
+          <div v-for="role in item.roles" :key="role.id">
+            {{ role.name }}
+          </div>
+        </v-flex>
+        <v-flex v-else>N/A</v-flex>
+      </template>
       <template v-slot:[`item.actions`]="{}">
         <v-flex>
           <v-btn class="ma-1" outlined x-small fab color="indigo">
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
-          <v-btn class="ma-1" outlined x-small fab color="error">
-            <v-icon>mdi-delete</v-icon>
-          </v-btn>
+         
         </v-flex>
       </template>
     </v-data-table>
@@ -56,7 +62,8 @@ export default {
     return {
       search: "",
       selected: [],
-
+      loading:false,
+      customers: [],
       breadcrumbsItems: [
         {
           text: "Dashboard",
@@ -71,34 +78,34 @@ export default {
 
       headers: [
         {
-          text: "Name",
+          text: "Client Name",
           align: "start",
           sortable: false,
-          value: "client_name",
+          value: "name",
         },
-        { text: "Login ID", value: "login_id" },
+        { text: "Company Name", value: "company_name" },
+        { text: "Address", value: "address" },
         { text: "User Type", value: "user_type" },
         { text: "Actions", value: "actions", sortable: false },
       ],
+    }
+  },
+  mounted(){
+    const self = this;
+    self.loadSuspenderUsers();
 
-      customers: [
-        {
-          client_name: "Aashish Aryal",
-          login_id: "aashish99",
-          user_type: "Client",
-        },
-        {
-          client_name: "Prakash Bista",
-          login_id: "bistap99",
-          user_type: "Reseller",
-        },
-        {
-          client_name: "Sunil Shrestha",
-          login_id: "bistap99",
-          user_type: "Reseller",
-        },
-      ],
-    };
+  },
+  methods:{
+    async loadSuspenderUsers(){
+      const self = this;
+      self.url = "/suspended-users";
+      self.loading = true;
+      
+      let response = await self.getAll();
+      self.customers = response.data;
+      self.loading = false;
+
+    }
   },
 };
 </script>

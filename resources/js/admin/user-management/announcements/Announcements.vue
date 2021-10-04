@@ -48,7 +48,7 @@
                         <v-icon left small> mdi-bullhorn </v-icon>
                         Create Annoucement
                     </v-btn>
-                     <download-excel
+                    <download-excel
                         class="btn btn-default"
                         :data="selectedList"
                         :fields="excel_file_header"
@@ -58,7 +58,7 @@
                             <v-icon left small> mdi-export </v-icon>
                         </v-btn>
                     </download-excel>
-                     <v-btn
+                    <v-btn
                         class="ma-1"
                         outlined
                         x-small
@@ -66,8 +66,8 @@
                         color="error"
                         @click="massDelete"
                     >
-                     <v-icon>mdi-delete</v-icon>
-                  </v-btn>
+                        <v-icon>mdi-delete</v-icon>
+                    </v-btn>
                 </v-toolbar>
             </template>
 
@@ -158,25 +158,51 @@ export default {
             console.log(self.announcements);
         },
 
-        async deleteAnnouncement(id) {
+        deleteAnnouncement(id) {
             const self = this;
             self.url = "/delete-announcement";
-            let response = await self.delete(id);
-            self.loadAnnouncement();
+            self.$store.commit("showDialog", {
+                type: "confirm",
+                icon: "mdi-alert-outline",
+                title: "Delete announcement",
+                message: "Are you sure you want to delete this announcement?",
+                okCb: async () => {
+                    self.delete(id, async () => {
+                        self.loadAnnouncement();
+                    });
+                }
+            });
         },
-        async massDelete(){
-          const self =this;
-          self.url = "/delete-selected-announcement";
-          let array = [];
-          self.selectedList.forEach(element => {
-           array.push(element.id);
-          });
 
-            let data = {
-              ids:array
-            };
-          let response = await self.deleteSelected(data);
-          self.loadAnnouncement();
+        massDelete() {
+            const self = this;
+            self.url = "/delete-selected-announcement";
+            let array = [];
+            self.selectedList.forEach(element => {
+                array.push(element.id);
+            });
+
+            if (array.length == 0) {
+                self.$store.commit("showSnackbar", {
+                    message: "Please select atleast one announcement!",
+                    color: false
+                });
+            } else {
+                let data = {ids: array};
+                self.url = "/delete-announcement";
+                self.$store.commit("showDialog", {
+                    type: "confirm",
+                    icon: "mdi-alert-outline",
+                    title: "Delete announcements",
+                    message:
+                        "Are you sure you want to delete these selected announcement?",
+                    okCb: async () => {
+                        self.deleteSelected(data, async () => {
+                            self.loadAnnouncement();
+                        });
+                    }
+                });
+            }
         }
     }
 };

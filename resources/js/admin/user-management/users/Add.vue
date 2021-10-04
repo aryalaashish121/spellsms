@@ -286,7 +286,8 @@ export default {
 
       self.post(data, async () => {
         self.loading = false;
-        self.addUserDialog = true;
+          self.$eventBus.$emit("usersData");
+        self.addUserDialog = false;
         console.log("success");
       });
       // let response = self.post(self.form_fields);

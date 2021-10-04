@@ -28,18 +28,18 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::selfUsers()->orderBy('created_at', 'desc')->get();
+        $users = User::selfUsers()
+        ->where('status',true)
+        ->orderBy('created_at', 'desc')->get();
         // $users = User::with('roles','parent')->orderBy('created_at','desc')->get();
         return $this->respondOk(new UserResource($users));
     }
 
+    public function suspenUserDetails(){
+        $suspenderUsers = User::selfUsers()->where('status',false)->orderBy('updated_at','desc')->get();
+        return $this->respondOk($suspenderUsers);
+    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(UserStoreRequest $request)
     {
         $userdata = $request->validated();
@@ -84,12 +84,6 @@ class UserController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function getUserDetailsBySlug($id)
     {
    try{
@@ -101,13 +95,6 @@ class UserController extends Controller
         
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $slug)
     {
         $userdata = $request->validated();

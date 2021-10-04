@@ -18,6 +18,7 @@
       :search="search"
       item-key="login_id"
       show-select
+      loading="usertableLoading"
     >
       <template v-slot:top>
         <v-toolbar flat class="rounded-md">
@@ -72,9 +73,7 @@
           <v-btn class="ma-1" outlined x-small fab color="indigo">
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
-          <v-btn class="ma-1" outlined x-small fab color="error">
-            <v-icon>mdi-delete</v-icon>
-          </v-btn>
+         
         </v-flex>
       </template>
     </v-data-table>
@@ -104,6 +103,7 @@ export default {
       search: "",
       selected: [],
       usersList: [],
+      usertableLoading:false,
       breadcrumbsItems: [
         {
           text: "Dashboard",
@@ -155,6 +155,7 @@ export default {
   mounted() {
     const self = this;
     self.loadUsersData();
+
     self.$eventBus.$on("usersData", (data) => {
       self.loadUsersData();
     });
@@ -177,9 +178,11 @@ export default {
 
     async loadUsersData() {
       const self = this;
+      self.usertableLoading = true;
       self.url = "/users";
       let response = await self.getAll();
       self.usersList = response.data;
+      self.usertableLoading = false;
       console.log(this.usersList);
     },
 

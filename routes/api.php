@@ -12,6 +12,7 @@ use App\Http\Controllers\Message\CampaignsController;
 use App\Http\Controllers\Message\MessageController;
 use App\Http\Controllers\Message\SenderIdController;
 use App\Http\Controllers\Message\UserCreditController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\Template\TemplateController;
 use App\Models\User;
@@ -31,6 +32,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/account/settings/{id}', [UserController::class, 'getUserDetailsBySlug']);
     Route::put('/reset/password/{id}', [UserController::class, 'resetClientPassword']);
     Route::post('/logout', [AuthenticationController::class, 'logout']);
+
+    //supended users
+    Route::get('/suspended-users',[UserController::class,'suspenUserDetails']);
 
     //account manager
     Route::post('/add-account-manager', [AccountManagerController::class, 'store']);
@@ -87,6 +91,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/load-announcement', [AnnouncementController::class, 'index']);
     Route::delete('/delete-announcement/{id}', [AnnouncementController::class, 'destroy']);
     Route::post('/delete-selected-announcement', [AnnouncementController::class, 'deleteSelected']);
+
+    //notifications
+    Route::get('my-notifications',[NotificationController::class,'myNotification']);
 });
 
 
