@@ -5,12 +5,18 @@ use App\Imports\ContactImportUpload;
 use App\Models\User;
 use App\Models\UserRoute;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Route;
 
 // Auth::routes();
 Route::get('/testing/testing',[NotificationController::class,'myNotification']);
 
 Route::get('/testing-credit',function(){
+
+    $date = "2021-01-22";
+    $time = "17:22";
+    $combinedDT = date('Y-m-d H:i:s', strtotime("$date $time"));
+    return $combinedDT;
     $credits = UserRoute::where('user_id',1)
     ->where('validity','>=',Carbon::today())      //removing expired credits
     ->where('status',true) 
