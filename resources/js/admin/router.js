@@ -161,7 +161,7 @@ const routes = [
     },
 
     {
-        path: '/user/rechargeHistory',
+        path: '/user/rechargeHistory/:id',
         name: 'admin.userRechargeHistory',
         component: require('../components/tables/RechargeHistoryTable').default,
         meta: { authOnly: true }
@@ -194,7 +194,7 @@ function isLoggedIn() {
 }
 
 router.beforeEach((to, from, next) => {
-    
+
     if (to.matched.some(record => record.meta.authOnly)) {
         if (!isLoggedIn()) {
             next({ name: 'login' })

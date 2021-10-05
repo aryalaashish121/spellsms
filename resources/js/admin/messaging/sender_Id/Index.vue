@@ -12,13 +12,13 @@
       v-model="selected"
       :headers="headers"
       :items="senderIDList"
-      class="shadow-md border rounded-md"
+      class="shadow border rounded-xl"
       :search="search"
       item-key="sender_id"
       show-select
     >
       <template v-slot:top>
-        <v-toolbar flat class="rounded-md">
+        <v-toolbar flat class="rounded-xl">
           <v-toolbar-title>
             <v-icon class="pb-1" left> mdi-card-account-details </v-icon>
             <span class="text-base"> Sender ID </span>
@@ -27,17 +27,19 @@
 
           <v-text-field
             v-model="search"
-            append-icon="mdi-magnify"
+            dense
+            outlined
+            prepend-inner-icon="mdi-magnify"
             label="Search"
             single-line
             hide-details
-            class="text-sm"
+            class="text-sm shadow-inner"
           ></v-text-field>
           <v-spacer></v-spacer>
 
           <v-btn dark color="primary" class="capitalize" v-on:click="AddSender">
             <v-icon left small> mdi-card-account-details </v-icon>
-            Add New Sender ID
+            Add Sender
           </v-btn>
         </v-toolbar>
       </template>
@@ -54,9 +56,10 @@
 
       <template v-slot:[`item.status`]="{ item }">
         <v-chip
+          small
+          dark
           class="ma-2"
-          color="indigo"
-          text-color="white"
+          color="blue lighten-1"
           v-if="item.is_approved"
         >
           <v-avatar left>
@@ -65,7 +68,7 @@
           Approved
         </v-chip>
 
-        <v-chip class="ma-2" color="orange" text-color="white" v-else>
+        <v-chip small dark class="ma-2" color="orange" v-else>
           <v-avatar left>
             <v-icon>mdi-account-clock</v-icon>
           </v-avatar>
@@ -73,13 +76,20 @@
         </v-chip>
       </template>
 
-      <template v-slot:[`item.actions`]="{item}">
+      <template v-slot:[`item.actions`]="{ item }">
         <v-flex>
-          <v-btn class="ma-1" outlined x-small fab color="indigo">
-            <v-icon>mdi-pencil</v-icon>
+          <v-btn class="ma-1" dark x-small fab color="green darken-1">
+            <v-icon small>mdi-pencil</v-icon>
           </v-btn>
-          <v-btn class="ma-1" outlined x-small fab color="error" @click="deleteSenderId(item.id)">
-            <v-icon>mdi-delete</v-icon>
+          <v-btn
+            class="ma-1"
+            dark
+            x-small
+            fab
+            color="red darken-1"
+            @click="deleteSenderId(item.id)"
+          >
+            <v-icon small>mdi-delete</v-icon>
           </v-btn>
         </v-flex>
       </template>
@@ -95,7 +105,7 @@ export default {
     return {
       search: "",
       selected: [],
-      senderIDList:[],
+      senderIDList: [],
       breadcrumbsItems: [
         {
           text: "Dashboard",
@@ -129,7 +139,7 @@ export default {
     };
   },
 
-  mounted(){
+  mounted() {
     const self = this;
     self.getSenderIds();
   },
@@ -140,19 +150,19 @@ export default {
       self.$refs.AddSender.create();
     },
 
-   async getSenderIds(){
+    async getSenderIds() {
       const self = this;
       self.url = "/all-senderid";
-      let response  = await self.getAll();
+      let response = await self.getAll();
       self.senderIDList = response.data;
     },
 
-    deleteSenderId(id){
+    deleteSenderId(id) {
       const self = this;
       self.url = "/delete/senderid";
       let response = self.delete(id);
       self.getSenderIds();
-    }
+    },
   },
 };
 </script>

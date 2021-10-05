@@ -15,12 +15,19 @@
       <div class="w-full lg:w-7/12 px-5 rounded-lg">
         <v-card flat>
           <v-card-text>
-            <v-card outlined elevation="1" rounded="xl" class="px-4 py-2 mt-3">
+            <v-card
+              outlined
+              class="blue lighten-3 white--text px-4 py-2 mt-3"
+              dark
+              elevation="1"
+              rounded="xl"
+            >
+              <v-card-title> Campaign </v-card-title>
               <v-card-text>
-                <p class="text-base font-bold">Campaign :</p>
                 <v-col cols="12" md="8" class="-ml-3">
                   <v-select
                     outlined
+                    dense
                     :items="campaignList"
                     label="Select Campaign"
                     prepend-inner-icon="mdi-sign-text"
@@ -93,7 +100,7 @@
                           @change="show"
                           outlined
                           placeholder="Copy paste numbers separated by newline.........
-                                                                            9851******"
+                                       9851******"
                           v-model="form_fields.pasted_numbers"
                         >
                         </v-textarea>
@@ -115,21 +122,6 @@
                           name="file"
                           @change="onFileChange"
                         />
-                        <!-- <v-file-input
-                          class="mt-3"
-                          placeholder="Upload your documents"
-                          label="Browse"
-                          type="file"
-                          ref="import_file"
-                          prepend-icon="mdi-paperclip"
-                          @change="onFileChange"
-                        >
-                          <template v-slot:selection="{ text }">
-                            <v-chip small label color="primary">
-                              {{ text }}
-                            </v-chip>
-                          </template>
-                        </v-file-input> -->
                       </v-card-text>
                     </v-card>
                   </v-tab-item>
@@ -197,49 +189,28 @@
                         >
                           <template v-slot:selection="data">
                             <v-chip
+                              :key="JSON.stringify(data.item)"
                               v-bind="data.attrs"
                               :input-value="data.selected"
-                              close
-                              @click="data.select"
+                              :disabled="data.disabled"
                               @click:close="data.parent.selectItem(data.item)"
                             >
                               <v-avatar
+                                class="accent white--text"
                                 left
                                 v-text="
-                                  data.item.group.name.slice(0, 1).toUpperCase()
+                                  data.item.name.slice(0, 1).toUpperCase()
                                 "
-                              >
-                              </v-avatar>
+                              ></v-avatar>
                               {{ data.item.name }}
+                              <v-icon
+                                small
+                                class="ml-2"
+                                @click="data.parent.selectItem(data.item)"
+                              >
+                                $delete
+                              </v-icon>
                             </v-chip>
-                          </template>
-                          <template v-slot:item="data">
-                            <template v-if="typeof data.item !== 'object'">
-                              <v-list-item-content
-                                v-text="data.item"
-                              ></v-list-item-content>
-                            </template>
-                            <template v-else>
-                              <v-list-item-avatar>
-                                <v-avatar
-                                  left
-                                  v-text="
-                                    data.item.group.name
-                                      .slice(0, 1)
-                                      .toUpperCase()
-                                  "
-                                >
-                                </v-avatar>
-                              </v-list-item-avatar>
-                              <v-list-item-content>
-                                <v-list-item-title
-                                  v-html="data.item.name"
-                                ></v-list-item-title>
-                                <v-list-item-subtitle
-                                  v-html="data.item.mobile"
-                                ></v-list-item-subtitle>
-                              </v-list-item-content>
-                            </template>
                           </template>
                         </v-autocomplete>
                       </v-card-text>

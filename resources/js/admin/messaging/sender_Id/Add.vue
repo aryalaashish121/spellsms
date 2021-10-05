@@ -7,7 +7,7 @@
       scrollable
     >
       <v-card>
-        <v-card-title class="primary white--text" elevation="5">
+        <v-card-title class="primary white--text body-1" elevation="5">
           <v-icon dark left> mdi-card-account-details </v-icon>
           Add Sender ID
           <v-spacer></v-spacer>
@@ -85,30 +85,30 @@
 
 <script>
 export default {
-  data(){
+  data() {
     return {
- column: null,
-    addSenderIdDialog: false,
-    form_fields:{
-      sender_id:"",
-      company_name:"",
-      description:"",
-      sample:"",
-      route:"",
-    },
-    }
+      column: null,
+      addSenderIdDialog: false,
+      form_fields: {
+        sender_id: "",
+        company_name: "",
+        description: "",
+        sample: "",
+        route: "",
+      },
+    };
   },
   methods: {
     create() {
       const self = this;
       self.addSenderIdDialog = true;
     },
-    
-    addNew(){
+
+    addNew() {
       const self = this;
       self.url = "create-senderid";
       let response = self.post(self.form_fields);
-    }
+    },
   },
 };
 </script>

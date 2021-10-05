@@ -7,7 +7,7 @@
       scrollable
     >
       <v-card>
-        <v-card-title class="primary white--text" elevation="5">
+        <v-card-title class="primary white--text body-1" elevation="5">
           <v-icon dark left> mdi-shape </v-icon>
           Create Template
           <v-spacer></v-spacer>

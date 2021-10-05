@@ -12,13 +12,13 @@
       v-model="selected"
       :headers="headers"
       :items="blacklistContacts"
-      class="shadow-md border rounded-md"
+      class="shadow border rounded-xl"
       :search="search"
       item-key="name"
       show-select
     >
       <template v-slot:top>
-        <v-toolbar flat class="rounded-md">
+        <v-toolbar flat class="rounded-xl">
           <v-toolbar-title>
             <v-icon class="pb-1" left> mdi-account-off </v-icon>
             <span class="text-base"> Manage Blacklist </span>
@@ -27,11 +27,13 @@
 
           <v-text-field
             v-model="search"
-            append-icon="mdi-magnify"
+            dense
+            outlined
+            prepend-inner-icon="mdi-magnify"
             label="Search"
             single-line
             hide-details
-            class="text-sm"
+            class="text-sm shadow-inner"
           ></v-text-field>
           <v-spacer></v-spacer>
 
@@ -47,10 +49,17 @@
         </v-toolbar>
       </template>
 
-      <template v-slot:[`item.actions`]="{item}">
+      <template v-slot:[`item.actions`]="{ item }">
         <v-flex>
-          <v-btn class="ma-1" outlined x-small fab color="error" @click="deleteData(item.id)">
-            <v-icon>mdi-delete</v-icon>
+          <v-btn
+            class="ma-1"
+            dark
+            x-small
+            fab
+            color="error"
+            @click="deleteData(item.id)"
+          >
+            <v-icon small>mdi-delete</v-icon>
           </v-btn>
         </v-flex>
       </template>
@@ -90,11 +99,10 @@ export default {
         { text: "Contact name", value: "name" },
         { text: "Actions", value: "actions", sortable: false },
       ],
-
     };
   },
 
-  mounted(){
+  mounted() {
     const self = this;
     self.loadBlackListData();
   },
@@ -105,18 +113,18 @@ export default {
       self.$refs.AddBlacklist.create();
     },
 
-    async loadBlackListData(){
+    async loadBlackListData() {
       const self = this;
       self.url = "/get-blacklist-contacts";
       let response = await self.getAll();
       self.blacklistContacts = response.data;
     },
-    deleteData(id){
+    deleteData(id) {
       const self = this;
       self.url = "/delete-blacklist-contact";
       let response = self.delete(id);
       self.loadBlackListData();
-    }
+    },
   },
 };
 </script>
