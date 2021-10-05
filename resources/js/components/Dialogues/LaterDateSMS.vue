@@ -12,12 +12,13 @@
 
         <v-card-text height="700px">
           <v-row>
+            
             <v-col cols="12" sm="12" lg="6">
               <v-date-picker class="mt-2" v-model="picker" flat></v-date-picker>
             </v-col>
 
             <v-col cols="12" sm="12" lg="6">
-              <v-time-picker class="mt-2" format="ampm"></v-time-picker>
+              <v-time-picker class="mt-2" format="ampm" v-model="time"></v-time-picker>
             </v-col>
           </v-row>
         </v-card-text>
@@ -27,7 +28,7 @@
             <v-icon left small> mdi-close </v-icon>
             Cancel
           </v-btn>
-          <v-btn text color="primary" class="ma-2">
+          <v-btn text color="primary" class="ma-2" @click="applyNow">
             Apply
             <v-icon right small> mdi-check-circle-outline </v-icon>
           </v-btn>
@@ -37,11 +38,13 @@
   </div>
 </template>
 <script>
+import moment from 'moment';
 export default {
   data() {
     return {
       dialog: false,
       picker: null,
+      time:null,
     };
   },
 
@@ -50,6 +53,12 @@ export default {
       const self = this;
       self.dialog = true;
     },
+
+    applyNow(){
+      const self = this;
+      self.$eventBus.$emit("schduledDate",{date:self.picker, time:self.time});
+      self.dialog = false;
+    }
   },
 };
 </script>

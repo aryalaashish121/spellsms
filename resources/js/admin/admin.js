@@ -13,6 +13,8 @@ import { toggleFullScreen } from "../utils";
 import AxiosAjaxDetect from "../common/axiosAxajDetect";
 import VMdDateRangePicker from "v-md-date-range-picker";
 import JsonExcel from 'vue-json-excel'
+
+import moment from 'moment';
 // import "v-md-date-range-picker/dist/v-md-date-range-picker.css";
 import './tailwindcss.css'
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
@@ -24,6 +26,7 @@ const admin = new Vue({
     eventBus,
     vuetify,
     store,
+    moment,
     components: {
         App, Login
     },

@@ -100,7 +100,7 @@
                           @change="show"
                           outlined
                           placeholder="Copy paste numbers separated by newline.........
-                                       9851******"
+                                                                            9851******"
                           v-model="form_fields.pasted_numbers"
                         >
                         </v-textarea>
@@ -122,6 +122,21 @@
                           name="file"
                           @change="onFileChange"
                         />
+                        <!-- <v-file-input
+                          class="mt-3"
+                          placeholder="Upload your documents"
+                          label="Browse"
+                          type="file"
+                          ref="import_file"
+                          prepend-icon="mdi-paperclip"
+                          @change="onFileChange"
+                        >
+                          <template v-slot:selection="{ text }">
+                            <v-chip small label color="primary">
+                              {{ text }}
+                            </v-chip>
+                          </template>
+                        </v-file-input> -->
                       </v-card-text>
                     </v-card>
                   </v-tab-item>
@@ -189,28 +204,49 @@
                         >
                           <template v-slot:selection="data">
                             <v-chip
-                              :key="JSON.stringify(data.item)"
                               v-bind="data.attrs"
                               :input-value="data.selected"
-                              :disabled="data.disabled"
+                              close
+                              @click="data.select"
                               @click:close="data.parent.selectItem(data.item)"
                             >
                               <v-avatar
-                                class="accent white--text"
                                 left
                                 v-text="
-                                  data.item.name.slice(0, 1).toUpperCase()
+                                  data.item.group.name.slice(0, 1).toUpperCase()
                                 "
-                              ></v-avatar>
-                              {{ data.item.name }}
-                              <v-icon
-                                small
-                                class="ml-2"
-                                @click="data.parent.selectItem(data.item)"
                               >
-                                $delete
-                              </v-icon>
+                              </v-avatar>
+                              {{ data.item.name }}
                             </v-chip>
+                          </template>
+                          <template v-slot:item="data">
+                            <template v-if="typeof data.item !== 'object'">
+                              <v-list-item-content
+                                v-text="data.item"
+                              ></v-list-item-content>
+                            </template>
+                            <template v-else>
+                              <v-list-item-avatar>
+                                <v-avatar
+                                  left
+                                  v-text="
+                                    data.item.group.name
+                                      .slice(0, 1)
+                                      .toUpperCase()
+                                  "
+                                >
+                                </v-avatar>
+                              </v-list-item-avatar>
+                              <v-list-item-content>
+                                <v-list-item-title
+                                  v-html="data.item.name"
+                                ></v-list-item-title>
+                                <v-list-item-subtitle
+                                  v-html="data.item.mobile"
+                                ></v-list-item-subtitle>
+                              </v-list-item-content>
+                            </template>
                           </template>
                         </v-autocomplete>
                       </v-card-text>
@@ -310,8 +346,15 @@
                       v-model="form_fields.message"
                       ref="message_field_np"
                       v-on:keypress="changeToNepaliFont"
+                      @input="checkMessageLetter"
+                      counter
                     >
                     </v-textarea>
+
+                    <v-text-field v-model="totalword" readonly
+                      >Characters</v-text-field
+                    >
+                    <v-text-field v-model="totalsms" readonly>Sms</v-text-field>
                   </div>
                 </v-row>
                 <div
@@ -347,7 +390,7 @@
                     <v-radio-group
                       row
                       mandatory
-                      v-model="form_fields.schedule"
+                      v-model="schedule"
                       @change="chooseSmsSchedule"
                     >
                       <v-radio label="Now" value="now"> </v-radio>
@@ -358,7 +401,7 @@
                   </div>
                 </v-row>
 
-                <div class="mt-4">
+                <div class="mt-4" v-if="form_fields.schedule_later">
                   <label for="" class="text-base">
                     Scheduled Date & Time :
                   </label>
@@ -368,7 +411,7 @@
                     class="mt-2"
                     solo
                     dense
-                    v-model="scheduledDateTime"
+                    v-model="form_fields.schedule_later"
                   ></v-text-field>
                 </div>
 
@@ -457,10 +500,12 @@ import Conversions from "../../../common/conversions";
 import UseTemplate from "../../../components/Dialogues/UseTemplate.vue";
 import LaterDate from "../../../components/Dialogues/LaterDateSMS.vue";
 import LongCourseDate from "../../../components/Dialogues/LongCourseSMS.vue";
+import moment from "moment";
 export default {
   components: { UseTemplate, LaterDate, LongCourseDate },
   data() {
     return {
+      scheduledDateTime: "",
       contacts: "",
       select: [],
       selectedPeople: [],
@@ -474,8 +519,12 @@ export default {
       checkBlacklist: false,
       selectedFile: null,
       sendlater: "",
+      totalword: 0,
+      totalsms: 0,
       sendnow: "",
+      schedule: "",
       form_fields: {
+        schedule_later: "",
         campaign_id: "",
         pasted_numbers: "",
         excel_numbers: "",
@@ -486,7 +535,6 @@ export default {
         remove_invalids: "",
         remove_blacklist: "",
         sms_type: "",
-        schedule: "",
       },
       excelfile: null,
 
@@ -508,6 +556,15 @@ export default {
     self.$eventBus.$on("backFire", (data) => {
       self.form_fields.message = data.msg;
     });
+
+    self.$eventBus.$on("schduledDate", (data) => {
+      var dateTime = moment(
+        data.date + " " + data.time,
+        "YYYY-MM-DD HH:mm"
+      ).format();
+      self.form_fields.schedule_later = dateTime;
+    });
+
     self.loadCampaignList();
     self.loadRoutes();
     self.loadSenderIDs();
@@ -516,6 +573,10 @@ export default {
   },
 
   methods: {
+    checkMessageLetter() {
+      const self = this;
+      // self.totalword = self.form_fields.message.length;
+    },
     onFileChange(e) {
       const self = this;
       console.log(e);
@@ -589,6 +650,7 @@ export default {
     },
 
     changeToNepaliFont(e) {
+      const self = this;
       if (this.form_fields.sms_type == "unicode") {
         let convertedtext = new Conversions().translateNepali(
           this.$refs.message_field_np,
@@ -605,9 +667,9 @@ export default {
 
     chooseSmsSchedule(e) {
       const self = this;
-      if (self.form_fields.schedule == "later") {
+      if (self.schedule == "later") {
         self.$refs.laterDate.open();
-      } else if (self.form_fields.schedule == "longCourse") {
+      } else if (self.schedule == "longCourse") {
         self.$refs.longCourseDate.open();
       }
     },
