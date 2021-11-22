@@ -2,7 +2,7 @@
   <div>
     <v-dialog v-model="addUserDialog" persistent max-width="750px" scrollable>
       <v-card>
-        <v-card-title class="primary white--text" elevation="5">
+        <v-card-title class="primary white--text body-1" elevation="5">
           <v-icon dark left> mdi-account-circle </v-icon>
           Add User
           <v-spacer></v-spacer>
@@ -286,7 +286,7 @@ export default {
 
       self.post(data, async () => {
         self.loading = false;
-          self.$eventBus.$emit("usersData");
+        self.$eventBus.$emit("usersData");
         self.addUserDialog = false;
         console.log("success");
       });

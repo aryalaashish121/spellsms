@@ -13,13 +13,13 @@
       :headers="headers"
       :loading="isLoading"
       :items="templates"
-      class="shadow-md border rounded-md"
+      class="shadow border rounded-xl"
       :search="search"
       item-key="name"
       show-select
     >
       <template v-slot:top>
-        <v-toolbar flat class="rounded-md">
+        <v-toolbar flat class="rounded-xl">
           <v-toolbar-title>
             <v-icon class="pb-1" left> mdi-shape </v-icon>
             <span class="text-base"> Templates </span>
@@ -28,17 +28,19 @@
 
           <v-text-field
             v-model="search"
-            append-icon="mdi-magnify"
+            dense
+            outlined
+            prepend-inner-icon="mdi-magnify"
             label="Search"
             single-line
             hide-details
-            class="text-sm"
+            class="text-sm shadow-inner"
           ></v-text-field>
           <v-spacer></v-spacer>
 
           <v-btn
             dark
-            color="green"
+            color="primary"
             class="capitalize"
             v-on:click="createTemplate"
           >
@@ -50,18 +52,18 @@
 
       <template v-slot:[`item.actions`]="{ item }">
         <v-flex>
-          <v-btn class="ma-1" outlined x-small fab color="indigo">
-            <v-icon>mdi-pencil</v-icon>
+          <v-btn class="ma-1" dark x-small fab color="green darken-1">
+            <v-icon small>mdi-pencil</v-icon>
           </v-btn>
           <v-btn
             class="ma-1"
-            outlined
+            dark
             x-small
             fab
-            color="error"
+            color="red darken-1"
             @click="deleteTemplate(item.id)"
           >
-            <v-icon>mdi-delete</v-icon>
+            <v-icon small>mdi-delete</v-icon>
           </v-btn>
         </v-flex>
       </template>

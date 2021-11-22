@@ -9,7 +9,6 @@
         x-small
         :color="color"
         @click="gotToLink"
- 
       >
         <v-icon>{{ icon }}</v-icon>
       </v-btn>
@@ -21,8 +20,8 @@
 <script>
 export default {
   props: {
-    data:{
-      type:Array
+    data: {
+      type: Array,
     },
     icon: String,
     title: String,
@@ -30,16 +29,14 @@ export default {
     href: String,
   },
 
-  methods:{
-    gotToLink(){
+  methods: {
+    gotToLink() {
       const self = this;
-      alert(this.data.slug)
-    
       self.$router.push({
-        name:this.href,
-        params:{id:this.data.slug}
+        name: this.href,
+        params: { id: this.data.slug },
       });
-    }
-  }
+    },
+  },
 };
 </script>

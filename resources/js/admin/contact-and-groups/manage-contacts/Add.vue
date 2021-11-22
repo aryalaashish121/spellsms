@@ -2,7 +2,7 @@
   <div>
     <v-dialog v-model="dialog" persistent max-width="750px" scrollable>
       <v-card>
-        <v-card-title class="primary white--text title" elevation="5">
+        <v-card-title class="primary white--text body-1" elevation="5">
           <v-icon dark left> mdi-phone </v-icon>
           Add Contact
           <v-spacer></v-spacer>

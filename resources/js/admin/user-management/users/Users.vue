@@ -14,14 +14,14 @@
       v-model="selectedList"
       :headers="headers"
       :items="usersList"
-      class="shadow-md border rounded-md cursor-pointer"
+      class="shadow border rounded-xl cursor-pointer"
       :search="search"
       item-key="login_id"
       show-select
       loading="usertableLoading"
     >
       <template v-slot:top>
-        <v-toolbar flat class="rounded-md">
+        <v-toolbar flat class="rounded-xl">
           <v-toolbar-title>
             <v-icon class="pb-1" left> mdi-account-clock </v-icon>
             <span class="text-base"> Active Users </span>
@@ -30,30 +30,51 @@
 
           <v-text-field
             v-model="search"
-            append-icon="mdi-magnify"
+            outlined
+            dense
+            prepend-inner-icon="mdi-magnify"
             label="Search"
             single-line
             hide-details
-            class="text-sm"
+            class="text-sm shadow-inner"
           ></v-text-field>
           <v-spacer></v-spacer>
 
-          <v-btn fab small color="primary" @click="addUser" class="capitalize">
-            <v-icon small> mdi-plus </v-icon>
-          </v-btn>
+          <v-tooltip top>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                fab
+                dark
+                v-bind="attrs"
+                v-on="on"
+                small
+                color="primary"
+                @click="addUser"
+              >
+                <v-icon small> mdi-plus </v-icon>
+              </v-btn>
+            </template>
+            <span>Add User</span>
+          </v-tooltip>
 
-          <download-excel
-            class="btn btn-default ml-1"
-            :data="selectedList"
-            :fields="excel_file_header"
-            name="users.xls"
-          >
-            <v-btn fab small dark color="orange">
-              <v-icon small> mdi-export </v-icon>
-            </v-btn>
-          </download-excel>
+          <v-tooltip top>
+            <template v-slot:activator="{ on, attrs }">
+              <download-excel
+                class="btn btn-default ml-2"
+                :data="selectedList"
+                :fields="excel_file_header"
+                name="users.xls"
+              >
+                <v-btn fab small v-on="on" v-bind="attrs" dark color="orange">
+                  <v-icon small> mdi-export </v-icon>
+                </v-btn>
+              </download-excel>
+            </template>
+            <span>Export as Excel</span>
+          </v-tooltip>
         </v-toolbar>
       </template>
+
       <template v-slot:[`item.user_type`]="{ item }">
         <v-flex v-if="item.roles[0]">
           <div v-for="role in item.roles" :key="role.id">
@@ -73,13 +94,12 @@
           <v-btn class="ma-1" outlined x-small fab color="indigo">
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
-         
         </v-flex>
       </template>
     </v-data-table>
   </div>
 </template>
-
+      
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
 th {
@@ -103,7 +123,7 @@ export default {
       search: "",
       selected: [],
       usersList: [],
-      usertableLoading:false,
+      usertableLoading: false,
       breadcrumbsItems: [
         {
           text: "Dashboard",

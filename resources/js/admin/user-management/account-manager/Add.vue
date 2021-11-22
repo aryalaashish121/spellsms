@@ -7,7 +7,7 @@
       scrollable
     >
       <v-card>
-        <v-card-title class="primary white--text" elevation="5">
+        <v-card-title class="primary white--text body-1" elevation="5">
           <v-icon dark left> mdi-account-tie </v-icon>
           Create Account Manager
           <v-spacer></v-spacer>
@@ -90,11 +90,11 @@
 
 <script>
 export default {
-  data(){
-    return{
-    addAccountManagerDialog: false,
-    form_fields:[],
-    }
+  data() {
+    return {
+      addAccountManagerDialog: false,
+      form_fields: [],
+    };
   },
   methods: {
     create() {
@@ -102,18 +102,19 @@ export default {
       self.addAccountManagerDialog = true;
     },
 
-    createNew(){
+    createNew() {
       const self = this;
       self.url = "/add-account-manager";
       let data = {
-        name:self.form_fields.name,
-        phone:self.form_fields.phone,
-        whatsapp:self.form_fields.whatsapp,
-        email:self.form_fields.email,
-        facebook_url:self.form_fields.facebook_url,
-      }
+        name: self.form_fields.name,
+        phone: self.form_fields.phone,
+        whatsapp: self.form_fields.whatsapp,
+        email: self.form_fields.email,
+        facebook_url: self.form_fields.facebook_url,
+      };
       let response = self.post(data);
-    }
+      self.addAccountManagerDialog = false;
+    },
   },
 };
 </script>

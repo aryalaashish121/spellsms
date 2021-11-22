@@ -13,13 +13,13 @@
       :headers="headers"
       :loading="loading"
       :items="contact_groups"
-      class="shadow-md border rounded-md"
+      class="shadow border rounded-xl"
       :search="search"
       item-key="name"
       show-select
     >
       <template v-slot:top>
-        <v-toolbar flat class="rounded-md">
+        <v-toolbar flat class="rounded-xl">
           <v-toolbar-title>
             <v-icon class="pb-1" left> mdi-account-group </v-icon>
             <span class="text-base"> Contact Groups </span>
@@ -28,11 +28,13 @@
 
           <v-text-field
             v-model="search"
-            append-icon="mdi-magnify"
+            outlined
+            dense
+            prepend-inner-icon="mdi-magnify"
             label="Search"
             single-line
             hide-details
-            class="text-sm"
+            class="text-sm shadow-inner"
           ></v-text-field>
           <v-spacer></v-spacer>
 
@@ -50,30 +52,36 @@
       </template>
 
       <template v-slot:[`item.total_contacts`]="{ item }">
-        <v-chip v-if="item.total_contacts == null" color="red" dark> 0 </v-chip>
+        <v-chip
+          small
+          v-if="item.total_contacts == null"
+          color="red darken-1"
+          dark
+        >
+          0
+        </v-chip>
 
-        <v-chip v-else color="primary" dark>
+        <v-chip small v-else color="primary" dark>
           {{ item.total_contacts }}
         </v-chip>
       </template>
 
       <template v-slot:[`item.actions`]="{ item }">
         <v-flex>
-          <v-btn class="ma-1" outlined x-small fab color="indigo">
-            <v-icon>mdi-eye</v-icon>
+          <v-btn class="ma-1" x-small fab dark color="indigo">
+            <v-icon small>mdi-eye</v-icon>
           </v-btn>
-          <v-btn class="ma-1" outlined x-small fab color="green">
-            <v-icon>mdi-pencil</v-icon>
+          <v-btn class="ma-1" x-small dark fab color="green darken-1">
+            <v-icon small>mdi-pencil</v-icon>
           </v-btn>
           <v-btn
             class="ma-1"
-            outlined
             x-small
             fab
             color="error"
             @click="deleteContactGroup(item.id)"
           >
-            <v-icon>mdi-delete</v-icon>
+            <v-icon small>mdi-delete</v-icon>
           </v-btn>
         </v-flex>
       </template>

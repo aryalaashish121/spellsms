@@ -5,7 +5,6 @@
       <v-breadcrumbs :items="breadcrumbsItems">
         <template v-slot:divider>
           <v-icon>mdi-chevron-right</v-icon>
-    
         </template>
       </v-breadcrumbs>
     </div>
@@ -13,13 +12,13 @@
       v-model="selected"
       :headers="headers"
       :items="accountManagers"
-      class="shadow-md border rounded-md"
+      class="shadow border rounded-xl"
       :search="search"
       item-key="name"
       show-select
     >
       <template v-slot:top>
-        <v-toolbar flat class="rounded-md">
+        <v-toolbar flat class="rounded-xl">
           <v-toolbar-title>
             <v-icon class="pb-1" left> mdi-account-tie </v-icon>
             <span class="text-base"> Account Managers </span>
@@ -38,7 +37,7 @@
 
           <v-btn
             dark
-            color="secondary"
+            color="primary"
             class="capitalize"
             v-on:click="createAccountManager"
           >
@@ -48,13 +47,20 @@
         </v-toolbar>
       </template>
 
-      <template v-slot:[`item.actions`]="{item}">
+      <template v-slot:[`item.actions`]="{ item }">
         <v-flex>
-          <v-btn class="ma-1" outlined x-small fab color="indigo">
-            <v-icon>mdi-pencil</v-icon>
+          <v-btn class="ma-1" dark x-small fab color="green darken-1">
+            <v-icon small>mdi-pencil</v-icon>
           </v-btn>
-          <v-btn class="ma-1" outlined x-small fab color="error" @click="deleteManager(item.id)">
-            <v-icon>mdi-delete</v-icon>
+          <v-btn
+            class="ma-1"
+            dark
+            x-small
+            fab
+            color="red darken-1"
+            @click="deleteManager(item.id)"
+          >
+            <v-icon small>mdi-delete</v-icon>
           </v-btn>
         </v-flex>
       </template>
@@ -94,17 +100,16 @@ export default {
         { text: "Email", value: "email" },
         { text: "Mobile", value: "phone" },
         { text: "WhtasApp", value: "whatsapp" },
-        { text: "Skype", value: "facebook_url" },
+        { text: "Facebook", value: "facebook_url" },
         { text: "Created", value: "created_at" },
         { text: "Actions", value: "actions", sortable: false },
       ],
-
     };
   },
 
-   mounted() {
+  mounted() {
     const self = this;
-     self.getAllAccountManagers();
+    self.getAllAccountManagers();
   },
 
   methods: {
@@ -113,7 +118,7 @@ export default {
       self.$refs.createAccountManager.create();
     },
 
-    async getAllAccountManagers(){
+    async getAllAccountManagers() {
       const self = this;
       self.url = "/account-managers";
       let response = await self.getAll();
@@ -122,12 +127,12 @@ export default {
       console.log(response.data);
     },
 
-    deleteManager(id){
+    deleteManager(id) {
       const self = this;
       self.url = "delete/account-manager";
-     
+
       let response = self.delete(id);
-    }
+    },
   },
 };
 </script>

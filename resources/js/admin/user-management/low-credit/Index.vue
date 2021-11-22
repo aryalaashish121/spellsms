@@ -11,13 +11,13 @@
       v-model="selected"
       :headers="headers"
       :items="lowCreditUsers"
-      class="shadow-md border rounded-md"
+      class="shadow border rounded-xl"
       :search="search"
       item-key="login_id"
       show-select
     >
       <template v-slot:top>
-        <v-toolbar flat class="rounded-md">
+        <v-toolbar flat class="rounded-xl">
           <v-toolbar-title>
             <v-icon class="pb-1" left> mdi-gauge-low </v-icon>
             <span class="text-base"> Low Credit Users (less than 500) </span>
@@ -26,11 +26,13 @@
 
           <v-text-field
             v-model="search"
-            append-icon="mdi-magnify"
+            dense
+            outlined
+            prepend-inner-icon="mdi-magnify"
             label="Search"
             single-line
             hide-details
-            class="text-sm"
+            class="text-sm shadow-inner"
           ></v-text-field>
           <v-spacer></v-spacer>
         </v-toolbar>
